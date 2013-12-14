@@ -1,5 +1,5 @@
 var CANVAS_WIDTH = 800,
-    CANVAS_HEIGHT = 600;
+    CANVAS_HEIGHT = 640;
 
 (function () {
     var keysDown = [],
@@ -8,6 +8,9 @@ var CANVAS_WIDTH = 800,
         keyUpListener,
         canvas,
         context;
+    
+    var map,
+        player;
     
     // shim layer with setTimeout fallback
     window.requestAnimFrame = (function(){
@@ -46,6 +49,11 @@ var CANVAS_WIDTH = 800,
         
         context = canvas.getContext('2d');
         
+        
+        map = new Map(50, 50);
+        map.generate();
+        player = new Player(25,25);
+        
         gameRunning = true;
         animLoop();
     }
@@ -58,22 +66,27 @@ var CANVAS_WIDTH = 800,
     
     var handleInput = function() {
         if (38 in keysDown) { // Player holding up
-
+            player.moveUp(map);
         }
         if (40 in keysDown) { // Player holding down
-
+            player.moveDown(map);
         }
         if (37 in keysDown) { // Player holding left
-            
+            player.moveLeft(map);
         }
         if (39 in keysDown) { // Player holding right
-            
+            player.moveRight(map);
         }
+        
+        keysDown = [];
     }
     
     var render = function(){
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle="#000000";
+        context.fillRect(0, 0, canvas.width, canvas.height);
 
+        map.draw(context, player.getX(), player.getY());
+        player.draw(context);
     }
 
     init();
