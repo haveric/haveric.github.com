@@ -19,6 +19,16 @@ var Enemy = function(name, map, player) {
     
     this.x = randX;
     this.y = randY;
+    var rand = Math.floor(Math.random()*4);
+    if (rand == 0) {
+        this.direction = "up";
+    } else if (rand == 1) {
+        this.direction = "down";
+    } else if (rand == 2) {
+        this.direction = "right";
+    } else if (rand == 3) {
+        this.direction = "left";
+    }
 }
 
 Enemy.prototype.draw = function(context, i, j) {
@@ -28,7 +38,7 @@ Enemy.prototype.draw = function(context, i, j) {
     var bot = j + 10;
     
     if (this.x >= left && this.x <= right && this.y >= top && this.y <= bot) {
-        spriteMapper.getImage(this.name).drawImage(context, (this.x-left)*32, (this.y-top)*32);
+        spriteMapper.getImage(this.name + "-" + this.direction).drawImage(context, (this.x-left)*32, (this.y-top)*32);
     }
 }
 
@@ -47,6 +57,7 @@ Enemy.prototype.moveRandomly = function(map) {
 }
 
 Enemy.prototype.moveUp = function(map) {
+    this.direction = "up";
     if (this.y > 0) {
         var tile = map.getTile(this.x, this.y-1);
         if (tile == null) {
@@ -57,6 +68,7 @@ Enemy.prototype.moveUp = function(map) {
     }
 }
 Enemy.prototype.moveDown = function(map) {
+    this.direction = "down";
     if (this.y < map.cols) {
         var tile = map.getTile(this.x, this.y+1);
         if (tile == null) {
@@ -67,6 +79,7 @@ Enemy.prototype.moveDown = function(map) {
     }
 }
 Enemy.prototype.moveLeft = function(map) {
+    this.direction = "left";
     if (this.x > 0) {
         var tile = map.getTile(this.x-1, this.y);
         if (tile == null) {
@@ -78,6 +91,7 @@ Enemy.prototype.moveLeft = function(map) {
 }
 
 Enemy.prototype.moveRight = function(map) {
+    this.direction = "right";
     if (this.x < map.rows) {
         var tile = map.getTile(this.x+1, this.y);
         if (tile == null) {

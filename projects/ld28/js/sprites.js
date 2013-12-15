@@ -91,7 +91,10 @@ spriteMapper.addImage('player-right', 'sprites', 160, 96, 32, 32);
 spriteMapper.addImage('player-right-sword', 'sprites', 128, 96, 32, 32);
 
 
-spriteMapper.addImage('enemy', 'sprites', 96, 0, 32, 32);
+spriteMapper.addImage('enemy-up', 'sprites', 64, 0, 32, 32);
+spriteMapper.addImage('enemy-right', 'sprites', 96, 0, 32, 32);
+spriteMapper.addImage('enemy-down', 'sprites', 128, 0, 32, 32);
+spriteMapper.addImage('enemy-left', 'sprites', 160, 0, 32, 32);
 
 spriteMapper.addImage('icon-shovel', 'sprites', 0, 128, 32, 40);
 spriteMapper.addImage('icon-ladder', 'sprites', 32, 128, 32, 40);
