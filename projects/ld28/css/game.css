@@ -131,6 +131,10 @@ a:hover {
     color: #1f6;
 }
 
+#startMenu hr {
+    margin: 0 50px;
+}
+
 .icon {
     display: inline-block;
     background: url('../img/sprites.png') left top no-repeat;
