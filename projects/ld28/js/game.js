@@ -130,7 +130,11 @@ var CANVAS_WIDTH = 800,
             }
         }
         for (var i = 0; i < enemyLength; i++) {
-            enemies[i].draw(context, player.getX(), player.getY());
+            var enemy = enemies[i];
+            enemy.draw(context, player.getX(), player.getY());
+            if (enemy.x == player.getX() && enemy.y == player.getY()) {
+                stop();
+            }
         }
         
         var numItems = 0;
