@@ -38,6 +38,11 @@ Map.prototype.generate = function() {
     var startY = Math.floor(this.cols / 2);
     this.tiles[startX][startY] = new Path();
     
+    this.tiles[startX-1][startY] = new Path();
+    this.tiles[startX+1][startY] = new Path();
+    this.tiles[startX][startY-1] = new Path();
+    this.tiles[startX][startY+1] = new Path();
+    
     this.endX = 0;
     this.endY = 0;
     var end = Math.floor(Math.random()*4);

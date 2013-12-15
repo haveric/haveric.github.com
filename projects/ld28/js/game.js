@@ -59,7 +59,7 @@ var CANVAS_WIDTH = 800,
     }
     
     var initDemo = function() {
-        console.log("Init Demo");
+        ladders = [];
         stopDemo();
         difficulty = "demo";
         canvas = document.getElementById("gameCanvas");
@@ -88,7 +88,6 @@ var CANVAS_WIDTH = 800,
     }
     
     var init = function(newDifficulty) {
-        console.log("Init");
         stopDemo();
         hideMenus();
         
@@ -139,25 +138,32 @@ var CANVAS_WIDTH = 800,
         }
     }
     
-    var stop = function(win) {
-        gameRunning = false;
-
+    var stop = function(type) {
         window.removeEventListener("keydown", keyDownListener, false);
         window.removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
         keyUpListener = undefined;
-        if (win) {
+        if (type == "win") {
             $("#endMenu .win").show();
             $("#endMenu .lose").hide();
-        } else {
+        } else if (type == "lose"){
             $("#endMenu .win").hide();
             $("#endMenu .lose").show();
         }
-        $("#endMenu").addClass("active").css({
-            'opacity':0
-        }).animate({
-            'opacity':1
-        },0.6);
+        if (type == "win" || type == "lose") {
+            $("#endMenu").addClass("active").css({
+                'opacity':0
+            }).animate({
+                'opacity':1
+            },0.6);
+        } else if (type == "menu") {
+            $("#startMenu").addClass("active").css({
+                'opacity':0
+            }).animate({
+                'opacity':1
+            },0.6);
+            initDemo();
+        }
     }
     
     $("#endMenu .tryAgain").on("click", function() {
@@ -209,6 +215,9 @@ var CANVAS_WIDTH = 800,
         if (32 in keysDown) { // space
             player.performAction(map);
         }
+        if (81 in keysDown) { // q
+            stop("menu");
+        }
         
         keysDown = [];
     }
@@ -239,12 +248,12 @@ var CANVAS_WIDTH = 800,
             var enemy = enemies[i];
             enemy.draw(context, player.getX(), player.getY());
             if (difficulty != "demo" && enemy.x == player.getX() && enemy.y == player.getY()) {
-                stop(false);
+                stop("lose");
             }
         }
         
         if (difficulty != "demo" && map.endX == player.getX() && map.endY == player.getY()) {
-            stop(true);
+            stop("win");
         }
         
         var numItems = 0;
