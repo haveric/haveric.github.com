@@ -133,10 +133,23 @@ Player.prototype.useLadder = function(map) {
     if (this.ladder) {
         var tile = map.getTile(this.x, this.y);
         if (tile.name == "path") {
-            ladders[ladders.length] = new Ladder(this.x, this.y, this.direction);
             
-            this.ladder = false;
-            this.activeItem = "none";
+            var tileGrass;
+            if (this.direction == "up") {
+                tileGrass = map.getTile(this.x, this.y-1);
+            } else if (this.direction == "down") {
+                tileGrass = map.getTile(this.x, this.y+1);
+            } else if (this.direction == "left") {
+                tileGrass = map.getTile(this.x-1, this.y);
+            } else if (this.direction == "right") {
+                tileGrass = map.getTile(this.x+1, this.y);
+            }
+            if (tileGrass.name == "grass") {
+                ladders[ladders.length] = new Ladder(this.x, this.y, this.direction);
+                
+                this.ladder = false;
+                this.activeItem = "none";
+            }
         }
     }
 }
