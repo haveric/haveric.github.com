@@ -2,6 +2,7 @@ var Tile = function(name, sprite) {
     this.name = name;
     this.sprite = sprite;
     this.canWalk = false;
+    this.castsShadow = false;
 }
 
 Tile.prototype.draw = function(context, x, y, map, i, j) {
@@ -13,21 +14,21 @@ Tile.prototype.draw = function(context, x, y, map, i, j) {
             var sprite = this.sprite;
     
             if (right != null && top != null && topRight != null) {
-                if (right.name == "grass" && top.name == "grass") {
+                if (right.castsShadow && top.castsShadow) {
                     sprite = this.spriteShadowBL2;
-                } else if (right.name == "grass" && topRight.name == "grass") {
+                } else if (right.castsShadow && topRight.castsShadow) {
                     sprite = this.spriteShadowL;
-                } else if (right.name == "grass") {
+                } else if (right.castsShadow) {
                     sprite = this.spriteShadowL2;
-                } else if (top.name == "grass" && topRight.name == "grass") {
+                } else if (top.castsShadow && topRight.castsShadow) {
                     sprite = this.spriteShadowB;
-                } else if (top.name == "grass") {
+                } else if (top.castsShadow) {
                     sprite = this.spriteShadowB2;
-                } else if (topRight.name == "grass") {
+                } else if (topRight.castsShadow) {
                     sprite = this.spriteShadowBL;
                 }
             } else if (j == 0 && right != null) {
-                if (right.name == "grass") {
+                if (right.castsShadow) {
                     sprite = this.spriteShadowL2;
                 }
             }
@@ -35,7 +36,7 @@ Tile.prototype.draw = function(context, x, y, map, i, j) {
             spriteMapper.getImage(sprite).drawImage(context, x*32, y*32);
         } else if (i == map.rows-1) {
             var top = map.getTile(i, j-1);
-            if (top.name == "grass") {
+            if (top.castsShadow) {
                 spriteMapper.getImage(this.spriteShadowB).drawImage(context, x*32, y*32);
             } else {
                 spriteMapper.getImage(this.sprite).drawImage(context, x*32, y*32);
@@ -66,8 +67,17 @@ Path.prototype.constructor = Path;
 var Wall = function() {
     Tile.call(this, "grass", "grass");
     this.canWalk = false;
+    this.castsShadow = true;
 }
 
 Wall.prototype = new Tile();
 Wall.prototype.constructor = Wall;
 
+var Brick = function() {
+    Tile.call(this, "brick", "brick")
+    this.canWalk = false;
+    this.castsShadow = true;
+}
+
+Brick.prototype = new Tile();
+Brick.prototype.constructor = Brick;

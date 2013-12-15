@@ -59,7 +59,6 @@ var CANVAS_WIDTH = 800,
     }
     
     var initDemo = function() {
-        ladders = [];
         stopDemo();
         difficulty = "demo";
         canvas = document.getElementById("gameCanvas");
@@ -87,6 +86,7 @@ var CANVAS_WIDTH = 800,
         gameRunning = false;
         cancelAnimFrame(requestId);
         requestId = undefined;
+        reset();
     }
     
     var init = function(newDifficulty) {
@@ -120,16 +120,13 @@ var CANVAS_WIDTH = 800,
             numEnemies = 160;
             mapSize = 80;
         }
-        
-        ladders = [];
-        map = null;
+
         map = new Map(mapSize, mapSize);
         map.generate();
         var midPoint = Math.floor(mapSize/2);
-        player = null;
+
         player = new Player(midPoint,midPoint);
 
-        enemies = [];
         for (var i = 0; i < numEnemies; i++) {
             enemies[enemies.length] = new Enemy("enemy", map, player);
         }
@@ -139,7 +136,12 @@ var CANVAS_WIDTH = 800,
             animLoop();
         }
     }
-    
+    var reset = function() {
+        ladders = [];
+        map = null;
+        player = null;
+        enemies = [];
+    }
     var stop = function(type) {
         gameRunning = false;
         removeEventListener("keydown", keyDownListener, false);
@@ -160,7 +162,7 @@ var CANVAS_WIDTH = 800,
                 'opacity':1
             },0.6);
         } else if (type == "menu") {
-            $("#startMenu").addClass("active").css({
+            $("#startMenu").removeClass("open").addClass("active").css({
                 'opacity':0
             }).animate({
                 'opacity':1

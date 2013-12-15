@@ -4,9 +4,14 @@ body {
     position: relative;
 }
 
+#gameWrapper {
+    position: relative;
+}
+
 hr {
     margin: 0 15px;
 }
+
 a:link,
 a:visited,
 a:active {
@@ -86,7 +91,7 @@ a:hover {
 
 #startMenu,
 #endMenu {
-    top: 45px;
+    top: 25px;
     left: 200px;
     width: 400px;
     height: 550px;
@@ -103,7 +108,7 @@ a:hover {
 }
 
 .menu2 {
-    top: 45px;
+    top: 25px;
     left: 500px;
     width: 250px;
     height: 550px;

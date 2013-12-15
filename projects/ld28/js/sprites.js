@@ -81,6 +81,8 @@ spriteMapper.addImage('pathsb', 'sprites', 64, 32, 32, 32);
 spriteMapper.addImage('pathsbl2', 'sprites', 96, 32, 32, 32);
 spriteMapper.addImage('pathsl2', 'sprites', 128, 32, 32, 32);
 spriteMapper.addImage('pathsb2', 'sprites', 160, 32, 32, 32);
+spriteMapper.addImage('brick', 'sprites', 192, 32, 32, 32);
+
 spriteMapper.addImage('player-up', 'sprites', 0, 96, 32, 32);
 spriteMapper.addImage('player-up-sword', 'sprites', 32, 96, 32, 32);
 spriteMapper.addImage('player-left', 'sprites', 64, 96, 32, 32);
