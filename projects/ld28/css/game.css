@@ -1,9 +1,154 @@
 body {
     width: 800px;
     margin: 0 auto;
+    position: relative;
+}
+
+a:link,
+a:visited,
+a:active {
+    font-size: 26px;
+    display: block;
+    text-align: center;
+    padding: 15px;
+    
+    margin: 20px 0;
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    -ms-transition: all .4s ease;
+    -o-transition: all .4s ease;
+    transition: all .4s ease;
+}
+
+#about a:link,
+#about a:visited,
+#about a:active {
+    padding: 0;
+    text-align: left;
+    font-size: auto;
+    display: inline;
+    color: #33f;
+    font-size: 16px;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+    background: none;
+}
+
+#about a:hover {
+    color: #55f;
+}
+
+h2 {
+    font-size: 30px;
+    text-align: center;
+    color: #06f;
+}
+
+p {
+    padding: 0 15px;
+    color: #ccc;
+    font-size: 16px;
+}
+
+p strong {
+    color: #1f6;
+}
+a:hover {
+    color: #ccc;
+    background: #333;
 }
 
 #gameCanvas {
     width: 800px;
     height: 600px;
+    z-index:0;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    background: rgba(0,0,0,.85);
+    border-radius: 15px;
+    z-index: 50;
+}
+
+.menu.active {
+    display: block;
+}
+
+#startMenu,
+#endMenu {
+    top: 45px;
+    left: 200px;
+    width: 400px;
+    height: 550px;
+    
+    -webkit-transition: all .6s ease;
+    -moz-transition: all .6s ease;
+    -ms-transition: all .6s ease;
+    -o-transition: all .6s ease;
+    transition: all .6s ease;
+}
+
+.menu2 {
+    top: 45px;
+    left: 500px;
+    width: 250px;
+    height: 550px;
+    
+    -webkit-transition: all .6s ease;
+    -moz-transition: all .6s ease;
+    -ms-transition: all .6s ease;
+    -o-transition: all .6s ease;
+    transition: all .6s ease;
+}
+
+#playGame.active {
+    
+}
+
+#playGame a:link,
+#playGame a:visited,
+#playGame a:active {
+    padding: 10px 0;
+}
+    
+#startMenu.open {
+    left: 50px;
+}
+
+#startMenu h1 {
+    font-size: 48px;
+    text-align: center;
+    color: #1f6;
+}
+
+.icon {
+    display: inline-block;
+    background: url('../img/sprites.png') left top no-repeat;
+    width: 32px;
+    height: 40px;
+    float: left;
+    margin-right: 5px;
+}
+
+.icon-shovel {
+    background-position: 0 -128px;
+}
+
+.icon-ladder {
+    background-position: -32px -128px;
+}
+
+.icon-sword {
+    background-position: -64px -128px;
+}
+
+.icon-jump {
+    background-position: -96px -128px;
 }

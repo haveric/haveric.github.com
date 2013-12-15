@@ -38,8 +38,34 @@ var CANVAS_WIDTH = 800,
         }
     }
     
-    var init = function() {
-        console.log("init");
+    var initDemo = function() {
+        canvas = document.getElementById("gameCanvas");
+        canvas.setAttribute("width", CANVAS_WIDTH);
+        canvas.setAttribute("height", CANVAS_HEIGHT);
+        
+        context = canvas.getContext('2d');
+        
+        map = new Map(30, 30);
+        map.generate();
+        
+        player = new Player(15,15);
+        
+        for (var i = 0; i < 20; i++) {
+            enemies[enemies.length] = new Enemy("enemy", map, player);
+        }
+        
+        gameRunning = true;
+        animLoop();
+    }
+    
+    var stopDemo = function() {
+        
+    }
+    
+    var init = function(difficulty) {
+        stopDemo();
+        hideMenus();
+        
         var keyDownListener = addEventListener("keydown", function (e) {
             console.log("Keycode: " + e.keyCode);
             keysDown[e.keyCode] = true;
@@ -48,24 +74,45 @@ var CANVAS_WIDTH = 800,
         var keyUpListener = addEventListener("keyup", function (e) {
             delete keysDown[e.keyCode];
         }, false);
-        
+        /*
         canvas = document.getElementById("gameCanvas");
         canvas.setAttribute("width", CANVAS_WIDTH);
         canvas.setAttribute("height", CANVAS_HEIGHT);
         
         context = canvas.getContext('2d');
-        
-        
-        map = new Map(20, 20);
+        */
+        var numEnemies = 0;
+        var mapSize = 0;
+        if (difficulty == "easy") {
+            numEnemies = 10;
+            mapSize = 15;
+        } else if (difficulty == "normal") {
+            numEnemies = 20;
+            mapSize = 25;
+        } else if (difficulty == "hard") {
+            numEnemies = 40;
+            mapSize = 40;
+        } else if (difficulty == "impossible") {
+            numEnemies = 80;
+            mapSize = 60;
+        } else if (difficulty == "hate") {
+            numEnemies = 160;
+            mapSize = 80;
+        }
+        map = null;
+        map = new Map(mapSize, mapSize);
         map.generate();
-        player = new Player(10,10);
+        var midPoint = Math.floor(mapSize/2);
+        player = null;
+        player = new Player(midPoint,midPoint);
         
-        for (var i = 0; i < 20; i++) {
+        enemies = [];
+        for (var i = 0; i < numEnemies; i++) {
             enemies[enemies.length] = new Enemy("enemy", map, player);
         }
         
         gameRunning = true;
-        animLoop();
+        //animLoop();
     }
     
     var stop = function() {
@@ -245,5 +292,97 @@ var CANVAS_WIDTH = 800,
         numRenders++;
     }
 
-    init();
+    initDemo();
+    
+    $("#quickGameLink").on("click", function() {
+        init("normal");
+    });
+    
+    $(".easyDiff").on("click", function() {
+        init("easy");
+    });
+    
+    $(".normalDiff").on("click", function() {
+        init("normal");
+    });
+    
+    $(".hardDiff").on("click", function() {
+        init("hard");
+    });
+    
+    $(".impossibleDiff").on("click", function() {
+        init("impossible");
+    });
+    
+    $(".hateDiff").on("click", function() {
+        init("hate");
+    });
+    
+    $("#playGameLink").on("click", function() {
+        $(".menu2.active").removeClass("active").css({
+            'opacity':1
+        }).animate({
+            'opacity':0
+        },.6);
+        
+        $("#startMenu").addClass("open");
+        $("#playGame").addClass("active").css({
+            'opacity':0
+        }).animate({
+            'opacity':1
+        },.6);
+    });
+    
+    $("#instructionsLink").on("click", function() {
+        $(".menu2.active").removeClass("active").css({
+            'opacity':1
+        }).animate({
+            'opacity':0
+        },.6);
+        
+        $("#startMenu").addClass("open");
+        $("#instructions").addClass("active").css({
+            'opacity':0
+        }).animate({
+            'opacity':1
+        },.6);
+    });
+    
+    $("#controlsLink").on("click", function() {
+        $(".menu2.active").removeClass("active").css({
+            'opacity':1
+        }).animate({
+            'opacity':0
+        },.6);
+        
+        $("#startMenu").addClass("open");
+        $("#controls").addClass("active").css({
+            'opacity':0
+        }).animate({
+            'opacity':1
+        },.6);
+    });
+    
+    $("#aboutLink").on("click", function() {
+        $(".menu2.active").removeClass("active").css({
+            'opacity':1
+        }).animate({
+            'opacity':0
+        },.6);
+        
+        $("#startMenu").addClass("open");
+        $("#about").addClass("active").css({
+            'opacity':0
+        }).animate({
+            'opacity':1
+        },.6);
+    });
+    
+    function hideMenus() {
+        $(".menu.active, .menu2.active").removeClass("active").css({
+            'opacity':1
+        }).animate({
+            'opacity':0
+        },.6);
+    }
 }());
