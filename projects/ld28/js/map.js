@@ -3,6 +3,8 @@ var Map = function(rows, cols) {
     this.cols = cols;
     
     this.tiles = create2dArray(rows);
+    this.endX;
+    this.endY;
 }
 
 Map.prototype.getTiles = function() {
@@ -36,27 +38,27 @@ Map.prototype.generate = function() {
     var startY = Math.floor(this.cols / 2);
     this.tiles[startX][startY] = new Path();
     
-    var endX = 0;
-    var endY = 0;
+    this.endX = 0;
+    this.endY = 0;
     var end = Math.floor(Math.random()*4);
 
     if (end == 0) {
         var rand = Math.floor(Math.random()*(this.rows-2)) + 1;
-        endX = rand;
+        this.endX = rand;
     } else if (end == 1) {
         var rand = Math.floor(Math.random()*(this.rows-2)) + 1;
-        endX = rand;
-        endY = this.cols-1;
+        this.endX = rand;
+        this.endY = this.cols-1;
     } else if (end == 2) {
         var rand = Math.floor(Math.random()*(this.cols-2)) + 1;
-        endY = rand;
+        this.endY = rand;
     } else {
         var rand = Math.floor(Math.random()*(this.cols-2)) + 1;
-        endX = this.rows-1;
-        endY = rand;
+        this.endX = this.rows-1;
+        this.endY = rand;
     }
 
-    this.tiles[endX][endY] = new Path();
+    this.tiles[this.endX][this.endY] = new Path();
     
 }
 

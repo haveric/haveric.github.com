@@ -11,11 +11,15 @@ var CANVAS_WIDTH = 800,
     
     var map,
         player,
+        requestId;
         numRenders = 0,
+        difficulty = "demo",
         action1 = "none",
         action2 = "none",
         action3 = "none",
-        action4 = "none";
+        action4 = "none",
+        keyDownListener,
+        keyUpListener;
     
     // shim layer with setTimeout fallback
     window.requestAnimFrame = (function(){
@@ -28,17 +32,36 @@ var CANVAS_WIDTH = 800,
                 window.setTimeout(callback, 1000 / 60);
               };
     })();
+    
+    // TODO: Remove unnecessary calls here
+    window.cancelAnimFrame = (function(){
+      return  window.cancelAnimationFrame       ||
+              window.webkitCancelAnimationFrame ||
+              window.mozCancelAnimationFrame    ||
+              window.msCancelAnimationFrame     ||
+              window.oCancelAnimationFrame ||
+              window.cancelRequestAnimationFrame       ||
+              window.webkitCancelRequestAnimationFrame ||
+              window.mozCancelRequestAnimationFrame    ||
+              window.msCancelRequestAnimationFrame     ||
+              window.oCancelRequestAnimationFrame;
+    })();
         
     
     var animLoop = function(){
         if (gameRunning) {
-            requestAnimFrame(animLoop);
-            handleInput();
+            requestId = requestAnimFrame(animLoop);
+            if (difficulty != "demo") {
+                handleInput();
+            }
             render();
         }
     }
     
     var initDemo = function() {
+        console.log("Init Demo");
+        stopDemo();
+        difficulty = "demo";
         canvas = document.getElementById("gameCanvas");
         canvas.setAttribute("width", CANVAS_WIDTH);
         canvas.setAttribute("height", CANVAS_HEIGHT);
@@ -59,28 +82,25 @@ var CANVAS_WIDTH = 800,
     }
     
     var stopDemo = function() {
-        
+        gameRunning = false;
+        cancelAnimFrame(requestId);
+        requestId = undefined;
     }
     
-    var init = function(difficulty) {
+    var init = function(newDifficulty) {
+        console.log("Init");
         stopDemo();
         hideMenus();
         
-        var keyDownListener = addEventListener("keydown", function (e) {
-            console.log("Keycode: " + e.keyCode);
+        difficulty = newDifficulty;
+        keyDownListener = window.addEventListener("keydown", function (e) {
             keysDown[e.keyCode] = true;
         }, false);
 
-        var keyUpListener = addEventListener("keyup", function (e) {
+        keyUpListener = window.addEventListener("keyup", function (e) {
             delete keysDown[e.keyCode];
         }, false);
-        /*
-        canvas = document.getElementById("gameCanvas");
-        canvas.setAttribute("width", CANVAS_WIDTH);
-        canvas.setAttribute("height", CANVAS_HEIGHT);
-        
-        context = canvas.getContext('2d');
-        */
+
         var numEnemies = 0;
         var mapSize = 0;
         if (difficulty == "easy") {
@@ -99,27 +119,66 @@ var CANVAS_WIDTH = 800,
             numEnemies = 160;
             mapSize = 80;
         }
+        
+        ladders = [];
         map = null;
         map = new Map(mapSize, mapSize);
         map.generate();
         var midPoint = Math.floor(mapSize/2);
         player = null;
         player = new Player(midPoint,midPoint);
-        
+
         enemies = [];
         for (var i = 0; i < numEnemies; i++) {
             enemies[enemies.length] = new Enemy("enemy", map, player);
         }
-        
+
         gameRunning = true;
-        //animLoop();
+        if (!requestId) {
+            animLoop();
+        }
     }
     
-    var stop = function() {
+    var stop = function(win) {
         gameRunning = false;
-        removeEventListener("keydown", keyDownListener);
-        removeEventListener("keyup", keyUpListener);
+
+        window.removeEventListener("keydown", keyDownListener, false);
+        window.removeEventListener("keyup", keyUpListener, false);
+        keyDownListener = undefined;
+        keyUpListener = undefined;
+        if (win) {
+            $("#endMenu .win").show();
+            $("#endMenu .lose").hide();
+        } else {
+            $("#endMenu .win").hide();
+            $("#endMenu .lose").show();
+        }
+        $("#endMenu").addClass("active").css({
+            'opacity':0
+        }).animate({
+            'opacity':1
+        },0.6);
     }
+    
+    $("#endMenu .tryAgain").on("click", function() {
+        init(difficulty);
+    });
+    
+    $("#endMenu .gotoMenu").on("click", function() {
+        $("#endMenu").removeClass("active").css({
+            'opacity':1
+        }).animate({
+            'opacity':0
+        },0.6);
+        
+        $("#startMenu").removeClass("open").addClass("active").css({
+            'opacity':0
+        }).animate({
+            'opacity':1
+        },0.6);
+        
+        initDemo();
+    });
     
     var handleInput = function() {
         if (38 in keysDown) { // Player holding up
@@ -179,9 +238,13 @@ var CANVAS_WIDTH = 800,
         for (var i = 0; i < enemyLength; i++) {
             var enemy = enemies[i];
             enemy.draw(context, player.getX(), player.getY());
-            if (enemy.x == player.getX() && enemy.y == player.getY()) {
-                stop();
+            if (difficulty != "demo" && enemy.x == player.getX() && enemy.y == player.getY()) {
+                stop(false);
             }
+        }
+        
+        if (difficulty != "demo" && map.endX == player.getX() && map.endY == player.getY()) {
+            stop(true);
         }
         
         var numItems = 0;

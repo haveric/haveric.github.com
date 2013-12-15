@@ -95,6 +95,10 @@ a:hover {
     transition: all .6s ease;
 }
 
+#endMenu .lose {
+    color: #f33;
+}
+
 .menu2 {
     top: 45px;
     left: 500px;
@@ -106,10 +110,6 @@ a:hover {
     -ms-transition: all .6s ease;
     -o-transition: all .6s ease;
     transition: all .6s ease;
-}
-
-#playGame.active {
-    
 }
 
 #playGame a:link,
