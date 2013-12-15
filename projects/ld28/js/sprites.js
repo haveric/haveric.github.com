@@ -81,7 +81,15 @@ spriteMapper.addImage('pathsb', 'sprites', 64, 32, 32, 32);
 spriteMapper.addImage('pathsbl2', 'sprites', 96, 32, 32, 32);
 spriteMapper.addImage('pathsl2', 'sprites', 128, 32, 32, 32);
 spriteMapper.addImage('pathsb2', 'sprites', 160, 32, 32, 32);
-spriteMapper.addImage('player', 'sprites', 64, 0, 32, 32);
+spriteMapper.addImage('player-up', 'sprites', 0, 96, 32, 32);
+spriteMapper.addImage('player-up-sword', 'sprites', 32, 96, 32, 32);
+spriteMapper.addImage('player-left', 'sprites', 64, 96, 32, 32);
+spriteMapper.addImage('player-left-sword', 'sprites', 96, 96, 32, 32);
+spriteMapper.addImage('player-down', 'sprites', 224, 96, 32, 32);
+spriteMapper.addImage('player-down-sword', 'sprites', 192, 96, 32, 32);
+spriteMapper.addImage('player-right', 'sprites', 160, 96, 32, 32);
+spriteMapper.addImage('player-right-sword', 'sprites', 128, 96, 32, 32);
+
 
 spriteMapper.addImage('enemy', 'sprites', 96, 0, 32, 32);
 
@@ -89,3 +97,8 @@ spriteMapper.addImage('icon-shovel', 'sprites', 0, 128, 32, 40);
 spriteMapper.addImage('icon-ladder', 'sprites', 32, 128, 32, 40);
 spriteMapper.addImage('icon-sword', 'sprites', 64, 128, 32, 40);
 spriteMapper.addImage('icon-jump', 'sprites', 96, 128, 32, 40);
+
+spriteMapper.addImage('ladder-up', 'sprites', 0, 64, 32, 32);
+spriteMapper.addImage('ladder-right', 'sprites', 32, 64, 32, 32);
+spriteMapper.addImage('ladder-down', 'sprites', 64, 64, 32, 32);
+spriteMapper.addImage('ladder-left', 'sprites', 96, 64, 32, 32);
