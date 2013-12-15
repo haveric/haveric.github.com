@@ -174,13 +174,45 @@ Player.prototype.useSword = function(map) {
 
 Player.prototype.useJump = function(map) {
     if (this.jump) {
-        this.jump = false;
+        
+        if (this.height == 1) {
+            var tile = null;
+            var tile2 = null;
+            var tempX = this.x;
+            var tempY = this.y;
+            if (this.direction == "up") {
+                tempY = this.y - 2;
+                tile = map.getTile(tempX, tempY);
+                tile2 = map.getTile(tempX, tempY+1);
+            } else if (this.direction == "down") {
+                tempY = this.y + 2;
+                tile = map.getTile(tempX, tempY);
+                tile2 = map.getTile(tempX, tempY-1);
+            } else if (this.direction == "left") {
+                tempX = this.x - 2;
+                tile = map.getTile(tempX, tempY);
+                tile2 = map.getTile(tempX+1, tempY);
+            } else if (this.direction == "right") {
+                tempX = this.x + 2;
+                tile = map.getTile(tempX, tempY);
+                tile2 = map.getTile(tempX-1, tempY);
+            }
+            
+            if (tile.name == "grass" && tile2.name == "path") {
+                this.x = tempX;
+                this.y = tempY;
+                this.jump = false;
+                this.activeItem = "none";
+            }
+        }
+        
     }
 }
 
 Player.prototype.useShovel = function(map) {
     if (this.shovel) {
         var tile = null;
+
         var tempX = this.x;
         var tempY = this.y;
         if (this.direction == "up") {
