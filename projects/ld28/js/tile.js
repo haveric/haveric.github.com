@@ -26,6 +26,10 @@ Tile.prototype.draw = function(context, x, y, map, i, j) {
                 } else if (topRight.name == "grass") {
                     sprite = this.spriteShadowBL;
                 }
+            } else if (j == 0 && right != null) {
+                if (right.name == "grass") {
+                    sprite = this.spriteShadowL2;
+                }
             }
             
             spriteMapper.getImage(sprite).drawImage(context, x*32, y*32);
