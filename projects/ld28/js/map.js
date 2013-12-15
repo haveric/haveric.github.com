@@ -26,7 +26,7 @@ Map.prototype.generate = function() {
                     this.tiles[i][j] = new Path();
                 }
             } else {
-                this.tiles[i][j] = new Path();
+                this.tiles[i][j] = new Wall();
             }
         }
     }

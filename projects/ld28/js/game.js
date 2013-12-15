@@ -10,7 +10,9 @@ var CANVAS_WIDTH = 800,
         context;
     
     var map,
-        player;
+        player,
+        numRenders = 0,
+        enemies = [];
     
     // shim layer with setTimeout fallback
     window.requestAnimFrame = (function(){
@@ -50,9 +52,13 @@ var CANVAS_WIDTH = 800,
         context = canvas.getContext('2d');
         
         
-        map = new Map(50, 50);
+        map = new Map(20, 20);
         map.generate();
-        player = new Player(25,25);
+        player = new Player(10,10);
+        
+        for (var i = 0; i < 20; i++) {
+            enemies[enemies.length] = new Enemy("enemy", map, player);
+        }
         
         gameRunning = true;
         animLoop();
@@ -87,6 +93,52 @@ var CANVAS_WIDTH = 800,
 
         map.draw(context, player.getX(), player.getY());
         player.draw(context);
+        
+        var enemyLength = enemies.length;
+        
+        if (numRenders == 30) {
+            numRenders = 0;
+            
+            for (var i = 0; i < enemyLength; i++) {
+                enemies[i].moveRandomly(map);
+            }
+        }
+        for (var i = 0; i < enemyLength; i++) {
+            enemies[i].draw(context, player.getX(), player.getY());
+        }
+
+        var items = 0;
+        context.fillStyle = 'rgba(0,0,0,.5)';
+        if (player.shovel) {
+            context.beginPath();
+            context.arc(760,600, 25, 0, 2 * Math.PI, false);
+            context.fill();
+            spriteMapper.getImage("icon-shovel").drawImage(context, 745,582);
+            items ++;
+        }
+        if (player.ladder) {
+            context.beginPath();
+            context.arc(760-60*items,600, 25, 0, 2 * Math.PI, false);
+            context.fill();
+            spriteMapper.getImage("icon-ladder").drawImage(context, 745-60*items,582);
+            items ++;
+        }
+        if (player.sword) {
+            context.beginPath();
+            context.arc(760-60*items,600, 25, 0, 2 * Math.PI, false);
+            context.fill();
+            spriteMapper.getImage("icon-sword").drawImage(context, 745-60*items,582);
+            items ++;
+        }
+        if (player.jump) {
+            context.beginPath();
+            context.arc(760-60*items,600, 25, 0, 2 * Math.PI, false);
+            context.fill();
+            spriteMapper.getImage("icon-jump").drawImage(context, 745-60*items,582);
+        }
+        
+        
+        numRenders++;
     }
 
     init();
