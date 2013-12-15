@@ -136,13 +136,39 @@ Player.prototype.useLadder = function(map) {
             ladders[ladders.length] = new Ladder(this.x, this.y, this.direction);
             
             this.ladder = false;
+            this.activeItem = "none";
         }
     }
 }
 
 Player.prototype.useSword = function(map) {
     if (this.sword) {
-        this.sword = false;
+        var tempX = this.x;
+        var tempY = this.y;
+        
+        if (this.direction == "up") {
+            tempY = this.y - 1;
+        } else if (this.direction == "down") {
+            tempY = this.y + 1;
+        } else if (this.direction == "left") {
+            tempX = this.x - 1;
+        } else if (this.direction == "right") {
+            tempX = this.x + 1;
+        }
+        var enemyLength = enemies.length;
+        var enemyToKill = -1;
+        for (var i = 0; i < enemyLength; i++) {
+            var enemy = enemies[i];
+            if (enemy.x == tempX && enemy.y == tempY) {
+                enemyToKill = i;
+                break;
+            }
+        }
+        if (enemyToKill != -1) {
+            killEnemy(enemyToKill);
+            this.sword = false;
+            this.activeItem = "none";
+        }
     }
 }
 
@@ -173,6 +199,7 @@ Player.prototype.useShovel = function(map) {
         
         if (tile.name == "grass") {
             this.shovel = false;
+            this.activeItem = "none";
             
             map.tiles[tempX][tempY] = new Path();
             

@@ -1,3 +1,5 @@
+var enemies = [];
+
 var Enemy = function(name, map, player) {
     this.name = name;
     var randX = -1; 
@@ -88,4 +90,10 @@ Enemy.prototype.moveRight = function(map) {
 
 function getRandBetween(from, to) {
     return Math.floor(Math.random()*(to-from+1) + from);
+}
+
+function killEnemy(index) {
+    if (index > 0 && index < enemies.length) {
+        enemies.splice(index, 1);
+    }
 }
