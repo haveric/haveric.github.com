@@ -78,7 +78,9 @@ var CANVAS_WIDTH = 800,
         }
         
         gameRunning = true;
-        animLoop();
+        if (!requestId) {
+            animLoop();
+        }
     }
     
     var stopDemo = function() {
@@ -92,11 +94,11 @@ var CANVAS_WIDTH = 800,
         hideMenus();
         
         difficulty = newDifficulty;
-        keyDownListener = window.addEventListener("keydown", function (e) {
+        keyDownListener = addEventListener("keydown", function (e) {
             keysDown[e.keyCode] = true;
         }, false);
 
-        keyUpListener = window.addEventListener("keyup", function (e) {
+        keyUpListener = addEventListener("keyup", function (e) {
             delete keysDown[e.keyCode];
         }, false);
 
@@ -139,8 +141,9 @@ var CANVAS_WIDTH = 800,
     }
     
     var stop = function(type) {
-        window.removeEventListener("keydown", keyDownListener, false);
-        window.removeEventListener("keyup", keyUpListener, false);
+        gameRunning = false;
+        removeEventListener("keydown", keyDownListener, false);
+        removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
         keyUpListener = undefined;
         if (type == "win") {
