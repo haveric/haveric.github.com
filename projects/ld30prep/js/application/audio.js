@@ -1,11 +1,9 @@
 var SoundMapper = function() {
     sounds = [];
-    isPlaying = [];
 }
 
 SoundMapper.prototype.add = function(name, src) {
-    var audio = new Audio(src);
-    var sound = new Sound(name, audio);
+    var sound = new Sound(name, src);
     sounds.push(sound);
 }
 
@@ -14,17 +12,22 @@ SoundMapper.prototype.play = function(audioName) {
     for (var i = 0; i < length; i++) {
         var sound = sounds[i];
         if (sound.name === audioName) {
-            var audio = sound.audio;
-            audio.currentTime = 0; // Reset the audio
+            var audio = new Audio(sound.src);
             audio.play();
+            
+            // Prevent memory leaks for audio
+            audio.addEventListener("ended", function() {
+                audio.src = null;
+                audio.load();
+            });
             break;
         }
     }
 }
 
-var Sound = function (name, audio) {
+var Sound = function (name, src) {
     this.name = name;
-    this.audio = audio;
+    this.src = src;
 }
 
 var soundMapper = new SoundMapper();
