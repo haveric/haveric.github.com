@@ -1,17 +1,22 @@
 var SoundMapper = function() {
     sounds = [];
+    isPlaying = [];
 }
 
 SoundMapper.prototype.add = function(name, src) {
-    var sound = new Sound(name, new Audio(src));
+    var audio = new Audio(src);
+    var sound = new Sound(name, audio);
     sounds.push(sound);
 }
 
 SoundMapper.prototype.play = function(audioName) {
     var length = sounds.length;
     for (var i = 0; i < length; i++) {
-        if (sounds[i].name === audioName) {
-            sounds[i].audio.play();
+        var sound = sounds[i];
+        if (sound.name === audioName) {
+            var audio = sound.audio;
+            audio.currentTime = 0; // Reset the audio
+            audio.play();
             break;
         }
     }
