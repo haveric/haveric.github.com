@@ -66,7 +66,7 @@ Player.prototype.getY = function() {
     return this.y;
 }
 
-Player.prototype.draw = function(context) {
+Player.prototype.draw = function(context, frame) {
     var sprite = "player-" + this.direction;
 
     spriteMapper.getImage(sprite).drawImage(context, 384, 320);

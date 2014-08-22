@@ -27,7 +27,7 @@ Map.prototype.generate = function() {
     var startY = Math.floor(this.cols / 2);
 }
 
-Map.prototype.draw = function(context, x, y) {
+Map.prototype.draw = function(context, frame, x, y) {
     var left = x - 12;
     var right = x + 13;
     var top = y - 10;
@@ -39,7 +39,7 @@ Map.prototype.draw = function(context, x, y) {
                 // draw nothing
             } else {
                 var tile = this.tiles[i][j];
-                tile.draw(context, i-left, j-top, this, i, j);
+                tile.draw(context, frame, i-left, j-top, this, i, j);
             }
         }
     }

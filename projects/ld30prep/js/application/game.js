@@ -118,13 +118,16 @@ var CANVAS_WIDTH = 800,
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
 
-        map.draw(context, player.getX(), player.getY());
+        map.draw(context, numRenders, player.getX(), player.getY());
         
-        player.draw(context);
+        player.draw(context, numRenders);
         
 
         
         numRenders++;
+        if (numRenders == 60) {
+            numRenders = 0;
+        }
     }
     
     init();
