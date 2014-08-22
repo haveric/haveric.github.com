@@ -77,6 +77,7 @@ var CANVAS_WIDTH = 800,
 
         player = new Player(midPoint,midPoint);
 
+        soundMapper.play('music');
         gameRunning = true;
         if (!requestId) {
             animLoop();

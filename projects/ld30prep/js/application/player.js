@@ -13,6 +13,8 @@ Player.prototype.moveUp = function(map) {
         } else if (tile.canWalk){
             this.y--;
         }
+    } else {
+        soundMapper.play('blip');
     }
 }
 Player.prototype.moveDown = function(map) {
@@ -24,6 +26,8 @@ Player.prototype.moveDown = function(map) {
         } else if (tile.canWalk){
             this.y++;
         }
+    } else {
+        soundMapper.play('blip');
     }
 }
 Player.prototype.moveLeft = function(map) {
@@ -35,6 +39,8 @@ Player.prototype.moveLeft = function(map) {
         } else if (tile.canWalk){
             this.x--;
         }
+    } else {
+        soundMapper.play('blip');
     }
 }
 
@@ -47,6 +53,8 @@ Player.prototype.moveRight = function(map) {
         } else if (tile.canWalk){
             this.x++;
         }
+    } else {
+        soundMapper.play('blip');
     }
 }
 
