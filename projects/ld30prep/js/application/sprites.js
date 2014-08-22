@@ -52,8 +52,8 @@ var Sprite = function (imageName, textureName, x, y, w, h) {
     this.texture = textureMapper.getTexture(textureName);
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
+    this.w = w || 32;
+    this.h = h || 32;
 }
 
 Sprite.prototype.drawImage = function (context, i, j) {
@@ -70,8 +70,8 @@ textureMapper.addTexture('sprites', 'img/placeholder.gif');
 textureMapper.addTexture('player', 'img/player.gif');
 
 var spriteMapper = new SpriteMapper();
-spriteMapper.addImage('path', 'sprites', 0, 0, 32, 32);
-spriteMapper.addImage('player-up', 'player', 0, 0, 32, 32);
-spriteMapper.addImage('player-down', 'player', 0, 0, 32, 32);
-spriteMapper.addImage('player-left', 'player', 0, 0, 32, 32);
-spriteMapper.addImage('player-right', 'player', 0, 0, 32, 32);
+spriteMapper.addImage('path', 'sprites', 0, 0);
+spriteMapper.addImage('player-up', 'player', 0, 0);
+spriteMapper.addImage('player-down', 'player', 0, 0);
+spriteMapper.addImage('player-left', 'player', 0, 0);
+spriteMapper.addImage('player-right', 'player', 0, 0);
