@@ -1,18 +1,21 @@
-var SoundMapper = function() {
-    sounds = [];
+var SoundManager = function() {
+    this.sounds = [];
+    this.volume = 1;
 }
 
-SoundMapper.prototype.add = function(name, src) {
+SoundManager.prototype.add = function(name, src) {
     var sound = new Sound(name, src);
-    sounds.push(sound);
+    this.sounds.push(sound);
 }
 
-SoundMapper.prototype.play = function(audioName) {
-    var length = sounds.length;
+SoundManager.prototype.play = function(audioName) {
+    var self = this;
+    var length = self.sounds.length;
     for (var i = 0; i < length; i++) {
-        var sound = sounds[i];
+        var sound = self.sounds[i];
         if (sound.name === audioName) {
             var audio = new Audio(sound.src);
+            audio.volume = self.volume;
             audio.play();
             
             // Prevent memory leaks for audio
@@ -20,9 +23,21 @@ SoundMapper.prototype.play = function(audioName) {
                 audio.src = null;
                 audio.load();
             });
-            break;
+            return;
         }
     }
+    
+    console.error("Audio not found: " + audioName);
+}
+
+SoundManager.prototype.setVolume = function(newVolume) {
+    if (newVolume >= 0 && newVolume <= 1) {
+        this.volume = newVolume;
+    }
+}
+
+SoundManager.prototype.getVolume = function() {
+    return volume;
 }
 
 var Sound = function (name, src) {
@@ -30,6 +45,6 @@ var Sound = function (name, src) {
     this.src = src;
 }
 
-var soundMapper = new SoundMapper();
+var soundManager = new SoundManager();
 
-soundMapper.add('blip', 'assets/placeholderBlip.wav');
+soundManager.add('blip', 'assets/placeholderBlip.wav');
