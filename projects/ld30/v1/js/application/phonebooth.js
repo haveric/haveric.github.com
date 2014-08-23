@@ -1,6 +1,8 @@
 var PhoneBooth = function(x, y) {
     this.x = x;
     this.y = y;
+    this.width = 32;
+    this.height = 64;
     
     this.sprite = "phonebooth";
     this.opening = 0;

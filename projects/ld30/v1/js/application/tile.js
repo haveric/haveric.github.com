@@ -5,8 +5,38 @@ var Tile = function(name, sprite) {
     this.isSolid = false;
 }
 
-Tile.prototype.draw = function(context, frame, x, y, i, j) {
-    spriteMapper.getImage(this.sprite).drawImage(context, x*32 - i, y*32 - j);
+Tile.prototype.draw = function(context, frame, ax, ay, x, y, i, j) {
+    var newSprite = this.sprite;
+    if (this instanceof Solid) {
+        var topTile = map.getTile(ax,ay-1);
+        
+        var leftTile = map.getTile(ax-1, ay);
+        var rightTile = map.getTile(ax+1, ay);
+        if (topTile instanceof Empty) {
+            if (leftTile instanceof Empty && rightTile instanceof Empty) {
+                newSprite += "-tm";
+            } else if (leftTile instanceof Empty) {
+                newSprite += "-tl";
+            } else if (rightTile instanceof Empty) {
+                newSprite += "-tr";
+            } else {
+                newSprite += "-top";
+            }
+        }
+        /*
+        if (y > 1 && y < map.cols -2) {
+            var tileTop = map.getTile[x,y-1];
+            if (tileTop != null) {
+                console.log("TileTop: " + tileTop);
+                if (!tileTop.isSolid) {
+                    newSprite += "-top";
+                }
+            }
+        }
+        */
+    }
+    
+    spriteMapper.getImage(newSprite).drawImage(context, x*32 - i, y*32 - j);
 }
 
 Tile.prototype.getCanWalk = function() {

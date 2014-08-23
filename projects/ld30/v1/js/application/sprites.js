@@ -66,9 +66,8 @@ Sprite.prototype.drawImage = function (context, i, j) {
 
 
 var textureMapper = new TextureMapper();
-textureMapper.addTexture('sprites', 'img/placeholder.gif');
 textureMapper.addTexture('player', 'img/player.png');
-textureMapper.addTexture('solid', 'img/solid.gif');
+textureMapper.addTexture('solid', 'img/sprites.png');
 textureMapper.addTexture('phonebooth', 'img/phonebooth.png');
 
 var spriteMapper = new SpriteMapper();
@@ -104,7 +103,11 @@ spriteMapper.addImage('player-right-attack5', 'player', 160, 96, 32, 16);
 spriteMapper.addImage('player-right-attack6', 'player', 192, 96, 32, 16);
 spriteMapper.addImage('player-right-attack7', 'player', 224, 96, 32, 16);
 
-spriteMapper.addImage('solid', 'solid', 0, 0);
+spriteMapper.addImage('solid', 'solid', 32, 32);
+spriteMapper.addImage('solid-top', 'solid', 64, 32);
+spriteMapper.addImage('solid-tr', 'solid', 96, 32);
+spriteMapper.addImage('solid-tl', 'solid', 128, 32);
+spriteMapper.addImage('solid-tm', 'solid', 160, 32);
 
 spriteMapper.addImage('phonebooth', 'phonebooth', 0, 0, 32, 64);
 spriteMapper.addImage('phonebooth-open0', 'phonebooth', 0, 0, 32, 64);

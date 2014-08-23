@@ -16,6 +16,9 @@ var Player = function(x, y) {
     this.walk = 0;
     this.attack = 0;
     this.isAttacking = false;
+    
+    this.width = 32;
+    this.height = 32;
 }
 
 Player.prototype.moveLeft = function() {
@@ -99,6 +102,8 @@ Player.prototype.moveRight = function() {
 Player.prototype.doAttack = function() {
     if (this.isAttacking == false) {
         this.isAttacking = true;
+        
+        soundManager.play('attack');
         
         /*
         if (phoneBooth.fading == 8) {
@@ -250,7 +255,6 @@ Player.prototype.draw = function(frame) {
     if (this.xVelocity === 0) {
         this.walk = 0;
     }
-    console.log(attackSprite + ", " + walkSprite);
     spriteMapper.getImage(attackSprite).drawImage(context, 384, 480);
     spriteMapper.getImage(walkSprite).drawImage(context, 384, 496);
 }

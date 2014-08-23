@@ -51,7 +51,8 @@ Map.prototype.draw = function(frame, playerX, playerY) {
                 // draw nothing
             } else {
                 var tile = this.tiles[i][j];
-                tile.draw(context, frame, i-left, j-top, offsetX, offsetY);
+                
+                tile.draw(context, frame, i, j, i-left, j-top, offsetX, offsetY);
             }
         }
     }
