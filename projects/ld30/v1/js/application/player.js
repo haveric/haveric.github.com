@@ -2,59 +2,79 @@ var Player = function(x, y) {
     this.x = x;
     this.y = y;
     this.direction = "up";
+    this.speed = 8;
+    this.fallSpeed = 7;
+    this.jumpTimer = 0;
+    this.jumpSpeed = 12;
 }
 
-Player.prototype.moveUp = function(map) {
-    this.direction = "up";
-    if (this.y > 0) {
-        var tile = map.getTile(this.x, this.y-1);
-        if (tile == null) {
-            
-        } else if (tile.canWalk){
-            this.y--;
-        }
-    } else {
-        soundManager.play('blip');
-    }
-}
-Player.prototype.moveDown = function(map) {
-    this.direction = "down";
-    if (this.y < map.cols-1) {
-        var tile = map.getTile(this.x, this.y+1);
-        if (tile == null) {
-            
-        } else if (tile.canWalk){
-            this.y++;
-        }
-    } else {
-        soundManager.play('blip');
-    }
-}
 Player.prototype.moveLeft = function(map) {
     this.direction = "left";
-    if (this.x >= 1) {
-        var tile = map.getTile(this.x-1, this.y);
-        if (tile == null) {
-            
-        } else if (tile.canWalk){
-            this.x--;
+    
+    var leftX = Math.floor((this.x - this.speed) / 32);
+    var topTile = Math.floor(this.y / 32);
+    var bottomTile = Math.ceil(this.y / 32);
+    
+    var canMove = true;
+    if (topTile == bottomTile) {
+        var tile = map.getTile(leftX, topTile);
+        
+        if (tile.isSolid) {
+            canMove = false;
         }
     } else {
-        soundManager.play('blip');
+        var top = map.getTile(leftX, topTile);
+        var bot = map.getTile(leftX, bottomTile);
+        
+        if (top.isSolid || bot.isSolid) {
+            canMove = false;
+        }
+    }
+    
+    if (canMove) {
+        this.x -= this.speed;
+    } else {
+        var left = ((leftX+1) * 32) - this.x;
+        this.x += left;
     }
 }
 
 Player.prototype.moveRight = function(map) {
     this.direction = "right";
-    if (this.x < map.rows-1) {
-        var tile = map.getTile(this.x+1, this.y);
-        if (tile == null) {
+    if (this.x < (map.rows-1) * 32) {
+        
+        var rightX = Math.ceil((this.x + this.speed) / 32);
+        var topTile = Math.floor(this.y / 32);
+        var bottomTile = Math.ceil(this.y / 32);
+        
+        var canMove = true;
+        if (topTile == bottomTile) {
+            var tile = map.getTile(rightX, topTile);
             
-        } else if (tile.canWalk){
-            this.x++;
+            if (tile.isSolid) {
+                canMove = false;
+            }
+        } else {
+            var top = map.getTile(rightX, topTile);
+            var bot = map.getTile(rightX, bottomTile);
+            
+            if (top.isSolid || bot.isSolid) {
+                canMove = false;
+            }
         }
-    } else {
-        soundManager.play('blip');
+        
+        if (canMove) {
+            this.x += this.speed;
+        } else {
+            var right = ((rightX-1) * 32) - this.x;
+            this.x += right;
+        }
+    }
+}
+
+Player.prototype.jump = function() {
+    if (this.jumpTimer == 0) {
+        this.jumpTimer = 1;
     }
 }
 
@@ -66,8 +86,90 @@ Player.prototype.getY = function() {
     return this.y;
 }
 
-Player.prototype.draw = function(context, frame) {
+Player.prototype.draw = function(context, frame, map) {
     var sprite = "player-" + this.direction;
+    
+    var originalY = this.y;
+    if (this.jumpTimer <= 1) { 
+        var fallTileY = Math.ceil((this.y + this.fallSpeed) / 32);
+        
+        var leftTile = Math.floor(this.x / 32);
+        var rightTile = Math.ceil(this.x / 32);
+        
+        var fall = true;
+        if (leftTile == rightTile) {
+            var tile = map.getTile(leftTile, fallTileY);
+            
+            if (tile.isSolid) {
+                fall = false;
+            }
+        } else {
+            var left = map.getTile(leftTile, fallTileY);
+            var right = map.getTile(rightTile, fallTileY);
+            
+            if (left.isSolid || right.isSolid) {
+                fall = false;
+            }
+        }
+        
+        if (fallTileY >= map.cols) {
+            fall = false;
+        }
+        
+        if (fall) {
+            this.y += this.fallSpeed;
+        } else {
+            var left = (fallTileY -1) * 32 - this.y;
+            this.y += left;
+        }
+    }
+    var newY = this.y;
+    
+    if (this.jumpTimer == 1) {
+        // Handle jumping
+        if (originalY != newY) {
+            this.jumpTimer = 0;
+        }
+    }
+    
+    if (this.jumpTimer > 0) {
+        if (this.jumpTimer > 10) {
+            this.jumpTimer = 0;
+        } else {
+            this.jumpTimer ++;
+            
+            var jumpTileY = Math.floor((this.y - this.fallSpeed) / 32);
+            
+            var leftTile = Math.floor(this.x / 32);
+            var rightTile = Math.ceil(this.x / 32);
+            
+            var canJump = true;
+            if (leftTile == rightTile) {
+                var tile = map.getTile(leftTile, jumpTileY);
+                
+                if (tile.isSolid) {
+                    canJump = false;
+                }
+            } else {
+                var left = map.getTile(leftTile, jumpTileY);
+                var right = map.getTile(rightTile, jumpTileY);
+                
+                if (left.isSolid || right.isSolid) {
+                    canJump = false;
+                }
+            }
+            
+            if (canJump) {
+                this.y -= this.jumpSpeed;
+            } else {
+                var left = (jumpTileY+1) * 32 - this.y;
+                //if (left < 0) {
+                    this.y += left;
+                //}
+            }
+            
+        }
+    }
 
     spriteMapper.getImage(sprite).drawImage(context, 384, 320);
 }

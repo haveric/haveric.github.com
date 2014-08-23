@@ -68,6 +68,7 @@ Sprite.prototype.drawImage = function (context, i, j) {
 var textureMapper = new TextureMapper();
 textureMapper.addTexture('sprites', 'img/placeholder.gif');
 textureMapper.addTexture('player', 'img/player.gif');
+textureMapper.addTexture('solid', 'img/solid.gif');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('path', 'sprites', 0, 0);
@@ -75,3 +76,4 @@ spriteMapper.addImage('player-up', 'player', 0, 0);
 spriteMapper.addImage('player-down', 'player', 0, 0);
 spriteMapper.addImage('player-left', 'player', 0, 0);
 spriteMapper.addImage('player-right', 'player', 0, 0);
+spriteMapper.addImage('solid', 'solid', 0, 0);

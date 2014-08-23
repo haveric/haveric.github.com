@@ -75,7 +75,7 @@ var CANVAS_WIDTH = 800,
         map.generate();
         var midPoint = Math.floor(mapSize/2);
 
-        player = new Player(midPoint,midPoint);
+        player = new Player(midPoint*32, midPoint*32);
 
         gameRunning = true;
         if (!requestId) {
@@ -96,7 +96,7 @@ var CANVAS_WIDTH = 800,
     
     var handleInput = function() {
         if (38 in keysDown) { // Player holding up
-            player.moveUp(map);
+            player.jump();
         }
         if (40 in keysDown) { // Player holding down
             player.moveDown(map);
@@ -111,7 +111,7 @@ var CANVAS_WIDTH = 800,
             stop("menu");
         }
         
-        keysDown = [];
+        //keysDown = [];
     }
     
     var render = function(){
@@ -120,7 +120,7 @@ var CANVAS_WIDTH = 800,
 
         map.draw(context, numRenders, player.getX(), player.getY());
         
-        player.draw(context, numRenders);
+        player.draw(context, numRenders, map);
         
 
         
