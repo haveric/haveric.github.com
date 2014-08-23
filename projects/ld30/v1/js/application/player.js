@@ -1,7 +1,7 @@
 var Player = function(x, y) {
     this.x = x;
     this.y = y;
-    this.direction = "up";
+    this.direction = "left";
     this.speed = .8;
     this.maxSpeed = 8;
     this.fallSpeed = 7;
@@ -12,6 +12,8 @@ var Player = function(x, y) {
     this.jumpVelocity = 2;
     this.maxJumpSpeed = 7;
     this.yVelocity = 0;
+    
+    this.walk = 0;
 }
 
 Player.prototype.moveLeft = function() {
@@ -108,7 +110,7 @@ Player.prototype.getY = function() {
 
 Player.prototype.draw = function(context, frame) {
     var sprite = "player-" + this.direction;
-    
+    var frameAnim = 5;
     var originalY = this.y;
     if (this.jumpTimer <= 1) {
         if (this.jumpTimer == -1) {
@@ -200,9 +202,18 @@ Player.prototype.draw = function(context, frame) {
                 this.jumpTimer = -1;
                 this.yVelocity = 0;
             }
-            
         }
     }
-
+    
+    if (this.jumpTimer === 0 && this.xVelocity != 0) {
+        sprite += "-walk" + this.walk;
+        if (this.walk === 3) {
+            this.walk = 0;
+        }
+        if (frame % frameAnim == 0) {
+            this.walk ++;
+        }
+    }
+    console.log("Sprite: " + sprite);
     spriteMapper.getImage(sprite).drawImage(context, 384, 480);
 }
