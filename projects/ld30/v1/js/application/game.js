@@ -3,7 +3,9 @@ var CANVAS_WIDTH = 800,
 
 var map;
 var canvas,
-    context;
+    context,
+    phoneBooth,
+    sky;
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -15,9 +17,6 @@ var canvas,
         numRenders = 0,
         keyDownListener,
         keyUpListener;
-        
-    var phoneBooth;
-    var sky;
     
     // shim layer with setTimeout fallback
     window.requestAnimFrame = (function(){

@@ -105,6 +105,23 @@ Player.prototype.doAttack = function() {
         
         soundManager.play('attack');
         
+        var diffRight = phoneBooth.x * 32 - this.x;
+        if (diffRight <= 100 && diffRight >= 0 && this.direction == "right") {
+            if (phoneBooth.opening == 0) {
+                phoneBooth.open();
+            } else {
+                phoneBooth.close();
+            }
+        }
+        
+        var diffLeft = this.x - phoneBooth.x * 32;
+        if (diffLeft <= 100 && diffLeft >= 0 && this.direction == "left") {
+            if (phoneBooth.opening == 0) {
+                phoneBooth.open();
+            } else {
+                phoneBooth.close();
+            }
+        }
         /*
         if (phoneBooth.fading == 8) {
             phoneBooth.fadeIn();
