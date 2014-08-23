@@ -14,6 +14,11 @@ Map.prototype.getTiles = function() {
 Map.prototype.getTile = function(x,y) {
     return this.tiles[x][y];
 }
+
+Map.prototype.setTile = function(x,y,tile) {
+    this.tiles[x][y] = tile;
+}
+
 Map.prototype.generate = function() {
     var unvisited = [];
     

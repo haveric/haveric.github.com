@@ -87,12 +87,21 @@ var canvas,
         var midPointY = Math.floor(mapY/2);
 
         player = new Player(midPointX*32, midPointY*32);
+        map.setTile(midPointX, midPointY, new Empty());
+        map.setTile(midPointX-1, midPointY, new Empty());
+        map.setTile(midPointX+1, midPointY, new Empty());
+        map.setTile(midPointX, midPointY-1, new Empty());
+        map.setTile(midPointX, midPointY+1, new Solid());
         
         sky = new Sky();
         
         var pbX = Math.floor(Math.random() * (mapX - 33)) + 16;
         var pbY = mapY - 18;
         phoneBooth = new PhoneBooth(pbX,pbY);
+        
+        map.setTile(pbX, pbY, new Empty());
+        map.setTile(pbX, pbY+1, new Empty());
+        
 
         gameRunning = true;
         if (!requestId) {
