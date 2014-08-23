@@ -45,4 +45,4 @@ var soundManager = new SoundManager();
 
 soundManager.add('jump', 'assets/jump.wav');
 soundManager.add('land', 'assets/land.wav');
-soundManager.add('attack', 'assets/attack.wav', .15);
+soundManager.add('attack', 'assets/attack.wav');
