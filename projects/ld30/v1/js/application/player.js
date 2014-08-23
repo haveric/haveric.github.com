@@ -9,7 +9,7 @@ var Player = function(x, y) {
     this.jumpSpeed = 12;
     this.xVelocity = 0;
     
-    this.jumpVelocity = .8;
+    this.jumpVelocity = 1.5;
     this.maxJumpSpeed = 12;
     this.yVelocity = 0;
 }
@@ -104,7 +104,7 @@ Player.prototype.draw = function(context, frame, map) {
     var sprite = "player-" + this.direction;
     
     var originalY = this.y;
-    if (this.jumpTimer <= 1) { 
+    if (this.jumpTimer <= 1) {
         var fallTileY = Math.ceil((this.y + this.fallSpeed) / 32);
         
         var leftTile = Math.floor(this.x / 32);
@@ -137,6 +137,7 @@ Player.prototype.draw = function(context, frame, map) {
             this.y += left;
         }
     }
+    
     var newY = this.y;
     
     if (this.jumpTimer == 1) {
@@ -148,13 +149,19 @@ Player.prototype.draw = function(context, frame, map) {
         this.jumpTimer ++;
     }
     if (this.jumpTimer > 0) {
-        if (this.jumpTimer > 10) {
+        if (this.jumpTimer > 15) {
             this.jumpTimer = 0;
+            this.yVelocity = 0;
         } else {
             this.jumpTimer ++;
             
-            var jumpTileY = Math.floor((this.y - this.fallSpeed) / 32);
+            this.yVelocity += -this.jumpVelocity;
+            if (this.yVelocity < -this.maxJumpSpeed) {
+                this.yVelocity = -this.maxJumpSpeed;
+            }
             
+            var jumpTileY = Math.floor((this.y + this.yVelocity) / 32);
+            //console.log("YVel: " + this.yVelocity +", ytile: " + jumpTileY);
             var leftTile = Math.floor(this.x / 32);
             var rightTile = Math.ceil(this.x / 32);
             
@@ -173,14 +180,12 @@ Player.prototype.draw = function(context, frame, map) {
                     canJump = false;
                 }
             }
-            
+
             if (canJump) {
-                this.y -= this.jumpSpeed;
+                this.y += this.yVelocity;
             } else {
                 var left = (jumpTileY+1) * 32 - this.y;
-                //if (left < 0) {
-                    this.y += left;
-                //}
+                this.y += left;
             }
             
         }
