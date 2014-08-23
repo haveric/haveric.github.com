@@ -18,11 +18,6 @@ SoundManager.prototype.play = function(audioName) {
             audio.volume = self.volume;
             audio.play();
             
-            // Prevent memory leaks for audio
-            audio.addEventListener("ended", function() {
-                audio.src = null;
-                audio.load();
-            });
             return;
         }
     }
@@ -47,4 +42,5 @@ var Sound = function (name, src) {
 
 var soundManager = new SoundManager();
 
-soundManager.add('blip', 'assets/placeholderBlip.wav');
+soundManager.add('jump', 'assets/jump.wav');
+soundManager.add('land', 'assets/land.wav');

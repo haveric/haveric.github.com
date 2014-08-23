@@ -134,6 +134,7 @@ Player.prototype.draw = function(context, frame, map) {
             // Stop falling
             if (left > 0) {
                 this.jumpTimer = 0;
+                soundManager.play('land');
             }
         }
     }
@@ -143,11 +144,11 @@ Player.prototype.draw = function(context, frame, map) {
     if (this.jumpTimer == 1) {
         if (originalY != newY) {
             this.jumpTimer = 0;
+        } else {
+            //soundManager.play('jump');
         }
     }
-    if (this.jumpTimer < 0) {
-        this.jumpTimer ++;
-    }
+
     if (this.jumpTimer > 0) {
         // Reached top of jump cycle, stop jumping
         if (this.jumpTimer > 15) {
