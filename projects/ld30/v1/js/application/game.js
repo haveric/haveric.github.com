@@ -76,7 +76,7 @@ var map;
         
         context = canvas.getContext('2d');
         
-        var mapSize = 20;
+        var mapSize = 50;
 
         map = new Map(mapSize, mapSize);
         map.generate();
