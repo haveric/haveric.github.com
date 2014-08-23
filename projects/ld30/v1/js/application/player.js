@@ -105,6 +105,9 @@ Player.prototype.draw = function(context, frame) {
     
     var originalY = this.y;
     if (this.jumpTimer <= 1) {
+        if (this.jumpTimer == -1) {
+            this.jumpTimer = 0;
+        }
         var fallTileY = Math.ceil((this.y + this.fallSpeed) / 32);
         
         var leftTile = Math.floor(this.x / 32);
@@ -133,7 +136,6 @@ Player.prototype.draw = function(context, frame) {
             this.y += left;
             // Stop falling
             if (left > 0) {
-                this.jumpTimer = 0;
                 soundManager.play('land');
             }
         }
