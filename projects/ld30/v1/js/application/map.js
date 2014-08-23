@@ -25,11 +25,21 @@ Map.prototype.generate = function() {
     for (var i = 0; i < this.rows; i++) {
         for (var j = 0; j < this.cols; j++) {
             
-            var rand = Math.floor(Math.random()*10);
-            if (rand == 0 || i <= 15 || j <= 15 || i >= this.rows-1-15 || j >= this.cols-1-15) {
+            var rand = Math.floor(Math.random()*15);
+            if (i <= 15 || i >= this.rows-1-15 || j >= this.cols-1-15) {
                 this.tiles[i][j] = new Solid();
+            } else if (rand == 0 && j > 15) {
+                this.tiles[i][j] = new Solid();
+                
+                var more = Math.floor(Math.random()*3)+1;
+
+                for (var k = 0; k < more; k++) {
+                    this.tiles[i+k][j] = new Solid();
+                }
             } else {
-                this.tiles[i][j] = new Empty();
+                if (this.tiles[i][j] == null) {
+                    this.tiles[i][j] = new Empty();
+                }
             }
         }
     }
