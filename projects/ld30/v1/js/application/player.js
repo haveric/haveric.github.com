@@ -38,11 +38,14 @@ Player.prototype.moveLeft = function() {
     }
     
     if (canMove) {
-        this.xVelocity -= this.speed;
-        if (this.xVelocity < -this.maxSpeed) {
-            this.xVelocity = -this.maxSpeed;
+        if (this.xVelocity <= 0) {
+            this.xVelocity -= this.speed;
+            if (this.xVelocity < -this.maxSpeed) {
+                this.xVelocity = -this.maxSpeed;
+            }
+
+            this.x += this.xVelocity;
         }
-        this.x += this.xVelocity;
     } else {
         var left = ((leftX+1) * 32) - this.x;
         this.x += left;
@@ -74,11 +77,14 @@ Player.prototype.moveRight = function() {
         }
         
         if (canMove) {
-            this.xVelocity += this.speed;
-            if (this.xVelocity > this.maxSpeed) {
-                this.xVelocity = this.maxSpeed;
+            if (this.xVelocity >= 0) {
+                this.xVelocity += this.speed;
+                if (this.xVelocity > this.maxSpeed) {
+                    this.xVelocity = this.maxSpeed;
+                }
+
+                this.x += this.xVelocity;
             }
-            this.x += this.xVelocity;
         } else {
             var right = ((rightX-1) * 32) - this.x;
             this.x += right;
