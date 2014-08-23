@@ -78,17 +78,21 @@ var canvas,
         
         context = canvas.getContext('2d');
         
-        var mapSize = 50;
+        var mapX = 100;
+        var mapY = 46;
 
-        map = new Map(mapSize, mapSize);
+        map = new Map(mapX, mapY);
         map.generate();
-        var midPoint = Math.floor(mapSize/2);
+        var midPointX = Math.floor(mapX/2);
+        var midPointY = Math.floor(mapY/2);
 
-        player = new Player(midPoint*32, midPoint*32);
+        player = new Player(midPointX*32, midPointY*32);
         
         sky = new Sky();
         
-        phoneBooth = new PhoneBooth(20,32);
+        var pbX = Math.floor(Math.random() * (mapX - 33)) + 16;
+        var pbY = mapY - 18;
+        phoneBooth = new PhoneBooth(pbX,pbY);
 
         gameRunning = true;
         if (!requestId) {
