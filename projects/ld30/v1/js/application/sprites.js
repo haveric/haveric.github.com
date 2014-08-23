@@ -76,15 +76,33 @@ spriteMapper.addImage('empty', 'sprites', 32, 0);
 spriteMapper.addImage('player-left', 'player', 0, 0);
 spriteMapper.addImage('player-right', 'player', 0, 32);
 
-spriteMapper.addImage('player-left-walk0', 'player', 0, 0);
-spriteMapper.addImage('player-left-walk1', 'player', 32, 0);
-spriteMapper.addImage('player-left-walk2', 'player', 64, 0);
-spriteMapper.addImage('player-left-walk3', 'player', 96, 0);
+spriteMapper.addImage('player-left-walk0', 'player', 0, 16, 32, 16);
+spriteMapper.addImage('player-left-walk1', 'player', 32, 16, 32, 16);
+spriteMapper.addImage('player-left-walk2', 'player', 64, 16, 32, 16);
+spriteMapper.addImage('player-left-walk3', 'player', 96, 16, 32, 16);
 
-spriteMapper.addImage('player-right-walk0', 'player', 0, 32);
-spriteMapper.addImage('player-right-walk1', 'player', 32, 32);
-spriteMapper.addImage('player-right-walk2', 'player', 64, 32);
-spriteMapper.addImage('player-right-walk3', 'player', 96, 32);
+spriteMapper.addImage('player-right-walk0', 'player', 0, 48, 32, 16);
+spriteMapper.addImage('player-right-walk1', 'player', 32, 48, 32, 16);
+spriteMapper.addImage('player-right-walk2', 'player', 64, 48, 32, 16);
+spriteMapper.addImage('player-right-walk3', 'player', 96, 48, 32, 16);
+
+spriteMapper.addImage('player-left-attack0', 'player', 0, 64, 32, 16);
+spriteMapper.addImage('player-left-attack1', 'player', 32, 64, 32, 16);
+spriteMapper.addImage('player-left-attack2', 'player', 64, 64, 32, 16);
+spriteMapper.addImage('player-left-attack3', 'player', 96, 64, 32, 16);
+spriteMapper.addImage('player-left-attack4', 'player', 128, 64, 32, 16);
+spriteMapper.addImage('player-left-attack5', 'player', 160, 64, 32, 16);
+spriteMapper.addImage('player-left-attack6', 'player', 192, 64, 32, 16);
+spriteMapper.addImage('player-left-attack7', 'player', 224, 64, 32, 16);
+
+spriteMapper.addImage('player-right-attack0', 'player', 0, 96, 32, 16);
+spriteMapper.addImage('player-right-attack1', 'player', 32, 96, 32, 16);
+spriteMapper.addImage('player-right-attack2', 'player', 64, 96, 32, 16);
+spriteMapper.addImage('player-right-attack3', 'player', 96, 96, 32, 16);
+spriteMapper.addImage('player-right-attack4', 'player', 128, 96, 32, 16);
+spriteMapper.addImage('player-right-attack5', 'player', 160, 96, 32, 16);
+spriteMapper.addImage('player-right-attack6', 'player', 192, 96, 32, 16);
+spriteMapper.addImage('player-right-attack7', 'player', 224, 96, 32, 16);
 
 spriteMapper.addImage('solid', 'solid', 0, 0);
 

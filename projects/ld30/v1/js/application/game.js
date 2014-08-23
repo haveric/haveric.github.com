@@ -114,19 +114,7 @@ var canvas,
         }
         
         if (40 in keysDown) { // Player holding down
-            /*
-            if (phoneBooth.fading == 8) {
-                phoneBooth.fadeIn();
-            } else {
-                phoneBooth.fadeOut();
-            }
-            */
-            
-            if (phoneBooth.opening == 0) {
-                phoneBooth.open();
-            } else {
-                phoneBooth.close();
-            }
+            player.doAttack();
         }
         
         if (37 in keysDown) { // Player holding left

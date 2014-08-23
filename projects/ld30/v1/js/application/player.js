@@ -14,6 +14,8 @@ var Player = function(x, y) {
     this.yVelocity = 0;
     
     this.walk = 0;
+    this.attack = 0;
+    this.isAttacking = false;
 }
 
 Player.prototype.moveLeft = function() {
@@ -91,6 +93,27 @@ Player.prototype.moveRight = function() {
             var right = ((rightX-1) * 32) - this.x;
             this.x += right;
         }
+    }
+}
+
+Player.prototype.doAttack = function() {
+    if (this.isAttacking == false) {
+        this.isAttacking = true;
+        
+        /*
+        if (phoneBooth.fading == 8) {
+            phoneBooth.fadeIn();
+        } else {
+            phoneBooth.fadeOut();
+        }
+        */
+        /*
+        if (phoneBooth.opening == 0) {
+            phoneBooth.open();
+        } else {
+            phoneBooth.close();
+        }
+        */
     }
 }
 
@@ -205,8 +228,18 @@ Player.prototype.draw = function(frame) {
         }
     }
     
+    var walkSprite = sprite;
+    var attackSprite = sprite;
+    attackSprite += "-attack" + this.attack;
+    if (this.isAttacking) {
+        if (this.attack === 7) {
+            this.attack = -1;
+            this.isAttacking = false;
+        }
+        this.attack ++;
+    }
+    walkSprite += "-walk" + this.walk;
     if (this.jumpTimer === 0 && this.xVelocity != 0) {
-        sprite += "-walk" + this.walk;
         if (this.walk === 3) {
             this.walk = 0;
         }
@@ -214,6 +247,10 @@ Player.prototype.draw = function(frame) {
             this.walk ++;
         }
     }
-    
-    spriteMapper.getImage(sprite).drawImage(context, 384, 480);
+    if (this.xVelocity === 0) {
+        this.walk = 0;
+    }
+    console.log(attackSprite + ", " + walkSprite);
+    spriteMapper.getImage(attackSprite).drawImage(context, 384, 480);
+    spriteMapper.getImage(walkSprite).drawImage(context, 384, 496);
 }
