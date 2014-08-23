@@ -2,21 +2,22 @@ var CANVAS_WIDTH = 800,
     CANVAS_HEIGHT = 640;
 
 var map;
+var canvas,
+    context;
 (function () {
     var keysDown = [],
         gameRunning = false,
         keyDownListener,
-        keyUpListener,
-        canvas,
-        context;
+        keyUpListener;
     
     var player,
-        requestId;
+        requestId,
         numRenders = 0,
         keyDownListener,
         keyUpListener;
         
     var phoneBooth;
+    var sky;
     
     // shim layer with setTimeout fallback
     window.requestAnimFrame = (function(){
@@ -86,6 +87,8 @@ var map;
 
         player = new Player(midPoint*32, midPoint*32);
         
+        sky = new Sky();
+        
         phoneBooth = new PhoneBooth(20,32);
 
         gameRunning = true;
@@ -140,14 +143,15 @@ var map;
     }
     
     var render = function(){
-        context.fillStyle="#000000";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        //context.fillStyle="#000000";
+        //context.fillRect(0, 0, canvas.width, canvas.height);
 
-        map.draw(context, numRenders, player.getX(), player.getY());
+        sky.draw(numRenders);
+        map.draw(numRenders, player.getX(), player.getY());
         
-        phoneBooth.draw(context, numRenders, player.getX(), player.getY());
+        phoneBooth.draw(numRenders, player.getX(), player.getY());
         
-        player.draw(context, numRenders);
+        player.draw(numRenders);
         
 
         

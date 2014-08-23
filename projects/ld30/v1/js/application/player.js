@@ -108,7 +108,7 @@ Player.prototype.getY = function() {
     return this.y;
 }
 
-Player.prototype.draw = function(context, frame) {
+Player.prototype.draw = function(frame) {
     var sprite = "player-" + this.direction;
     var frameAnim = 5;
     var originalY = this.y;
@@ -214,6 +214,6 @@ Player.prototype.draw = function(context, frame) {
             this.walk ++;
         }
     }
-    console.log("Sprite: " + sprite);
+    
     spriteMapper.getImage(sprite).drawImage(context, 384, 480);
 }

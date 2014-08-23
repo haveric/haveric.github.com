@@ -24,7 +24,7 @@ Map.prototype.generate = function() {
             if (rand == 0 || i <= 15 || j <= 15 || i >= this.rows-1-15 || j >= this.cols-1-15) {
                 this.tiles[i][j] = new Solid();
             } else {
-                this.tiles[i][j] = new Path();
+                this.tiles[i][j] = new Empty();
             }
         }
     }
@@ -33,7 +33,7 @@ Map.prototype.generate = function() {
     var startY = Math.floor(this.cols / 2);
 }
 
-Map.prototype.draw = function(context, frame, playerX, playerY) {
+Map.prototype.draw = function(frame, playerX, playerY) {
     var tileX = Math.floor(playerX / 32);
     var tileY = Math.floor(playerY / 32);
 

@@ -13,13 +13,13 @@ Tile.prototype.getCanWalk = function() {
     return this.canWalk;
 }
 
-var Path = function() {
-    Tile.call(this, "path", "path");
+var Empty = function() {
+    Tile.call(this, "empty", "empty");
     this.canWalk = true;
 }
 
-Path.prototype = new Tile();
-Path.prototype.constructor = Path;
+Empty.prototype = new Tile();
+Empty.prototype.constructor = Empty;
 
 var Solid = function() {
     Tile.call(this, "solid", "solid");

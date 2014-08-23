@@ -37,7 +37,7 @@ PhoneBooth.prototype.close = function() {
 }
 
 
-PhoneBooth.prototype.draw = function(context, frame, playerX, playerY) {
+PhoneBooth.prototype.draw = function(frame, playerX, playerY) {
     var tileX = Math.floor(playerX / 32);
     var tileY = Math.floor(playerY / 32);
 
@@ -98,8 +98,6 @@ PhoneBooth.prototype.draw = function(context, frame, playerX, playerY) {
             }
         }
         
-        
-        console.log("Draw Sprite: " + drawSprite);
         spriteMapper.getImage(drawSprite).drawImage(context, (this.x-left)*32 - offsetX, (this.y-top)*32 - offsetY);
     }
 }

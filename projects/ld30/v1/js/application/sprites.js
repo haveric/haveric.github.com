@@ -72,7 +72,7 @@ textureMapper.addTexture('solid', 'img/solid.gif');
 textureMapper.addTexture('phonebooth', 'img/phonebooth.png');
 
 var spriteMapper = new SpriteMapper();
-spriteMapper.addImage('path', 'sprites', 0, 0);
+spriteMapper.addImage('empty', 'sprites', 32, 0);
 spriteMapper.addImage('player-left', 'player', 0, 0);
 spriteMapper.addImage('player-right', 'player', 0, 32);
 
