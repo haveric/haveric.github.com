@@ -9,8 +9,8 @@ var Player = function(x, y) {
     this.jumpSpeed = 12;
     this.xVelocity = 0;
     
-    this.jumpVelocity = 1.5;
-    this.maxJumpSpeed = 12;
+    this.jumpVelocity = 2;
+    this.maxJumpSpeed = 7;
     this.yVelocity = 0;
 }
 
@@ -126,15 +126,15 @@ Player.prototype.draw = function(context, frame, map) {
             }
         }
         
-        if (fallTileY >= map.cols) {
-            fall = false;
-        }
-        
         if (fall) {
             this.y += this.fallSpeed;
         } else {
             var left = (fallTileY -1) * 32 - this.y;
             this.y += left;
+            // Stop falling
+            if (left > 0) {
+                this.jumpTimer = 0;
+            }
         }
     }
     
@@ -149,8 +149,9 @@ Player.prototype.draw = function(context, frame, map) {
         this.jumpTimer ++;
     }
     if (this.jumpTimer > 0) {
+        // Reached top of jump cycle, stop jumping
         if (this.jumpTimer > 15) {
-            this.jumpTimer = 0;
+            this.jumpTimer = -1;
             this.yVelocity = 0;
         } else {
             this.jumpTimer ++;
@@ -161,7 +162,6 @@ Player.prototype.draw = function(context, frame, map) {
             }
             
             var jumpTileY = Math.floor((this.y + this.yVelocity) / 32);
-            //console.log("YVel: " + this.yVelocity +", ytile: " + jumpTileY);
             var leftTile = Math.floor(this.x / 32);
             var rightTile = Math.ceil(this.x / 32);
             
@@ -186,6 +186,9 @@ Player.prototype.draw = function(context, frame, map) {
             } else {
                 var left = (jumpTileY+1) * 32 - this.y;
                 this.y += left;
+                // Jump cycle cut off early, stop jumping
+                this.jumpTimer = -1;
+                this.yVelocity = 0;
             }
             
         }
