@@ -1,6 +1,7 @@
 var CANVAS_WIDTH = 800,
     CANVAS_HEIGHT = 640;
 
+var map;
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -9,8 +10,7 @@ var CANVAS_WIDTH = 800,
         canvas,
         context;
     
-    var map,
-        player,
+    var player,
         requestId;
         numRenders = 0,
         keyDownListener,
@@ -107,14 +107,14 @@ var CANVAS_WIDTH = 800,
         }
         /*
         if (40 in keysDown) { // Player holding down
-            player.moveDown(map);
+            player.moveDown();
         }
         */
         if (37 in keysDown) { // Player holding left
-            player.moveLeft(map);
+            player.moveLeft();
         }
         if (39 in keysDown) { // Player holding right
-            player.moveRight(map);
+            player.moveRight();
         }
         if (81 in keysDown) { // q
             stop("menu");
@@ -129,7 +129,7 @@ var CANVAS_WIDTH = 800,
 
         map.draw(context, numRenders, player.getX(), player.getY());
         
-        player.draw(context, numRenders, map);
+        player.draw(context, numRenders);
         
 
         

@@ -14,7 +14,7 @@ var Player = function(x, y) {
     this.yVelocity = 0;
 }
 
-Player.prototype.moveLeft = function(map) {
+Player.prototype.moveLeft = function() {
     this.direction = "left";
     
     var leftX = Math.floor((this.x - this.speed) / 32);
@@ -49,7 +49,7 @@ Player.prototype.moveLeft = function(map) {
     }
 }
 
-Player.prototype.moveRight = function(map) {
+Player.prototype.moveRight = function() {
     this.direction = "right";
     if (this.x < (map.rows-1) * 32) {
         
@@ -100,7 +100,7 @@ Player.prototype.getY = function() {
     return this.y;
 }
 
-Player.prototype.draw = function(context, frame, map) {
+Player.prototype.draw = function(context, frame) {
     var sprite = "player-" + this.direction;
     
     var originalY = this.y;
