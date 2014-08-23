@@ -2,10 +2,16 @@ var Player = function(x, y) {
     this.x = x;
     this.y = y;
     this.direction = "up";
-    this.speed = 8;
+    this.speed = .8;
+    this.maxSpeed = 8;
     this.fallSpeed = 7;
     this.jumpTimer = 0;
     this.jumpSpeed = 12;
+    this.xVelocity = 0;
+    
+    this.jumpVelocity = .8;
+    this.maxJumpSpeed = 12;
+    this.yVelocity = 0;
 }
 
 Player.prototype.moveLeft = function(map) {
@@ -32,7 +38,11 @@ Player.prototype.moveLeft = function(map) {
     }
     
     if (canMove) {
-        this.x -= this.speed;
+        this.xVelocity -= this.speed;
+        if (this.xVelocity < -this.maxSpeed) {
+            this.xVelocity = -this.maxSpeed;
+        }
+        this.x += this.xVelocity;
     } else {
         var left = ((leftX+1) * 32) - this.x;
         this.x += left;
@@ -64,7 +74,11 @@ Player.prototype.moveRight = function(map) {
         }
         
         if (canMove) {
-            this.x += this.speed;
+            this.xVelocity += this.speed;
+            if (this.xVelocity > this.maxSpeed) {
+                this.xVelocity = this.maxSpeed;
+            }
+            this.x += this.xVelocity;
         } else {
             var right = ((rightX-1) * 32) - this.x;
             this.x += right;
@@ -126,12 +140,13 @@ Player.prototype.draw = function(context, frame, map) {
     var newY = this.y;
     
     if (this.jumpTimer == 1) {
-        // Handle jumping
         if (originalY != newY) {
             this.jumpTimer = 0;
         }
     }
-    
+    if (this.jumpTimer < 0) {
+        this.jumpTimer ++;
+    }
     if (this.jumpTimer > 0) {
         if (this.jumpTimer > 10) {
             this.jumpTimer = 0;

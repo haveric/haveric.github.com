@@ -61,6 +61,13 @@ var CANVAS_WIDTH = 800,
 
         keyUpListener = addEventListener("keyup", function (e) {
             delete keysDown[e.keyCode];
+            
+            if (e.keyCode == 37) { // Player holding left
+                player.xVelocity = 0;
+            }
+            if (e.keyCode == 39) { // Player holding right
+                player.xVelocity = 0;
+            }
         }, false);
 
         canvas = document.getElementById("gameCanvas");
@@ -98,9 +105,11 @@ var CANVAS_WIDTH = 800,
         if (38 in keysDown) { // Player holding up
             player.jump();
         }
+        /*
         if (40 in keysDown) { // Player holding down
             player.moveDown(map);
         }
+        */
         if (37 in keysDown) { // Player holding left
             player.moveLeft(map);
         }
