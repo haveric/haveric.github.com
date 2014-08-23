@@ -42,8 +42,8 @@ Map.prototype.draw = function(context, frame, playerX, playerY) {
     
     var left = tileX - 12;
     var right = tileX + 14;
-    var top = tileY - 10;
-    var bot = tileY + 11;
+    var top = tileY - 15;
+    var bot = tileY + 6;
 
     for (var i = left; i < right; i++) {
         for (var j = top; j < bot; j++) {

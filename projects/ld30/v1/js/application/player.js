@@ -113,36 +113,37 @@ Player.prototype.draw = function(context, frame) {
     if (this.jumpTimer <= 1) {
         if (this.jumpTimer == -1) {
             this.jumpTimer = 0;
-        }
-        var fallTileY = Math.ceil((this.y + this.fallSpeed) / 32);
-        
-        var leftTile = Math.floor(this.x / 32);
-        var rightTile = Math.ceil(this.x / 32);
-        
-        var fall = true;
-        if (leftTile == rightTile) {
-            var tile = map.getTile(leftTile, fallTileY);
-            
-            if (tile.isSolid) {
-                fall = false;
-            }
         } else {
-            var left = map.getTile(leftTile, fallTileY);
-            var right = map.getTile(rightTile, fallTileY);
+            var fallTileY = Math.ceil((this.y + this.fallSpeed) / 32);
             
-            if (left.isSolid || right.isSolid) {
-                fall = false;
+            var leftTile = Math.floor(this.x / 32);
+            var rightTile = Math.ceil(this.x / 32);
+            
+            var fall = true;
+            if (leftTile == rightTile) {
+                var tile = map.getTile(leftTile, fallTileY);
+                
+                if (tile.isSolid) {
+                    fall = false;
+                }
+            } else {
+                var left = map.getTile(leftTile, fallTileY);
+                var right = map.getTile(rightTile, fallTileY);
+                
+                if (left.isSolid || right.isSolid) {
+                    fall = false;
+                }
             }
-        }
-        
-        if (fall) {
-            this.y += this.fallSpeed;
-        } else {
-            var left = (fallTileY -1) * 32 - this.y;
-            this.y += left;
-            // Stop falling
-            if (left > 0) {
-                soundManager.play('land');
+            
+            if (fall) {
+                this.y += this.fallSpeed;
+            } else {
+                var left = (fallTileY -1) * 32 - this.y;
+                this.y += left;
+                // Stop falling
+                if (left > 0) {
+                    soundManager.play('land');
+                }
             }
         }
     }
@@ -203,5 +204,5 @@ Player.prototype.draw = function(context, frame) {
         }
     }
 
-    spriteMapper.getImage(sprite).drawImage(context, 384, 320);
+    spriteMapper.getImage(sprite).drawImage(context, 384, 480);
 }
