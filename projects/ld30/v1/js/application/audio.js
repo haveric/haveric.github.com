@@ -67,3 +67,4 @@ soundManager.add('laser-hitwall', 'assets/laser-hitwall.wav', 0.2);
 soundManager.add('explode', 'assets/explode.wav');
 soundManager.add('dalek-stun', 'assets/dalek-stun.wav');
 soundManager.add('city-laser', 'assets/city-laser.wav');
+soundManager.add('tardis-fade', 'assets/tardis-fade.wav');

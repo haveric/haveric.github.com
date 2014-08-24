@@ -23,6 +23,7 @@ PhoneBooth.prototype.fadeIn = function() {
 PhoneBooth.prototype.fadeOut = function() {
     if (this.fading === 0) {
         this.toFadeOut = true;
+        soundManager.play('tardis-fade');
     }
 }
 
@@ -79,6 +80,9 @@ PhoneBooth.prototype.draw = function(frame, playerX, playerY) {
             } else {
                 this.fading = 8;
                 this.toFadeOut = false;
+                if (player.inTardis) {
+                    // WIN CONDITION
+                }
             }
         } else if (this.toOpen) {
             if (this.opening < 4) {
@@ -97,6 +101,10 @@ PhoneBooth.prototype.draw = function(frame, playerX, playerY) {
             } else {
                 this.opening = 0;
                 this.toClose = false;
+                
+                if (player.inTardis) {
+                    this.fadeOut();
+                }
             }
         }
         

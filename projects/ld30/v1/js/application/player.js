@@ -209,7 +209,6 @@ Player.prototype.jump = function() {
     if (enterPhoneBooth) {
         this.inTardis = true;
         phoneBooth.close();
-        // WIN CONDITION
     } else {
         if (!this.isDying && this.jumpTimer == 0) {
             this.jumpTimer = 1;
