@@ -16,6 +16,15 @@ var cityLasers = [];
 var cityDeathTimerMax = 10;
 var cityDeathTimer = 10;
 
+var Global = function() {
+    this.screenShakeX = 0;
+    this.screenShakeY = 0;
+    this.screenShakeTimer = 0;
+    this.isScreenShaking = false;
+}
+
+var global;
+
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -88,6 +97,8 @@ var cityDeathTimer = 10;
         canvas.setAttribute("height", CANVAS_HEIGHT);
         
         context = canvas.getContext('2d');
+
+        global = new Global();
         
         var mapX = 100;
         var mapY = 46;
@@ -208,13 +219,16 @@ var cityDeathTimer = 10;
     }
     
     var spawnCityLaser = function() {
-        var cityNum = Math.floor(Math.random() * cities.length);
-        var city = cities[cityNum];
-        var startX = Math.random() * 800;
-        var startY = -50;
-        
-        cityLasers.push(new CityLaser(startX, startY, city.x, city.y));
+        if (cities.length > 0) {
+            var cityNum = Math.floor(Math.random() * cities.length);
+            var city = cities[cityNum];
+            var startX = Math.random() * 800;
+            var startY = -50;
+            
+            cityLasers.push(new CityLaser(startX, startY, city.x, city.y));
+        }
     }
+    
     var render = function(){
         sky.draw(numRenders);
         cities.forEach(function(city, index) {
@@ -243,7 +257,24 @@ var cityDeathTimer = 10;
         
         player.draw(numRenders);
         
-
+        if (global.isScreenShaking) {
+            if (global.screenShakeTimer < 20) {
+                global.screenShakeX = Math.floor(Math.random() * 10);
+                global.screenShakeY = Math.floor(Math.random() * 10);
+                
+                global.screenShakeTimer ++;
+            } else {
+                global.screenShakeTimer = 0;
+                global.isScreenShaking = false;
+                global.screenShakeX = 0;
+                global.screenShakeY = 0;
+            }
+        }
+        
+        var screenShakeX = 0;
+        var screenShakeY = 0;
+        var screenShakeTimer = 0;
+        var isScreenShaking = false;
         
         numRenders++;
         if (numRenders == 60) {

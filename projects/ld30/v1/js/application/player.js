@@ -314,12 +314,12 @@ Player.prototype.draw = function(frame) {
     spriteMapper.getImage(attackSprite).drawImage(384, 480);
     spriteMapper.getImage(walkSprite).drawImage(384, 496);
     
-    spriteMapper.getImage('sonic-empty').drawImage(20, 20);
+    spriteMapper.getImage('sonic-empty').drawImage(20, 20, 100, true);
     if (this.sonic > 0) {
-        spriteMapper.getImage('sonic-full').drawImage(22, 22, this.sonic);
+        spriteMapper.getImage('sonic-full').drawImage(22, 22, this.sonic, true);
     }
     
-    spriteMapper.getImage('city').drawImage(15, 40);
+    spriteMapper.getImage('city').drawImage(15, 40, 100, true);
     context.font="32px Arial";
     context.fillStyle="#dddddd";
     context.fillText("x " + cities.length, 80, 80);

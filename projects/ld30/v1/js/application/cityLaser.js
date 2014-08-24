@@ -46,6 +46,12 @@ function killCityLaser(index) {
     if (index >= 0 && index < cityLasers.length) {
         var laser = cityLasers[index];
         laser.audio.src = "";
+        screenShake();
         cityLasers.splice(index, 1);
     }
+}
+
+function screenShake() {
+    global.isScreenShaking = true;
+    global.screenShakeTimer = 0;
 }

@@ -56,7 +56,7 @@ var Sprite = function (imageName, textureName, x, y, w, h) {
     this.h = h || 32;
 }
 
-Sprite.prototype.drawImage = function (i, j, widthPercent) {
+Sprite.prototype.drawImage = function (i, j, widthPercent, ignoreShake) {
     if (this.texture == null) {
         this.texture = textureMapper.getTexture(this.textureName);
     } else {
@@ -65,6 +65,12 @@ Sprite.prototype.drawImage = function (i, j, widthPercent) {
             width = this.w * widthPercent / 100;
         }
         
+        if (ignoreShake == null || !ignoreShake) {
+            if (global.isScreenShaking) {
+                i += global.screenShakeX;
+                j += global.screenShakeY;
+            }
+        }
         context.drawImage(this.texture, this.x, this.y, width, this.h, i, j, width, this.h);
     }
 }
