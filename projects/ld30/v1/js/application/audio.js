@@ -1,6 +1,6 @@
 var SoundManager = function() {
     this.sounds = [];
-    this.volume = 0.5;
+    this.volume = 0/*0.5*/;
 }
 
 SoundManager.prototype.add = function(name, src, vol) {

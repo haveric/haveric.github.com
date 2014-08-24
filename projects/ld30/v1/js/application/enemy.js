@@ -184,13 +184,13 @@ Bullet.prototype.draw = function(frame, index, playerX, playerY) {
 }
 
 function killEnemy(index) {
-    if (index > 0 && index < enemies.length) {
+    if (index >= 0 && index < enemies.length) {
         enemies.splice(index, 1);
     }
 }
 
 function killBullet(index) {
-    if (index > 0 && index < enemies.length) {
+    if (index >= 0 && index < enemies.length) {
         bullets.splice(index, 1);
     }
 }

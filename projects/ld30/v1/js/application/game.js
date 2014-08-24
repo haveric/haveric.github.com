@@ -216,7 +216,7 @@ var cityLasers = [];
         });
         
         deadCities.forEach(function(city, index) {
-            //city.draw(numRenders);
+            city.draw(numRenders);
         });
         
         cityLasers.forEach(function(laser, index) {

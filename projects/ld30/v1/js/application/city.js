@@ -22,7 +22,6 @@ City.prototype.draw = function(frame) {
             this.death ++;
         } else {
             this.dying = false;
-            // TODO: remove city
         }
     }
     
@@ -30,8 +29,9 @@ City.prototype.draw = function(frame) {
 }
 
 function killCity(index) {
-    if (index > 0 && index < cities.length) {
+    if (index >= 0 && index < cities.length) {
         var killedCity = cities.splice(index, 1);
-        deadCities.push(killedCity);
+
+        deadCities.push(killedCity[0]);
     }
 }
