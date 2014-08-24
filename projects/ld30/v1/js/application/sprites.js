@@ -56,11 +56,16 @@ var Sprite = function (imageName, textureName, x, y, w, h) {
     this.h = h || 32;
 }
 
-Sprite.prototype.drawImage = function (i, j) {
+Sprite.prototype.drawImage = function (i, j, widthPercent) {
     if (this.texture == null) {
         this.texture = textureMapper.getTexture(this.textureName);
     } else {
-        context.drawImage(this.texture, this.x, this.y, this.w, this.h, i, j, this.w, this.h);
+        var width = this.w;
+        if (widthPercent) {
+            width = this.w * widthPercent / 100;
+        }
+        
+        context.drawImage(this.texture, this.x, this.y, width, this.h, i, j, width, this.h);
     }
 }
 
@@ -70,9 +75,13 @@ textureMapper.addTexture('player', 'img/player.png');
 textureMapper.addTexture('solid', 'img/sprites.png');
 textureMapper.addTexture('phonebooth', 'img/phonebooth.png');
 textureMapper.addTexture('dalek', 'img/dalek.png');
+textureMapper.addTexture('ui', 'img/ui.png');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('empty', 'empty', 32, 0);
+
+spriteMapper.addImage('sonic-empty', 'ui', 0, 0, 104, 12);
+spriteMapper.addImage('sonic-full', 'ui', 2, 14, 100, 8);
 
 spriteMapper.addImage('dalek-left', 'dalek', 0, 0);
 spriteMapper.addImage('dalek-right', 'dalek', 0, 32);

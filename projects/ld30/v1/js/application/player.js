@@ -19,6 +19,12 @@ var Player = function(x, y) {
     
     this.width = 32;
     this.height = 32;
+    
+    this.sonicMax = 100;
+    this.sonic = 100;
+    this.sonicCost = 15;
+    this.regenSonic = 2;
+    this.regenModFrames = 10;
 }
 
 Player.prototype.moveLeft = function() {
@@ -103,39 +109,28 @@ Player.prototype.doAttack = function() {
     if (this.isAttacking == false) {
         this.isAttacking = true;
         
-        soundManager.play('attack');
-        
-        var diffRight = phoneBooth.x * 32 - this.x;
-        if (diffRight <= 100 && diffRight >= 0 && this.direction == "right") {
-            if (phoneBooth.opening == 0) {
-                phoneBooth.open();
-            } else {
-                phoneBooth.close();
+        if (this.sonic >= this.sonicCost) {
+            this.sonic -= this.sonicCost;
+            soundManager.play('attack');
+            
+            var diffRight = phoneBooth.x * 32 - this.x;
+            if (diffRight <= 100 && diffRight >= 0 && this.direction == "right") {
+                if (phoneBooth.opening == 0) {
+                    phoneBooth.open();
+                } else {
+                    phoneBooth.close();
+                }
+            }
+            
+            var diffLeft = this.x - phoneBooth.x * 32;
+            if (diffLeft <= 100 && diffLeft >= 0 && this.direction == "left") {
+                if (phoneBooth.opening == 0) {
+                    phoneBooth.open();
+                } else {
+                    phoneBooth.close();
+                }
             }
         }
-        
-        var diffLeft = this.x - phoneBooth.x * 32;
-        if (diffLeft <= 100 && diffLeft >= 0 && this.direction == "left") {
-            if (phoneBooth.opening == 0) {
-                phoneBooth.open();
-            } else {
-                phoneBooth.close();
-            }
-        }
-        /*
-        if (phoneBooth.fading == 8) {
-            phoneBooth.fadeIn();
-        } else {
-            phoneBooth.fadeOut();
-        }
-        */
-        /*
-        if (phoneBooth.opening == 0) {
-            phoneBooth.open();
-        } else {
-            phoneBooth.close();
-        }
-        */
     }
 }
 
@@ -272,6 +267,19 @@ Player.prototype.draw = function(frame) {
     if (this.xVelocity === 0) {
         this.walk = 0;
     }
+    
+    if (frame % this.regenModFrames == 0) {
+        this.sonic += this.regenSonic;
+        if (this.sonic > this.sonicMax) {
+            this.sonic = this.sonicMax;
+        }
+    }
+    
     spriteMapper.getImage(attackSprite).drawImage(384, 480);
     spriteMapper.getImage(walkSprite).drawImage(384, 496);
+    
+    spriteMapper.getImage('sonic-empty').drawImage(20, 20);
+    if (this.sonic > 0) {
+        spriteMapper.getImage('sonic-full').drawImage(22, 22, this.sonic);
+    }
 }
