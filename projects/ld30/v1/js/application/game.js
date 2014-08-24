@@ -25,8 +25,13 @@ var Global = function() {
 
 var global;
 var player;
+var isDemo = false;
+
+var numStartCities = 5;
 
 var stop;
+
+
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -76,9 +81,15 @@ var stop;
     }
     
     
-    var init = function() {
+    var init = function(type, numDaleks, laserTime, mapWidth, newCities, attack, regen) {
+        if (type == 'demo') {
+            isDemo = true;
+        } else {
+            isDemo = false;
+        }
+    
         keyDownListener = addEventListener("keydown", function (e) {
-            console.log("Keycode: " + e.keyCode);
+            //console.log("Keycode: " + e.keyCode);
             keysDown[e.keyCode] = true;
         }, false);
 
@@ -101,15 +112,17 @@ var stop;
 
         global = new Global();
         
-        var mapX = 100;
+        var mapX = mapWidth || 100;
         var mapY = 46;
 
+        cityDeathTimerMax = laserTime || 10;
+        
         map = new Map(mapX, mapY);
         map.generate();
         var midPointX = Math.floor(mapX/2);
         var midPointY = Math.floor(mapY/2);
 
-        player = new Player(midPointX*32, midPointY*32);
+        player = new Player(midPointX*32, midPointY*32, attack, regen);
         map.setTile(midPointX, midPointY, new Empty());
         map.setTile(midPointX-1, midPointY, new Empty());
         map.setTile(midPointX+1, midPointY, new Empty());
@@ -122,15 +135,26 @@ var stop;
         var pbY = mapY - 18;
         phoneBooth = new PhoneBooth(pbX,pbY);
         
+        
         map.setTile(pbX, pbY, new Empty());
         map.setTile(pbX, pbY+1, new Empty());
         
-        var numCities = 5;
+        // Clear out all old stuff
+        enemies = [];
+        bullets = [];
+        cities = [];
+        deadCities = [];
+        cityLasers = [];
+        
+        var numCities = newCities || 5;
+        numStartCities = numCities;
+        
+        
         for (var i = 0; i < numCities; i++) {
             createCity();
         }
         
-        var numEnemies = 10;
+        var numEnemies = numDaleks || 10;
         
         for (var i = 0; i < numEnemies; i++) {
             createRandomEnemy(midPointX, midPointY, mapX, mapY);
@@ -184,35 +208,58 @@ var stop;
         player = null;
     }
     stop = function(type) {
-        gameRunning = false;
-        removeEventListener("keydown", keyDownListener, false);
-        removeEventListener("keyup", keyUpListener, false);
-        keyDownListener = undefined;
-        keyUpListener = undefined;
-        
-        console.log("Stop: " + type);
+        if (isDemo) {
+            if (type == "menu") {
+                hideMenus();
+                $("#startMenu").addClass('active');
+            }
+        } else {
+            gameRunning = false;
+            removeEventListener("keydown", keyDownListener, false);
+            removeEventListener("keyup", keyUpListener, false);
+            keyDownListener = undefined;
+            keyUpListener = undefined;
+            
+            console.log("Stop: " + type);
+            
+            if (type == "menu") {
+                hideMenus();
+                $("#startMenu").addClass('active');
+            } else if (type == "win") {
+                hideMenus();
+                $("#winMenu").addClass("active");
+            } else if (type == "lose-cities") {
+                hideMenus();
+                $("#loseMenu").addClass("active");
+            } else if (type == "lose-death") {
+                hideMenus();
+                $("#loseMenu").addClass("active");
+            }
+        }
     }
     
     var handleInput = function() {
-        if (38 in keysDown || 32 in keysDown) { // Player holding up
-            player.jump();
-        }
-        
-        if (40 in keysDown || 17 in keysDown) { // Player holding down
-            player.doAttack();
-        }
-        
-        if (76 in keysDown) { // L is for LAZZZZERS
-            spawnCityLaser();
+        if (!isDemo) {
+            if (38 in keysDown || 32 in keysDown) { // Player holding up
+                player.jump();
+            }
             
-            delete keysDown[76];
-        }
-        
-        if (37 in keysDown) { // Player holding left
-            player.moveLeft();
-        }
-        if (39 in keysDown) { // Player holding right
-            player.moveRight();
+            if (40 in keysDown || 17 in keysDown) { // Player holding down
+                player.doAttack();
+            }
+            
+            if (76 in keysDown) { // L is for LAZZZZERS
+                spawnCityLaser();
+                
+                delete keysDown[76];
+            }
+            
+            if (37 in keysDown) { // Player holding left
+                player.moveLeft();
+            }
+            if (39 in keysDown) { // Player holding right
+                player.moveRight();
+            }
         }
         if (81 in keysDown) { // q
             stop("menu");
@@ -244,7 +291,7 @@ var stop;
             }
         });
         
-        if (numFullyDeadCities == 5) {
+        if (numFullyDeadCities == numStartCities) {
             stop('lose-cities');
         }
         
@@ -298,5 +345,119 @@ var stop;
         }
     }
     
-    init();
+    init('demo');
+    
+    
+    $("#quickGame").on("click", function() {
+        hideMenus();
+        init('easy');
+    });
+    
+    $("#difficulty .startButton").on("click", function() {
+        hideMenus();
+
+        var numDaleks = $("#dalekRange").val();
+        var laserTime = $("#laserRange").val();
+        var mapWidth = $("#mapRange").val();
+        var numCities = $("#cityRange").val();
+        var attack = $("#attackRange").val();
+        var regen = $("#regenRange").val();
+        
+        init('normal', numDaleks, laserTime, mapWidth, numCities, attack, regen);
+    });
+    
+    $("#chooseDifficulty").on("click", function() {
+        $("#startMenu").removeClass("active");
+        
+        $("#difficulty").addClass("active");
+    });
+    
+    $(".diff").on("click", function() {
+        var $this = $(this);
+        $this.addClass("active").siblings('.active').removeClass('active');
+        
+        var numDaleks = 0;
+        var laserRange = 0;
+        var mapWidth = 0;
+        var numCities = 0;
+        var attack = 0;
+        var regen = 0;
+        
+        var setSliders = true;
+        if ($this.hasClass("easyDiff")) {
+            mapWidth = 100;
+            numDaleks = 10;
+            laserRange = 10;
+            numCities = 5;
+            attack = 15;
+            regen = 3;
+        } else if ($this.hasClass("normalDiff")) {
+            mapWidth = 150;
+            numDaleks = 25;
+            laserRange = 5;
+            numCities = 7;
+            attack = 20;
+            regen = 2;
+        } else if ($this.hasClass("hardDiff")) {
+            mapWidth = 250;
+            numDaleks = 50;
+            laserRange = 3;
+            numCities = 10;
+            attack = 30;
+            regen = 1;
+        } else {
+            setSliders = false;
+        }
+        
+        if (setSliders) {
+            $("#dalekRange").val(numDaleks);
+            $("#dalekRange").siblings('.value').text(numDaleks);
+            
+            $("#laserRange").val(laserRange);
+            $("#laserRange").siblings('.value').text(laserRange);
+            
+            $("#mapRange").val(mapWidth);
+            $("#mapRange").siblings('.value').text(mapWidth);
+            
+            $("#cityRange").val(numCities);
+            $("#cityRange").siblings('.value').text(numCities);
+            
+            $("#attackRange").val(attack);
+            $("#attackRange").siblings('.value').text(attack);
+            
+            $("#regenRange").val(regen);
+            $("#regenRange").siblings('.value').text(regen);
+        }
+    });
+    
+    $("#difficulty input[type=range]").on("change", function() {
+        var $this = $(this);
+        $(".customDiff").addClass("active").siblings('.active').removeClass("active");
+        
+        $this.siblings('.value').text($this.val());
+    });
+    
+    $("#instructionsLink").on("click", function() {
+        $("#startMenu").removeClass("active");
+        
+        $("#instructions").addClass("active");
+    });
+    
+    $("#settingsLink").on("click", function() {
+        $("#startMenu").removeClass("active");
+        
+        $("#settings").addClass("active");
+    });
+    
+    $("#aboutLink").on("click", function() {
+        $("#startMenu").removeClass("active");
+        
+        $("#about").addClass("active");
+    });
+    
+    function hideMenus() {
+        $(".menu.active").removeClass("active");
+    }
+    
+    
 }());

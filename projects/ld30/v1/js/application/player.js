@@ -1,4 +1,4 @@
-var Player = function(x, y) {
+var Player = function(x, y, newAttackCost, newRegen) {
     this.x = x;
     this.y = y;
     this.direction = "left";
@@ -22,8 +22,8 @@ var Player = function(x, y) {
     
     this.sonicMax = 100;
     this.sonic = 100;
-    this.sonicCost = 15;
-    this.regenSonic = 2;
+    this.sonicCost = newAttackCost || 15;
+    this.regenSonic = newRegen || 3;
     this.regenModFrames = 10;
     
     this.isDying = false;
