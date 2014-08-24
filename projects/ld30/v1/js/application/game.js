@@ -26,6 +26,7 @@ var Global = function() {
 var global;
 var player;
 
+var stop;
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -182,12 +183,14 @@ var player;
         map = null;
         player = null;
     }
-    var stop = function(type) {
+    stop = function(type) {
         gameRunning = false;
         removeEventListener("keydown", keyDownListener, false);
         removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
         keyUpListener = undefined;
+        
+        console.log("Stop: " + type);
     }
     
     var handleInput = function() {
@@ -233,9 +236,17 @@ var player;
             city.draw(numRenders);
         });
         
+        var numFullyDeadCities = 0;
         deadCities.forEach(function(city, index) {
             city.draw(numRenders);
+            if (!city.dying) {
+                numFullyDeadCities ++;
+            }
         });
+        
+        if (numFullyDeadCities == 5) {
+            stop('lose-cities');
+        }
         
         cityLasers.forEach(function(laser, index) {
             laser.draw(numRenders, index);

@@ -194,13 +194,8 @@ Player.prototype.jump = function() {
         var diffHeight = phoneBooth.y * 32 - this.y;
         
         if (diffHeight >= -80 && diffHeight <= 16) {
-            var diffRight = phoneBooth.x * 32 - this.x;
-            if (diffRight <= 16 && diffRight >= 0 && this.direction == "right") {
-                enterPhoneBooth = true;
-            }
-            
-            var diffLeft = this.x - phoneBooth.x * 32;
-            if (diffLeft <= 16 && diffLeft >= 0 && this.direction == "left") {
+            var diff = Math.abs(phoneBooth.x * 32 - this.x);
+            if (diff <= 16 ) {
                 enterPhoneBooth = true;
             }
         }
@@ -209,7 +204,7 @@ Player.prototype.jump = function() {
     if (enterPhoneBooth) {
         this.inTardis = true;
         phoneBooth.close();
-    } else {
+    } else if (!this.inTardis) {
         if (!this.isDying && this.jumpTimer == 0) {
             this.jumpTimer = 1;
         }
@@ -329,7 +324,7 @@ Player.prototype.draw = function(frame) {
             
             this.death ++;
         } else {
-            // LOSE CONDITION
+            stop('lose-death');
         }
     }
     

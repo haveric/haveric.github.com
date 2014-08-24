@@ -171,7 +171,7 @@ Bullet.prototype.draw = function(frame, index, playerX, playerY) {
     }
     
     // Check for player collisions
-    if (bulletExists && this.x + 10 > playerX + 7 && this.x < playerX + 27 && this.y > playerY && this.y < playerY + 32) {
+    if (!player.inTardis && bulletExists && this.x + 10 > playerX + 7 && this.x < playerX + 27 && this.y > playerY && this.y < playerY + 32) {
         bulletExists = false;
         // Bullet hits player
         player.die();

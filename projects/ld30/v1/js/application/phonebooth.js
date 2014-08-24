@@ -80,8 +80,9 @@ PhoneBooth.prototype.draw = function(frame, playerX, playerY) {
             } else {
                 this.fading = 8;
                 this.toFadeOut = false;
+
                 if (player.inTardis) {
-                    // WIN CONDITION
+                    stop('win');
                 }
             }
         } else if (this.toOpen) {
