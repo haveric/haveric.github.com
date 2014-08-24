@@ -85,7 +85,7 @@ spriteMapper.addImage('sonic-full', 'ui', 2, 14, 100, 8);
 
 spriteMapper.addImage('dalek-right', 'dalek', 0, 0);
 spriteMapper.addImage('dalek-left', 'dalek', 0, 32);
-spriteMapper.addImage('dalek-laser', 'dalek', 32, 0, 5, 1);
+spriteMapper.addImage('dalek-laser', 'dalek', 32, 0, 10, 3);
 
 spriteMapper.addImage('player-left-walk0', 'player', 0, 16, 32, 16);
 spriteMapper.addImage('player-left-walk1', 'player', 32, 16, 32, 16);

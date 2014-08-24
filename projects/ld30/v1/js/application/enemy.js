@@ -16,8 +16,13 @@ var Enemy = function(x, y) {
     }
 }
 
-Enemy.prototype.draw = function(frame, playerX, playerY) {
+Enemy.prototype.draw = function(frame, index, playerX, playerY) {
     this.move(frame);
+    
+    var randAttack = Math.floor(Math.random() * 250);
+    if (randAttack == 0) {
+        this.attack(frame, playerX, playerY);
+    }
     
     var tileX = Math.floor(playerX / 32);
     var tileY = Math.floor(playerY / 32);
@@ -49,8 +54,8 @@ Enemy.prototype.switchDirections = function() {
 }
 
 Enemy.prototype.attack = function(frame, playerX, playerY) {
-    var bX = this.x * 32;
-    var bY = (this.y * 32) + 15;
+    var bX = this.x;
+    var bY = this.y + 14;
     
     if (this.direction == "left") {
         bX -= 3;
@@ -58,7 +63,7 @@ Enemy.prototype.attack = function(frame, playerX, playerY) {
         bX += 30;
     }
     
-    bullets.push(new Bullet(this.x*32, bY, this.direction))
+    bullets.push(new Bullet(bX, bY, this.direction, playerX, playerY))
 }
 
 Enemy.prototype.move = function(frame) {
@@ -92,14 +97,23 @@ Enemy.prototype.move = function(frame) {
 }
 
 
-var Bullet = function(x, y, direction) {
+var Bullet = function(x, y, direction, playerX, playerY) {
     this.x = x;
     this.y = y;
     this.direction = direction;
     this.sprite = 'dalek-laser';
+    this.speed = 5;
+    
+    var distX = Math.abs(playerX - x);
+    var volume = 1 - (distX / 1000);
+    if (volume > 1) {
+        volume = 1;
+    }
+    
+    soundManager.play('laser', volume);
 }
 
-Bullet.prototype.draw = function(frame, playerX, playerY) {
+Bullet.prototype.draw = function(frame, index, playerX, playerY) {
     var tileX = Math.floor(playerX / 32);
     var tileY = Math.floor(playerY / 32);
 
@@ -111,17 +125,36 @@ Bullet.prototype.draw = function(frame, playerX, playerY) {
     var top = tileY - 15;
     var bot = tileY + 6;
 
-    if (direction == "left") {
-        this.x --;
+    if (this.direction == "left") {
+        this.x -= this.speed;
     } else {
-        this.x ++;
+        this.x += this.speed;
     }
     
     var bulletExists = true;
-    if (x < 0 || x > map.rows *32) {
+    
+    if (this.x < 0 || this.x > map.rows *32) {
         bulletExists = false;
     }
+    
     if (bulletExists) {
-        spriteMapper.getImage(this.sprite).drawImage((this.x-left)*32 - offsetX, (this.y-top)*32 - offsetY);
+        var drawX = (this.x - (left * 32)) - offsetX;
+        var drawY = (this.y - (top * 32)) - offsetY;
+        
+        spriteMapper.getImage(this.sprite).drawImage(drawX, drawY);
+    } else {
+        killBullet(index);
+    }
+}
+
+function killEnemy(index) {
+    if (index > 0 && index < enemies.length) {
+        enemies.splice(index, 1);
+    }
+}
+
+function killBullet(index) {
+    if (index > 0 && index < enemies.length) {
+        bullets.splice(index, 1);
     }
 }

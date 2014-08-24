@@ -183,12 +183,12 @@ var bullets = [];
         
         phoneBooth.draw(numRenders, player.getX(), player.getY());
         
-        enemies.forEach(function(enemy) {
-            enemy.draw(numRenders, player.getX(), player.getY());
+        enemies.forEach(function(enemy, index) {
+            enemy.draw(numRenders, index, player.getX(), player.getY());
         });
         
-        bullets.forEach(function(bullet) {
-            bullet.draw(numRenders, player.getX(), player.getY());
+        bullets.forEach(function(bullet, index) {
+            bullet.draw(numRenders, index, player.getX(), player.getY());
         });
         
         player.draw(numRenders);
