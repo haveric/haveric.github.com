@@ -70,23 +70,22 @@ Enemy.prototype.move = function(frame) {
     if (frame % this.frameModMove == 0) {
         var y = Math.floor(this.y / 32);
         
-        if (this.direction == "left") {
-            var leftX = Math.floor((this.x - this.speed) / 32);
-
-            var leftTile = map.getTile(leftX, y);
-            var blTile = map.getTile(leftX, y+1);
-            
+        var leftX = Math.floor((this.x - this.speed) / 32);
+        var rightX = Math.floor((this.x + this.width + this.speed) / 32);
+        var leftTile = map.getTile(leftX, y);
+        var rightTile = map.getTile(rightX, y);
+        var blTile = map.getTile(leftX, y+1);
+        var brTile = map.getTile(rightX, y+1);
+        
+        if ((leftTile.isSolid || !blTile.isSolid) &&  (rightTile.isSolid || !brTile.isSolid)) {
+            // Don't move
+        } else if (this.direction == "left") {
             if (!leftTile.isSolid && blTile.isSolid) {
                 this.x -= this.speed;
             } else {
                 this.switchDirections();
             }
         } else {
-            var rightX = Math.floor((this.x + this.width + this.speed) / 32);
-            
-            var rightTile = map.getTile(rightX, y);
-            var brTile = map.getTile(rightX, y+1);
-            
             if (!rightTile.isSolid && brTile.isSolid) {
                 this.x += this.speed;
             } else {

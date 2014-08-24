@@ -57,5 +57,5 @@ var soundManager = new SoundManager();
 
 soundManager.add('land', 'assets/land.wav');
 soundManager.add('attack', 'assets/attack.wav');
-soundManager.add('laser', 'assets/laser.wav', 0.4);
+soundManager.add('laser', 'assets/laser.wav', .05/*0.4*/);
 soundManager.add('laser-hitwall', 'assets/laser-hitwall.wav', 0.2);
