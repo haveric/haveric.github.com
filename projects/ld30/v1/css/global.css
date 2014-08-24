@@ -134,6 +134,10 @@ p strong {
     clear: both;
 }
 
+.fullWidth .left {
+    border: 0;
+}
+
 #startMenu h1 {
     font-size: 48px;
     text-align: center;
@@ -173,7 +177,7 @@ p strong {
     position: absolute;
     top: 0;
     right: 0;
-    width: 130px;
+    width: 140px;
     height: 20px;
 }
 
@@ -183,6 +187,7 @@ p strong {
     height: 24px;
     background-position: -104px 0;
     display: inline-block;
+    margin-right: 10px;
 }
 
 #volume .note.muted {

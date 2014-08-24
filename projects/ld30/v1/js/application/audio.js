@@ -1,6 +1,6 @@
 var SoundManager = function() {
     this.sounds = [];
-    this.volume = 0.5/*0.5*/;
+    this.volume = 0.5;
 }
 
 SoundManager.prototype.add = function(name, src, vol) {
@@ -40,6 +40,8 @@ SoundManager.prototype.play = function(audioName, playVolume) {
 SoundManager.prototype.setVolume = function(newVolume) {
     if (newVolume >= 0 && newVolume <= 1) {
         this.volume = newVolume;
+        
+        localStorage.setItem('volume', newVolume);
     }
 }
 

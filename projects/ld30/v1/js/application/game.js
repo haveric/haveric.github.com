@@ -344,6 +344,18 @@ var stop;
     
     init('demo');
     
+    var localVolume = localStorage.getItem('volume');
+    if (localVolume != null) {
+        soundManager.setVolume(localVolume);
+        if (localVolume == 0) {
+            $("#volume .note").addClass("muted");
+        }
+        
+        $("#volume input").val(localVolume * 100);
+    } else {
+        soundManager.setVolume(0.5);
+        $("#volume input").val(50);
+    }
     
     $("#quickGame").on("click", function() {
         hideMenus();
@@ -464,6 +476,13 @@ var stop;
         $("#startMenu").removeClass("active");
         
         $("#about").addClass("active");
+    });
+    
+    
+    $(".backButton").on("click", function() {
+        hideMenus();
+        
+        $("#startMenu").addClass("active");
     });
     
     function hideMenus() {
