@@ -8,6 +8,7 @@ var canvas,
     sky;
 
 var enemies = [];
+var bullets = [];
 
 (function () {
     var keysDown = [],
@@ -131,7 +132,7 @@ var enemies = [];
                     createRandomEnemy(mx, my, mapX, mapY);
                     break;
                 } else {
-                    var enemy = new Enemy(randX, placeY);
+                    var enemy = new Enemy(randX*32, placeY*32);
     
                     map.setTile(randX, placeY, new Empty());
                     enemies.push(enemy);
@@ -184,6 +185,10 @@ var enemies = [];
         
         enemies.forEach(function(enemy) {
             enemy.draw(numRenders, player.getX(), player.getY());
+        });
+        
+        bullets.forEach(function(bullet) {
+            bullet.draw(numRenders, player.getX(), player.getY());
         });
         
         player.draw(numRenders);
