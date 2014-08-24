@@ -50,6 +50,16 @@ p {
     padding: 0 15px;
     color: #ccc;
     font-size: 16px;
+    position: relative;
+}
+
+p.inn {
+    margin: 0 35px;
+}
+
+ul, li {
+    color: #ccc;
+    font-size: 16px;
 }
 
 p strong {
@@ -175,8 +185,8 @@ p strong {
 
 #volume {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 3px;
+    right: 2px;
     width: 140px;
     height: 20px;
 }
@@ -188,6 +198,7 @@ p strong {
     background-position: -104px 0;
     display: inline-block;
     margin-right: 10px;
+    margin-top: 2px;
 }
 
 #volume .note.muted {
@@ -195,4 +206,30 @@ p strong {
 }
 #volume input {
     width: 100px;
+}
+
+#instructions .doctor {
+    position: relative;
+    display: inline-block;
+    background: url('../img/player.png') 0 0 no-repeat;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: -10px;
+}
+
+#instructions .tardis {
+    position: absolute;
+    display: inline-block;
+    background: url('../img/phonebooth.png') 0 0 no-repeat;
+    width: 32px;
+    height: 64px;
+    top: -15px;
+    left: -23px;
+}
+
+#instructions .dalek {
+    position: absolute;
+    display: inline-block;
+    right: -23px;
 }
