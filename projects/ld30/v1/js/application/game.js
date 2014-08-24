@@ -108,23 +108,7 @@ var enemies = [];
         var numEnemies = 10;
         
         for (var i = 0; i < numEnemies; i++) {
-            var randX = Math.floor(Math.random() * (mapX - 33)) + 16;
-            var randY = Math.floor(Math.random() * (mapY - 33)) + 16;
-            
-            var landed = false;
-            var j = 1;
-            while (!landed) {
-                var tile = map.getTile(randX, randY + j);
-                if (tile.isSolid) {
-                    var placeY = randY + j - 1;
-                    var enemy = new Enemy(randX, placeY);
-                    console.log("Create enemy at: " + randX + ", " + placeY);
-                    map.setTile(randX, placeY, new Empty());
-                    enemies.push(enemy);
-                    landed= true;
-                }
-                j ++;
-            }
+            createRandomEnemy(midPointX, midPointY, mapX, mapY);
         }
         
         gameRunning = true;
@@ -132,6 +116,32 @@ var enemies = [];
             animLoop();
         }
     }
+    
+    var createRandomEnemy = function(mx, my, mapX, mapY) {
+        var randX = Math.floor(Math.random() * (mapX - 33)) + 16;
+        var randY = Math.floor(Math.random() * (mapY - 33)) + 16;
+        
+        var landed = false;
+        var j = 1;
+        while (!landed) {
+            var tile = map.getTile(randX, randY + j);
+            if (tile.isSolid) {
+                var placeY = randY + j - 1;
+                if (randX == mx && placeY == my) {
+                    createRandomEnemy(mx, my, mapX, mapY);
+                    break;
+                } else {
+                    var enemy = new Enemy(randX, placeY);
+    
+                    map.setTile(randX, placeY, new Empty());
+                    enemies.push(enemy);
+                    landed= true;
+                }
+            }
+            j ++;
+        }
+    }
+    
     var reset = function() {
         map = null;
         player = null;
