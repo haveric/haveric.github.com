@@ -29,6 +29,7 @@ CityLaser.prototype.draw = function(frame, index) {
 
             if (cityX < 5 && cityY < 5) {
                 killCityLaser(index);
+                soundManager.play('explode');
                 killCity(i);
                 city.die();
                 break;

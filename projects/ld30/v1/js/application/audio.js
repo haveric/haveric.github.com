@@ -1,6 +1,6 @@
 var SoundManager = function() {
     this.sounds = [];
-    this.volume = 0/*0.5*/;
+    this.volume = 0.5/*0.5*/;
 }
 
 SoundManager.prototype.add = function(name, src, vol) {
@@ -63,3 +63,5 @@ soundManager.add('land', 'assets/land.wav');
 soundManager.add('attack', 'assets/attack.wav');
 soundManager.add('laser', 'assets/laser.wav', 0.4);
 soundManager.add('laser-hitwall', 'assets/laser-hitwall.wav', 0.2);
+
+soundManager.add('explode', 'assets/explode.wav');
