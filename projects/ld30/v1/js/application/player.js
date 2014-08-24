@@ -282,4 +282,10 @@ Player.prototype.draw = function(frame) {
     if (this.sonic > 0) {
         spriteMapper.getImage('sonic-full').drawImage(22, 22, this.sonic);
     }
+    
+    spriteMapper.getImage('city').drawImage(15, 40);
+    context.font="32px Arial";
+    context.fillStyle="#dddddd";
+    context.fillText("x " + cities.length, 80, 80);
+    
 }
