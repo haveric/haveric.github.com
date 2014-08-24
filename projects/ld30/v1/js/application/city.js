@@ -5,6 +5,7 @@ var City = function(x,y) {
     this.death = 0;
     this.dying = false;
     this.sprite = 'city';
+    this.deathFrameMod = 10;
 }
 
 City.prototype.die = function() {
@@ -16,7 +17,7 @@ City.prototype.die = function() {
 
 City.prototype.draw = function(frame) {
     var newSprite = this.sprite + "-death" + this.death;
-    if (this.dying) {
+    if (this.dying && frame % this.deathFrameMod == 0) {
         if (this.death < 7) {
             
             this.death ++;
