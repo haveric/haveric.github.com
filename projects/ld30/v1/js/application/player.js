@@ -272,6 +272,6 @@ Player.prototype.draw = function(frame) {
     if (this.xVelocity === 0) {
         this.walk = 0;
     }
-    spriteMapper.getImage(attackSprite).drawImage(context, 384, 480);
-    spriteMapper.getImage(walkSprite).drawImage(context, 384, 496);
+    spriteMapper.getImage(attackSprite).drawImage(384, 480);
+    spriteMapper.getImage(walkSprite).drawImage(384, 496);
 }

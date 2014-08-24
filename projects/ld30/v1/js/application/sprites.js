@@ -56,7 +56,7 @@ var Sprite = function (imageName, textureName, x, y, w, h) {
     this.h = h || 32;
 }
 
-Sprite.prototype.drawImage = function (context, i, j) {
+Sprite.prototype.drawImage = function (i, j) {
     if (this.texture == null) {
         this.texture = textureMapper.getTexture(this.textureName);
     } else {
@@ -69,11 +69,13 @@ var textureMapper = new TextureMapper();
 textureMapper.addTexture('player', 'img/player.png');
 textureMapper.addTexture('solid', 'img/sprites.png');
 textureMapper.addTexture('phonebooth', 'img/phonebooth.png');
+textureMapper.addTexture('dalek', 'img/dalek.png');
 
 var spriteMapper = new SpriteMapper();
-spriteMapper.addImage('empty', 'sprites', 32, 0);
-spriteMapper.addImage('player-left', 'player', 0, 0);
-spriteMapper.addImage('player-right', 'player', 0, 32);
+spriteMapper.addImage('empty', 'empty', 32, 0);
+
+spriteMapper.addImage('dalek-left', 'dalek', 0, 0);
+spriteMapper.addImage('dalek-right', 'dalek', 0, 32);
 
 spriteMapper.addImage('player-left-walk0', 'player', 0, 16, 32, 16);
 spriteMapper.addImage('player-left-walk1', 'player', 32, 16, 32, 16);

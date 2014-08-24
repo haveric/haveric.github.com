@@ -67,7 +67,7 @@ Map.prototype.draw = function(frame, playerX, playerY) {
             } else {
                 var tile = this.tiles[i][j];
                 
-                tile.draw(context, frame, i, j, i-left, j-top, offsetX, offsetY);
+                tile.draw(frame, i, j, i-left, j-top, offsetX, offsetY);
             }
         }
     }

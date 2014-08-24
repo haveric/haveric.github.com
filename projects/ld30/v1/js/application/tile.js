@@ -5,7 +5,7 @@ var Tile = function(name, sprite) {
     this.isSolid = false;
 }
 
-Tile.prototype.draw = function(context, frame, ax, ay, x, y, i, j) {
+Tile.prototype.draw = function(frame, ax, ay, x, y, i, j) {
     var newSprite = this.sprite;
     if (this instanceof Solid) {
         var topTile = map.getTile(ax,ay-1);
@@ -36,7 +36,7 @@ Tile.prototype.draw = function(context, frame, ax, ay, x, y, i, j) {
         */
     }
     
-    spriteMapper.getImage(newSprite).drawImage(context, x*32 - i, y*32 - j);
+    spriteMapper.getImage(newSprite).drawImage(x*32 - i, y*32 - j);
 }
 
 Tile.prototype.getCanWalk = function() {

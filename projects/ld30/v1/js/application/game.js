@@ -6,6 +6,9 @@ var canvas,
     context,
     phoneBooth,
     sky;
+
+var enemies = [];
+
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -102,7 +105,28 @@ var canvas,
         map.setTile(pbX, pbY, new Empty());
         map.setTile(pbX, pbY+1, new Empty());
         
-
+        var numEnemies = 10;
+        
+        for (var i = 0; i < numEnemies; i++) {
+            var randX = Math.floor(Math.random() * (mapX - 33)) + 16;
+            var randY = Math.floor(Math.random() * (mapY - 33)) + 16;
+            
+            var landed = false;
+            var j = 1;
+            while (!landed) {
+                var tile = map.getTile(randX, randY + j);
+                if (tile.isSolid) {
+                    var placeY = randY + j - 1;
+                    var enemy = new Enemy(randX, placeY);
+                    console.log("Create enemy at: " + randX + ", " + placeY);
+                    map.setTile(randX, placeY, new Empty());
+                    enemies.push(enemy);
+                    landed= true;
+                }
+                j ++;
+            }
+        }
+        
         gameRunning = true;
         if (!requestId) {
             animLoop();
@@ -143,13 +167,14 @@ var canvas,
     }
     
     var render = function(){
-        //context.fillStyle="#000000";
-        //context.fillRect(0, 0, canvas.width, canvas.height);
-
         sky.draw(numRenders);
         map.draw(numRenders, player.getX(), player.getY());
         
         phoneBooth.draw(numRenders, player.getX(), player.getY());
+        
+        enemies.forEach(function(enemy) {
+            enemy.draw(numRenders, player.getX(), player.getY());
+        });
         
         player.draw(numRenders);
         
