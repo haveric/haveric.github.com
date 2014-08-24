@@ -4,6 +4,7 @@ var CityLaser = function(x, y, tX, tY) {
     this.tX = tX + 32;
     this.tY = tY + 32;
     this.progress = 0;
+    this.audio = soundManager.play('city-laser');
 }
 
 CityLaser.prototype.draw = function(frame, index) {
@@ -36,10 +37,19 @@ CityLaser.prototype.draw = function(frame, index) {
             }
         }
     }
+    if (this.progress == 101) {
+        killCityLaser(index);
+    }
+    
+    if (this.progress == 100) {
+        this.progress ++;
+    }
 }
 
 function killCityLaser(index) {
     if (index >= 0 && index < cityLasers.length) {
+        var laser = cityLasers[index];
+        laser.audio.src = "";
         cityLasers.splice(index, 1);
     }
 }

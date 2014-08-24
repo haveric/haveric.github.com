@@ -30,7 +30,7 @@ SoundManager.prototype.play = function(audioName, playVolume) {
             audio.volume = actualVolume;
             audio.play();
             
-            return;
+            return audio;
         }
     }
     
@@ -65,3 +65,5 @@ soundManager.add('laser', 'assets/laser.wav', 0.4);
 soundManager.add('laser-hitwall', 'assets/laser-hitwall.wav', 0.2);
 
 soundManager.add('explode', 'assets/explode.wav');
+soundManager.add('dalek-stun', 'assets/dalek-stun.wav');
+soundManager.add('city-laser', 'assets/city-laser.wav');

@@ -125,6 +125,7 @@ Player.prototype.doAttack = function() {
                     if (diffEnemyRight <= 100 && diffEnemyRight >= 0 && this.direction == "right") {
                         enemy.doStun();
                         enemyStunned = true;
+                        soundManager.play('dalek-stun');
                         break;
                     }
                     
@@ -132,6 +133,7 @@ Player.prototype.doAttack = function() {
                     if (diffEnemyLeft <= 100 && diffEnemyLeft >= 0 && this.direction == "left") {
                         enemy.doStun();
                         enemyStunned = true;
+                        soundManager.play('dalek-stun');
                         break;
                     }
                 }
