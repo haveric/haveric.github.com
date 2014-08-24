@@ -24,6 +24,7 @@ var Global = function() {
 }
 
 var global;
+var player;
 
 (function () {
     var keysDown = [],
@@ -31,8 +32,7 @@ var global;
         keyDownListener,
         keyUpListener;
     
-    var player,
-        requestId,
+    var requestId,
         numRenders = 0,
         keyDownListener,
         keyUpListener;
@@ -214,8 +214,6 @@ var global;
         if (81 in keysDown) { // q
             stop("menu");
         }
-        
-        //keysDown = [];
     }
     
     var spawnCityLaser = function() {

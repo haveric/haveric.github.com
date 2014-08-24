@@ -142,6 +142,20 @@ spriteMapper.addImage('player-right-attack5', 'player', 160, 96, 32, 16);
 spriteMapper.addImage('player-right-attack6', 'player', 192, 96, 32, 16);
 spriteMapper.addImage('player-right-attack7', 'player', 224, 96, 32, 16);
 
+spriteMapper.addImage('player-left-death0', 'player', 0, 128);
+spriteMapper.addImage('player-left-death1', 'player', 32, 128);
+spriteMapper.addImage('player-left-death2', 'player', 64, 128);
+spriteMapper.addImage('player-left-death3', 'player', 96, 128);
+spriteMapper.addImage('player-left-death4', 'player', 128, 128);
+spriteMapper.addImage('player-left-death5', 'player', 160, 128);
+
+spriteMapper.addImage('player-right-death0', 'player', 0, 160);
+spriteMapper.addImage('player-right-death1', 'player', 32, 160);
+spriteMapper.addImage('player-right-death2', 'player', 64, 160);
+spriteMapper.addImage('player-right-death3', 'player', 96, 160);
+spriteMapper.addImage('player-right-death4', 'player', 128, 160);
+spriteMapper.addImage('player-right-death5', 'player', 160, 160);
+
 spriteMapper.addImage('solid', 'solid', 32, 32);
 spriteMapper.addImage('solid-top', 'solid', 64, 32);
 spriteMapper.addImage('solid-tr', 'solid', 96, 32);
