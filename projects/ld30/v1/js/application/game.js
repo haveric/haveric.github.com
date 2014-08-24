@@ -87,6 +87,11 @@ var stop;
         } else {
             isDemo = false;
         }
+        
+        // Reset game so we can play again
+        gameRunning = false;
+        cancelAnimFrame(requestId);
+        requestId = undefined;
     
         keyDownListener = addEventListener("keydown", function (e) {
             //console.log("Keycode: " + e.keyCode);
@@ -220,8 +225,6 @@ var stop;
             keyDownListener = undefined;
             keyUpListener = undefined;
             
-            console.log("Stop: " + type);
-            
             if (type == "menu") {
                 hideMenus();
                 $("#startMenu").addClass('active');
@@ -246,12 +249,6 @@ var stop;
             
             if (40 in keysDown || 17 in keysDown) { // Player holding down
                 player.doAttack();
-            }
-            
-            if (76 in keysDown) { // L is for LAZZZZERS
-                spawnCityLaser();
-                
-                delete keysDown[76];
             }
             
             if (37 in keysDown) { // Player holding left
