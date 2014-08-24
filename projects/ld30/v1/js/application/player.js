@@ -113,21 +113,51 @@ Player.prototype.doAttack = function() {
             this.sonic -= this.sonicCost;
             soundManager.play('attack');
             
-            var diffRight = phoneBooth.x * 32 - this.x;
-            if (diffRight <= 100 && diffRight >= 0 && this.direction == "right") {
-                if (phoneBooth.opening == 0) {
-                    phoneBooth.open();
-                } else {
-                    phoneBooth.close();
+            var enemyStunned = false;
+            
+            var enemyLength = enemies.length;
+            for (var i = 0; i < enemyLength; i++) {
+                var enemy = enemies[i];
+                
+                var diffEnemyHeight = Math.abs(enemy.y - this.y);
+                if (diffEnemyHeight <= 16) {
+                    var diffEnemyRight = enemy.x - this.x;
+                    if (diffEnemyRight <= 100 && diffEnemyRight >= 0 && this.direction == "right") {
+                        enemy.doStun();
+                        enemyStunned = true;
+                        break;
+                    }
+                    
+                    var diffEnemyLeft = this.x - enemy.x;
+                    if (diffEnemyLeft <= 100 && diffEnemyLeft >= 0 && this.direction == "left") {
+                        enemy.doStun();
+                        enemyStunned = true;
+                        break;
+                    }
                 }
             }
             
-            var diffLeft = this.x - phoneBooth.x * 32;
-            if (diffLeft <= 100 && diffLeft >= 0 && this.direction == "left") {
-                if (phoneBooth.opening == 0) {
-                    phoneBooth.open();
-                } else {
-                    phoneBooth.close();
+            if (!enemyStunned) {
+                var diffHeight = phoneBooth.y * 32 - this.y;
+                
+                if (diffHeight >= -80 && diffHeight <= 16) {
+                    var diffRight = phoneBooth.x * 32 - this.x;
+                    if (diffRight <= 100 && diffRight >= 0 && this.direction == "right") {
+                        if (phoneBooth.opening == 0) {
+                            phoneBooth.open();
+                        } else {
+                            phoneBooth.close();
+                        }
+                    }
+                    
+                    var diffLeft = this.x - phoneBooth.x * 32;
+                    if (diffLeft <= 100 && diffLeft >= 0 && this.direction == "left") {
+                        if (phoneBooth.opening == 0) {
+                            phoneBooth.open();
+                        } else {
+                            phoneBooth.close();
+                        }
+                    }
                 }
             }
         }

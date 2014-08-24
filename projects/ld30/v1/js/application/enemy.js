@@ -14,14 +14,41 @@ var Enemy = function(x, y) {
     } else {
         this.direction = "right";
     }
+    
+    this.stun = 0;
+    this.isStunned = false;
+    this.stunModFrame = 10;
+    this.stunTimer = 0;
+    this.stunLength = 100;
+    
+    this.randomAttackRate = 250;
+    
 }
 
 Enemy.prototype.draw = function(frame, index, playerX, playerY) {
-    this.move(frame);
-    
-    var randAttack = Math.floor(Math.random() * 250);
-    if (randAttack == 0) {
-        this.attack(frame, playerX, playerY);
+    if (this.stunned) {
+        if (this.stun < 3 && frame % this.stunModFrame == 0) {
+            this.stun ++;
+        }
+        
+        this.stunTimer ++;
+        if (this.stunTimer > this.stunLength) {
+            this.stunned = false;
+            this.stun = 0;
+            this.stunTimer = 0;
+        }
+    } else {
+        this.move(frame);
+        
+        var randAttack = Math.floor(Math.random() * this.randomAttackRate);
+        if (randAttack == 0) {
+            this.attack(frame, playerX, playerY);
+        }
+        
+        var rand = Math.floor(Math.random() * 100);
+        if (rand === 0) {
+            this.switchDirections();
+        }
     }
     
     var tileX = Math.floor(playerX / 32);
@@ -35,13 +62,7 @@ Enemy.prototype.draw = function(frame, index, playerX, playerY) {
     var top = tileY - 15;
     var bot = tileY + 6;
     
-    var rand = Math.floor(Math.random() * 100);
-    if (rand === 0) {
-        this.switchDirections();
-    }
-    
-    var newSprite = this.sprite + "-" + this.direction;
-    
+    var newSprite = this.sprite + "-" + this.direction + "-stun" + this.stun;
     spriteMapper.getImage(newSprite).drawImage((this.x-left*32) - offsetX, (this.y-top*32) - offsetY);
 }
 
@@ -92,6 +113,12 @@ Enemy.prototype.move = function(frame) {
                 this.switchDirections();
             }
         }
+    }
+}
+
+Enemy.prototype.doStun = function(frame) {
+    if (!this.isStunned) {
+        this.stunned = true;
     }
 }
 

@@ -96,6 +96,16 @@ spriteMapper.addImage('sonic-full', 'ui', 2, 14, 100, 8);
 
 spriteMapper.addImage('dalek-right', 'dalek', 0, 0);
 spriteMapper.addImage('dalek-left', 'dalek', 0, 32);
+
+spriteMapper.addImage('dalek-right-stun0', 'dalek', 0, 64);
+spriteMapper.addImage('dalek-right-stun1', 'dalek', 32, 64);
+spriteMapper.addImage('dalek-right-stun2', 'dalek', 64, 64);
+spriteMapper.addImage('dalek-right-stun3', 'dalek', 96, 64);
+spriteMapper.addImage('dalek-left-stun0', 'dalek', 0, 96);
+spriteMapper.addImage('dalek-left-stun1', 'dalek', 32, 96);
+spriteMapper.addImage('dalek-left-stun2', 'dalek', 64, 96);
+spriteMapper.addImage('dalek-left-stun3', 'dalek', 96, 96);
+
 spriteMapper.addImage('dalek-laser', 'dalek', 32, 0, 10, 3);
 
 spriteMapper.addImage('player-left-walk0', 'player', 0, 16, 32, 16);
