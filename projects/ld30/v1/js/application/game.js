@@ -63,6 +63,7 @@ var cities = [];
     
     var init = function() {
         keyDownListener = addEventListener("keydown", function (e) {
+            console.log("Keycode: " + e.keyCode);
             keysDown[e.keyCode] = true;
         }, false);
 
@@ -174,11 +175,11 @@ var cities = [];
     }
     
     var handleInput = function() {
-        if (38 in keysDown) { // Player holding up
+        if (38 in keysDown || 32 in keysDown) { // Player holding up
             player.jump();
         }
         
-        if (40 in keysDown) { // Player holding down
+        if (40 in keysDown || 17 in keysDown) { // Player holding down
             player.doAttack();
         }
         
