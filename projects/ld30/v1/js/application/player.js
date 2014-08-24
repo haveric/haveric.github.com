@@ -320,9 +320,10 @@ Player.prototype.draw = function(frame) {
     
     deathSprite += "-death" + this.death;
     if (this.isDying) {
-        if (this.death < 5 && frame % this.deathModFrame == 0) {
-            
-            this.death ++;
+        if (this.death < 5) {
+            if (frame % this.deathModFrame == 0) {
+                this.death ++;
+            }
         } else {
             stop('lose-death');
         }
