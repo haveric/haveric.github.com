@@ -76,9 +76,20 @@ textureMapper.addTexture('solid', 'img/sprites.png');
 textureMapper.addTexture('phonebooth', 'img/phonebooth.png');
 textureMapper.addTexture('dalek', 'img/dalek.png');
 textureMapper.addTexture('ui', 'img/ui.png');
+textureMapper.addTexture('city', 'img/city.png');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('empty', 'empty', 32, 0);
+
+spriteMapper.addImage('city', 'city', 0, 0, 64, 64);
+spriteMapper.addImage('city-death0', 'city', 0, 64, 64, 64);
+spriteMapper.addImage('city-death1', 'city', 32, 64, 64, 64);
+spriteMapper.addImage('city-death2', 'city', 64, 64, 64, 64);
+spriteMapper.addImage('city-death3', 'city', 96, 64, 64, 64);
+spriteMapper.addImage('city-death4', 'city', 128, 64, 64, 64);
+spriteMapper.addImage('city-death5', 'city', 160, 64, 64, 64);
+spriteMapper.addImage('city-death6', 'city', 192, 64, 64, 64);
+spriteMapper.addImage('city-death7', 'city', 224, 64, 64, 64);
 
 spriteMapper.addImage('sonic-empty', 'ui', 0, 0, 104, 12);
 spriteMapper.addImage('sonic-full', 'ui', 2, 14, 100, 8);

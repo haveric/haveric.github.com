@@ -9,6 +9,7 @@ var canvas,
 
 var enemies = [];
 var bullets = [];
+var cities = [];
 
 (function () {
     var keysDown = [],
@@ -106,6 +107,11 @@ var bullets = [];
         map.setTile(pbX, pbY, new Empty());
         map.setTile(pbX, pbY+1, new Empty());
         
+        var numCities = 5;
+        for (var i = 0; i < numCities; i++) {
+            createCity();
+        }
+        
         var numEnemies = 10;
         
         for (var i = 0; i < numEnemies; i++) {
@@ -115,6 +121,18 @@ var bullets = [];
         gameRunning = true;
         if (!requestId) {
             animLoop();
+        }
+    }
+    
+    var createCity = function() {
+        var x = Math.floor(Math.random() * CANVAS_WIDTH);
+        var y = (canvas.height * 2/3) + Math.floor(Math.random() * 160);
+        
+        // Prevent city from appearing behind player
+        if (x > 300 && x < 450 || x > CANVAS_WIDTH - 60) {
+            createCity();
+        } else {
+            cities.push(new City(x, y));
         }
     }
     
@@ -179,6 +197,10 @@ var bullets = [];
     
     var render = function(){
         sky.draw(numRenders);
+        cities.forEach(function(city, index) {
+            city.draw(numRenders);
+        });
+        
         map.draw(numRenders, player.getX(), player.getY());
         
         phoneBooth.draw(numRenders, player.getX(), player.getY());
