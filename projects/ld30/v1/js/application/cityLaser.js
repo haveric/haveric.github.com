@@ -9,8 +9,6 @@ var CityLaser = function(x, y, tX, tY) {
 
 CityLaser.prototype.draw = function(frame, index) {
     if (this.progress < 100) {
-        var oldLineWidth = context.lineWidth;
-        
         context.beginPath();
         context.strokeStyle = "#eeeeee";
         context.lineWidth = 10;
@@ -20,7 +18,7 @@ CityLaser.prototype.draw = function(frame, index) {
         var currentY = this.y + (this.tY - this.y) * this.progress / 100;
         context.lineTo(currentX, currentY);
         context.stroke();
-        context.lineWidth = oldLineWidth;
+        
         this.progress ++;
     } else {
         var kill = false;

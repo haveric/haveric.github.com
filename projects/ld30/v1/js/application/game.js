@@ -13,6 +13,9 @@ var cities = [];
 var deadCities = [];
 var cityLasers = [];
 
+var cityDeathTimerMax = 10;
+var cityDeathTimer = 10;
+
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -186,12 +189,7 @@ var cityLasers = [];
         }
         
         if (76 in keysDown) { // L is for LAZZZZERS
-            var cityNum = Math.floor(Math.random() * cities.length);
-            var city = cities[cityNum];
-            var startX = Math.random() * 800;
-            var startY = -50;
-            
-            cityLasers.push(new CityLaser(startX, startY, city.x, city.y));
+            spawnCityLaser();
             
             delete keysDown[76];
         }
@@ -209,6 +207,14 @@ var cityLasers = [];
         //keysDown = [];
     }
     
+    var spawnCityLaser = function() {
+        var cityNum = Math.floor(Math.random() * cities.length);
+        var city = cities[cityNum];
+        var startX = Math.random() * 800;
+        var startY = -50;
+        
+        cityLasers.push(new CityLaser(startX, startY, city.x, city.y));
+    }
     var render = function(){
         sky.draw(numRenders);
         cities.forEach(function(city, index) {
@@ -242,6 +248,13 @@ var cityLasers = [];
         numRenders++;
         if (numRenders == 60) {
             numRenders = 0;
+            
+            cityDeathTimer --;
+            
+            if (cityDeathTimer < 0) {
+                cityDeathTimer = cityDeathTimerMax;
+                spawnCityLaser();
+            }
         }
     }
     
