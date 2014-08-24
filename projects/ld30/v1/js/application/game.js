@@ -10,6 +10,8 @@ var canvas,
 var enemies = [];
 var bullets = [];
 var cities = [];
+var deadCities = [];
+var cityLasers = [];
 
 (function () {
     var keysDown = [],
@@ -183,6 +185,17 @@ var cities = [];
             player.doAttack();
         }
         
+        if (76 in keysDown) { // L is for LAZZZZERS
+            var cityNum = Math.floor(Math.random() * cities.length);
+            var city = cities[cityNum];
+            var startX = Math.random() * 800;
+            var startY = -50;
+            
+            cityLasers.push(new CityLaser(startX, startY, city.x, city.y));
+            
+            delete keysDown[76];
+        }
+        
         if (37 in keysDown) { // Player holding left
             player.moveLeft();
         }
@@ -200,6 +213,14 @@ var cities = [];
         sky.draw(numRenders);
         cities.forEach(function(city, index) {
             city.draw(numRenders);
+        });
+        
+        deadCities.forEach(function(city, index) {
+            //city.draw(numRenders);
+        });
+        
+        cityLasers.forEach(function(laser, index) {
+            laser.draw(numRenders, index);
         });
         
         map.draw(numRenders, player.getX(), player.getY());

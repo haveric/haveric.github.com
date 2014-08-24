@@ -7,7 +7,7 @@ var City = function(x,y) {
     this.sprite = 'city';
 }
 
-City.prototype.die = function(frame) {
+City.prototype.die = function() {
     if (!this.dying) {
         this.dying = true;
     }
@@ -27,4 +27,11 @@ City.prototype.draw = function(frame) {
     }
     
     spriteMapper.getImage(newSprite).drawImage(this.x, this.y);
+}
+
+function killCity(index) {
+    if (index > 0 && index < cities.length) {
+        var killedCity = cities.splice(index, 1);
+        deadCities.push(killedCity);
+    }
 }

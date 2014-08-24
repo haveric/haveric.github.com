@@ -12,7 +12,13 @@ Map.prototype.getTiles = function() {
 }
 
 Map.prototype.getTile = function(x,y) {
-    return this.tiles[x][y];
+    var tile = null;
+    
+    if (x >= 0 && y >= 0 && x < this.rows && y < this.cols) {
+        tile = this.tiles[x][y];
+    }
+    
+    return tile;
 }
 
 Map.prototype.setTile = function(x,y,tile) {

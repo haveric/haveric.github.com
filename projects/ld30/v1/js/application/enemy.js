@@ -156,7 +156,7 @@ Bullet.prototype.draw = function(frame, index, playerX, playerY) {
 
         var hitTile = map.getTile(tileX, tileY);
         
-        if (hitTile.isSolid) {
+        if (hitTile != null && hitTile.isSolid) {
             bulletExists = false;
             // Bullet hits wall
             soundManager.play('laser-hitwall', volume);
@@ -165,7 +165,7 @@ Bullet.prototype.draw = function(frame, index, playerX, playerY) {
         if (bulletExists) {
             var tileX2 = Math.floor((this.x + 10) / 32);
             var hitTile2 = map.getTile(tileX2, tileY);
-            if (bulletExists && hitTile2.isSolid) {
+            if (bulletExists && hitTile != null && hitTile2.isSolid) {
                 bulletExists = false;
                 // Bullet hits wall
                 soundManager.play('laser-hitwall', volume);

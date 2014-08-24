@@ -1,6 +1,6 @@
 var SoundManager = function() {
     this.sounds = [];
-    this.volume = 1;
+    this.volume = 0.5;
 }
 
 SoundManager.prototype.add = function(name, src, vol) {
@@ -11,7 +11,7 @@ SoundManager.prototype.add = function(name, src, vol) {
 SoundManager.prototype.play = function(audioName, playVolume) {
     var self = this;
     
-    if (!playVolume) {
+    if (!playVolume || playVolume == null) {
         playVolume = 1;
     }
 
@@ -50,12 +50,16 @@ SoundManager.prototype.getVolume = function() {
 var Sound = function (name, src, vol) {
     this.name = name;
     this.src = src;
-    this.vol = vol || 1;
+    if (vol == null) {
+        this.vol = 1;
+    } else {
+        this.vol = vol;
+    }
 }
 
 var soundManager = new SoundManager();
 
 soundManager.add('land', 'assets/land.wav');
 soundManager.add('attack', 'assets/attack.wav');
-soundManager.add('laser', 'assets/laser.wav', .05/*0.4*/);
+soundManager.add('laser', 'assets/laser.wav', 0.4);
 soundManager.add('laser-hitwall', 'assets/laser-hitwall.wav', 0.2);
