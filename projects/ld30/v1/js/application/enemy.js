@@ -133,8 +133,45 @@ Bullet.prototype.draw = function(frame, index, playerX, playerY) {
     
     var bulletExists = true;
     
+    var distX = Math.abs(playerX - this.x);
+    var volume = 1 - (distX / 1000);
+    if (volume > 1) {
+        volume = 1;
+    }
+    
+    // Check for out of bounds
     if (this.x < 0 || this.x > map.rows *32) {
         bulletExists = false;
+    }
+    
+    // Check for player collisions
+    if (bulletExists && this.x + 10 > playerX + 7 && this.x < playerX + 27 && this.y > playerY && this.y < playerY + 32) {
+        bulletExists = false;
+        // Bullet hits player
+    }
+    
+    // Check for wall collisions
+    if (bulletExists) {
+        var tileX = Math.floor(this.x / 32);
+        var tileY = Math.floor(this.y / 32);
+
+        var hitTile = map.getTile(tileX, tileY);
+        
+        if (hitTile.isSolid) {
+            bulletExists = false;
+            // Bullet hits wall
+            soundManager.play('laser-hitwall', volume);
+        }
+        
+        if (bulletExists) {
+            var tileX2 = Math.floor((this.x + 10) / 32);
+            var hitTile2 = map.getTile(tileX2, tileY);
+            if (bulletExists && hitTile2.isSolid) {
+                bulletExists = false;
+                // Bullet hits wall
+                soundManager.play('laser-hitwall', volume);
+            }
+        }
     }
     
     if (bulletExists) {
