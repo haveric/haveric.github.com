@@ -123,22 +123,26 @@ Player.prototype.doAttack = function() {
                 if (diffEnemyHeight <= 16) {
                     var diffEnemyRight = enemy.x - this.x;
                     if (diffEnemyRight <= 100 && diffEnemyRight >= 0 && this.direction == "right") {
-                        enemy.doStun();
-                        enemyStunned = true;
-                        soundManager.play('dalek-stun');
-                        break;
+                        if (!enemy.isStunned) {
+                            enemy.doStun();
+                            enemyStunned = true;
+                            soundManager.play('dalek-stun');
+                            break;
+                        }
                     }
                     
                     var diffEnemyLeft = this.x - enemy.x;
                     if (diffEnemyLeft <= 100 && diffEnemyLeft >= 0 && this.direction == "left") {
-                        enemy.doStun();
-                        enemyStunned = true;
-                        soundManager.play('dalek-stun');
-                        break;
+                        if (!enemy.isStunned) {
+                            enemy.doStun();
+                            enemyStunned = true;
+                            soundManager.play('dalek-stun');
+                            break;
+                        }
                     }
                 }
             }
-            
+
             if (!enemyStunned) {
                 var diffHeight = phoneBooth.y * 32 - this.y;
                 

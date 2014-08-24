@@ -26,14 +26,14 @@ var Enemy = function(x, y) {
 }
 
 Enemy.prototype.draw = function(frame, index, playerX, playerY) {
-    if (this.stunned) {
+    if (this.isStunned) {
         if (this.stun < 3 && frame % this.stunModFrame == 0) {
             this.stun ++;
         }
         
         this.stunTimer ++;
         if (this.stunTimer > this.stunLength) {
-            this.stunned = false;
+            this.isStunned = false;
             this.stun = 0;
             this.stunTimer = 0;
         }
@@ -118,7 +118,7 @@ Enemy.prototype.move = function(frame) {
 
 Enemy.prototype.doStun = function(frame) {
     if (!this.isStunned) {
-        this.stunned = true;
+        this.isStunned = true;
     }
 }
 
