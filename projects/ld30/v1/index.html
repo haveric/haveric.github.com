@@ -84,12 +84,14 @@
             <div>
                 <p>You are the Doctor.<i class='doctor'></i></p>
                 <p class="inn"><i class='tardis'></i>You must get to your T.A.R.D.I.S in order to stop the Dalek invasion.<i class='dalek dalek-left'></i></p>
-                <p>All you have to use is your trusty sonic screwdriver.</p>
-                <p>Using the sonic screwdriver, you can:</p>
+                <p>All you have to use is your trusty sonic screwdriver. Using the sonic screwdriver, you can:</p>
                 <ul>
                     <li>Disable (momentarily) Daleks which you are facing.</li>
                     <li>Open/Close the T.A.R.D.I.S doors.</li>
                 </ul>
+                <p>Every so often, a Dalek ship will destroy a city.</p>
+                <p>You win if you can get inside of the T.A.R.D.I.S.</p>
+                <p>You lose if all of the cities are destroyed or you get shot by a Dalek.</p>
             </div>
             <hr>
             <div>
@@ -98,10 +100,12 @@
         </div>
         
         <div id="settings" class="menu">
-            <h2>Settings</h2>
+            <h2>Controls</h2>
             <hr>
             <div>
-                <p>Settings go here</p>
+                <p>Left/Right: move character</p>
+                <p>Up or Space: Jump</p>
+                <p>Down or Control: Attack</p>
             </div>
             <hr>
             <div>
@@ -124,11 +128,43 @@
         </div>
         
         <div id="winMenu" class="menu">
-            <h2>You Win</h2>
+            <h2>You have defeated the Daleks!</h2>
+            <hr>
+            <p class="cityinn">
+                <i class="city"></i> Cities Remaining <span class="city-remain"></span> of <span class="city-start"></span>
+            </p>
+            <p>
+                Time elapsed: <span class="timeElapsed"></span> seconds.
+            </p>
+            <hr>
+            <div>
+                <a href="#" class="playAgain">Play again?</a>
+                <a href="#" class="backButton">Back To Home</a>
+            </div>
         </div>
         
         <div id="loseMenu" class="menu">
-            <h2>You Lose</h2>
+            <h2 class="cities">All cities have been destroyed.</h2>
+            <h2 class="death">You have died.</h2>
+            <hr>
+            <p class="cities">
+                You have failed to stop the destruction in time!
+            </p>
+            <p class="death">
+                You have been exterminated be the Daleks.
+            </p>
+            
+            <p class="cityinn">
+                <i class="city"></i> Cities Remaining <span class="city-remain"></span> of <span class="city-start"></span>
+            </p>
+            <p>
+                Time elapsed: <span class="timeElapsed"></span> seconds.
+            </p>
+            <hr>
+            <div>
+                <a href="#" class="playAgain">Try again?</a>
+                <a href="#" class="backButton">Back</a>
+            </div>
         </div>
         
         <script src="js/vendor/jquery-1.10.2.min.js" type="text/javascript"></script>

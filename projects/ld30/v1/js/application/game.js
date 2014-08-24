@@ -31,6 +31,8 @@ var numStartCities = 5;
 
 var stop;
 
+var elapsedTime = 0;
+
 
 (function () {
     var keysDown = [],
@@ -116,6 +118,8 @@ var stop;
         context = canvas.getContext('2d');
 
         global = new Global();
+        
+        elapsedTime = 0;
         
         var mapX = mapWidth || 100;
         var mapY = 46;
@@ -231,12 +235,34 @@ var stop;
             } else if (type == "win") {
                 hideMenus();
                 $("#winMenu").addClass("active");
+                
+                $("#winMenu .timeElapsed").text(elapsedTime);
+                $("#winMenu .city-start").text(numStartCities);
+                
+                var remainingCities = cities.length;
+                $("#winMenu .city-remain").text(remainingCities);
             } else if (type == "lose-cities") {
                 hideMenus();
+                $("#loseMenu .death").hide();
+                $("#loseMenu .cities").show();
                 $("#loseMenu").addClass("active");
+                
+                $("#loseMenu .timeElapsed").text(elapsedTime);
+                $("#loseMenu .city-start").text(numStartCities);
+                
+                var remainingCities = cities.length;
+                $("#loseMenu .city-remain").text(remainingCities);
             } else if (type == "lose-death") {
                 hideMenus();
+                $("#loseMenu .death").show();
+                $("#loseMenu .cities").hide();
                 $("#loseMenu").addClass("active");
+                
+                $("#loseMenu .timeElapsed").text(elapsedTime);
+                $("#loseMenu .city-start").text(numStartCities);
+                
+                var remainingCities = cities.length;
+                $("#loseMenu .city-remain").text(remainingCities);
             }
         }
     }
@@ -332,6 +358,7 @@ var stop;
         numRenders++;
         if (numRenders == 60) {
             numRenders = 0;
+            elapsedTime ++;
             
             cityDeathTimer --;
             

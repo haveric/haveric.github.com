@@ -233,3 +233,18 @@ p strong {
     display: inline-block;
     right: -23px;
 }
+
+.city {
+    position: absolute;
+    display: inline-block;
+    background: url('../img/city.png') 0 0 no-repeat;
+    width: 64px;
+    height: 64px;
+    left: -65px;
+    top: -20px;
+}
+
+.cityinn {
+    margin-left: 70px;
+    margin-bottom: 40px;
+}
