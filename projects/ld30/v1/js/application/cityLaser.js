@@ -23,6 +23,7 @@ CityLaser.prototype.draw = function(frame, index) {
         context.lineWidth = oldLineWidth;
         this.progress ++;
     } else {
+        var kill = false;
         for (var i = 0; i < cities.length; i ++) {
             var city = cities[i];
             var cityX = Math.abs(city.x + 32 - this.tX);
@@ -30,19 +31,16 @@ CityLaser.prototype.draw = function(frame, index) {
 
             if (cityX < 5 && cityY < 5) {
                 killCityLaser(index);
+                kill = true;
                 soundManager.play('explode');
                 killCity(i);
                 city.die();
                 break;
             }
         }
-    }
-    if (this.progress == 101) {
-        killCityLaser(index);
-    }
-    
-    if (this.progress == 100) {
-        this.progress ++;
+        if (!kill) {
+            killCityLaser(index);
+        }
     }
 }
 
