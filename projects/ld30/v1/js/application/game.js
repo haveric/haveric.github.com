@@ -437,6 +437,20 @@ var stop;
         $this.siblings('.value').text($this.val());
     });
     
+    $("#volume input").on("change", function() {
+        var $this = $(this);
+        
+        var newVolume = $this.val();
+        
+        if (newVolume == 0) {
+            $("#volume .note").addClass('muted');
+        } else {
+            $("#volume .note").removeClass('muted');
+        }
+        
+        soundManager.setVolume(newVolume / 100);
+    });
+    
     $("#instructionsLink").on("click", function() {
         $("#startMenu").removeClass("active");
         

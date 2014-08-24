@@ -167,3 +167,27 @@ p strong {
 .dalek-right {
     background-position: 0 0;
 }
+
+
+#volume {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 130px;
+    height: 20px;
+}
+
+#volume .note {
+    background: url('../img/ui.png') left top no-repeat;
+    width: 26px;
+    height: 24px;
+    background-position: -104px 0;
+    display: inline-block;
+}
+
+#volume .note.muted {
+    background-position: -130px 0;
+}
+#volume input {
+    width: 100px;
+}

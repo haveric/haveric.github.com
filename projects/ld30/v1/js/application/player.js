@@ -374,13 +374,13 @@ Player.prototype.draw = function(frame) {
     context.fillStyle="#dddddd";
     context.fillText("x " + cities.length, 80, 80);
     
-    context.fillText(cityDeathTimer, 750, 40);
+    context.fillText(cityDeathTimer, 750, 80);
     
     context.beginPath();
     context.strokeStyle = "#eeeeee";
     context.lineWidth = 10;
-    context.moveTo(735, 15);
-    context.lineTo(720, 40);
+    context.moveTo(735, 55);
+    context.lineTo(720, 80);
     context.stroke();
     
 }
