@@ -240,6 +240,8 @@ var elapsedTime = 0;
             if (type == "menu") {
                 hideMenus();
                 $("#startMenu").addClass('active');
+            } else {
+                init('demo');
             }
         } else {
             gameRunning = false;
