@@ -248,3 +248,7 @@ p strong {
     margin-left: 70px;
     margin-bottom: 40px;
 }
+
+#settings span {
+    color: #11ff66;
+}

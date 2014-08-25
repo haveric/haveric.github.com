@@ -96,17 +96,17 @@ var elapsedTime = 0;
         requestId = undefined;
     
         keyDownListener = addEventListener("keydown", function (e) {
-            //console.log("Keycode: " + e.keyCode);
+            console.log("Keycode: " + e.keyCode);
             keysDown[e.keyCode] = true;
         }, false);
 
         keyUpListener = addEventListener("keyup", function (e) {
             delete keysDown[e.keyCode];
             
-            if (e.keyCode == 37) { // Player holding left
+            if (e.keyCode == 37 || e.keyCode == 65) { // Player holding left
                 player.xVelocity = 0;
             }
-            if (e.keyCode == 39) { // Player holding right
+            if (e.keyCode == 39 || e.keyCode == 68) { // Player holding right
                 player.xVelocity = 0;
             }
         }, false);
@@ -290,18 +290,18 @@ var elapsedTime = 0;
     
     var handleInput = function() {
         if (!isDemo) {
-            if (38 in keysDown || 32 in keysDown) { // Player holding up
+            if (38 in keysDown || 32 in keysDown || 87 in keysDown) { // Player holding up
                 player.jump();
             }
             
-            if (40 in keysDown || 17 in keysDown) { // Player holding down
+            if (40 in keysDown || 17 in keysDown || 83 in keysDown) { // Player holding down
                 player.doAttack();
             }
             
-            if (37 in keysDown) { // Player holding left
+            if (37 in keysDown || 65 in keysDown) { // Player holding left
                 player.moveLeft();
             }
-            if (39 in keysDown) { // Player holding right
+            if (39 in keysDown || 68 in keysDown) { // Player holding right
                 player.moveRight();
             }
         }
