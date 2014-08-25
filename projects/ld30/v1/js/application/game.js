@@ -117,20 +117,37 @@ var elapsedTime = 0;
         
         context = canvas.getContext('2d');
 
+        if (type == "same") {
+            hideMenus();
+            numDaleks = global.numDaleks;
+            laserTime = global.laserTime;
+            mapWidth = global.mapWidth;
+            newCities = global.newCities;
+            attack = global.attack;
+            regen = global.regen;
+        }
+        
         global = new Global();
         
         elapsedTime = 0;
         
         var mapX = mapWidth || 100;
+        global.mapWidth = mapX;
         var mapY = 46;
 
         cityDeathTimerMax = laserTime || 10;
+        global.laserTimer = cityDeathTimerMax;
         
         map = new Map(mapX, mapY);
         map.generate();
         var midPointX = Math.floor(mapX/2);
         var midPointY = Math.floor(mapY/2);
 
+        var sonicCost = attack || 15;
+        var regenSonic = regen || 3;
+        global.attack = sonicCost;
+        global.regen = regenSonic;
+        
         player = new Player(midPointX*32, midPointY*32, attack, regen);
         map.setTile(midPointX, midPointY, new Empty());
         map.setTile(midPointX-1, midPointY, new Empty());
@@ -156,6 +173,7 @@ var elapsedTime = 0;
         cityLasers = [];
         
         var numCities = newCities || 5;
+        global.newCities = numCities;
         numStartCities = numCities;
         
         
@@ -164,6 +182,7 @@ var elapsedTime = 0;
         }
         
         var numEnemies = numDaleks || 10;
+        global.numDaleks = numEnemies;
         
         for (var i = 0; i < numEnemies; i++) {
             createRandomEnemy(midPointX, midPointY, mapX, mapY);
@@ -510,6 +529,10 @@ var elapsedTime = 0;
         hideMenus();
         
         $("#startMenu").addClass("active");
+    });
+    
+    $(".playAgain").on("click", function() {
+        init('same');
     });
     
     function hideMenus() {
