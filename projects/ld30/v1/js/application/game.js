@@ -208,7 +208,7 @@ var elapsedTime = 0;
     
     var createRandomEnemy = function(mx, my, mapX, mapY) {
         var randX = Math.floor(Math.random() * (mapX - 33)) + 16;
-        var randY = Math.floor(Math.random() * (mapY - 33)) + 16;
+        var randY = Math.floor(Math.random() * (mapY - 33)) + 13;
         
         var landed = false;
         var j = 1;
