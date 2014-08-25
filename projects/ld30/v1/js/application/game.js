@@ -96,7 +96,7 @@ var elapsedTime = 0;
         requestId = undefined;
     
         keyDownListener = addEventListener("keydown", function (e) {
-            console.log("Keycode: " + e.keyCode);
+            //console.log("Keycode: " + e.keyCode);
             keysDown[e.keyCode] = true;
         }, false);
 

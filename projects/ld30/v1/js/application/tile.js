@@ -23,17 +23,6 @@ Tile.prototype.draw = function(frame, ax, ay, x, y, i, j) {
                 newSprite += "-top";
             }
         }
-        /*
-        if (y > 1 && y < map.cols -2) {
-            var tileTop = map.getTile[x,y-1];
-            if (tileTop != null) {
-                console.log("TileTop: " + tileTop);
-                if (!tileTop.isSolid) {
-                    newSprite += "-top";
-                }
-            }
-        }
-        */
     }
     
     spriteMapper.getImage(newSprite).drawImage(x*32 - i, y*32 - j);
