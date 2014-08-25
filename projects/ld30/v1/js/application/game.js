@@ -253,6 +253,7 @@ var elapsedTime = 0;
             if (type == "menu") {
                 hideMenus();
                 $("#startMenu").addClass('active');
+                init('demo');
             } else if (type == "win") {
                 hideMenus();
                 $("#winMenu").addClass("active");
@@ -544,6 +545,10 @@ var elapsedTime = 0;
         hideMenus();
         soundManager.play('click');
         $("#startMenu").addClass("active");
+        
+        if ($(this).hasClass("backToHome")) {
+            init('demo');
+        }
     });
     
     $(".playAgain").on("click", function() {
