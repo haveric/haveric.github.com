@@ -34,7 +34,7 @@ var Player = function(x, y, newAttackCost, newRegen) {
 }
 
 Player.prototype.moveLeft = function() {
-    if (!this.isDying) {
+    if (!this.isDying && !this.inTardis) {
         this.direction = "left";
         
         var leftX = Math.floor((this.x - this.speed) / 32);
@@ -74,7 +74,7 @@ Player.prototype.moveLeft = function() {
 }
 
 Player.prototype.moveRight = function() {
-    if (!this.isDying) {
+    if (!this.isDying && !this.inTardis) {
         this.direction = "right";
         if (this.x < (map.rows-1) * 32) {
             
