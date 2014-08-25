@@ -70,3 +70,4 @@ soundManager.add('explode', 'assets/explode.wav');
 soundManager.add('dalek-stun', 'assets/dalek-stun.wav');
 soundManager.add('city-laser', 'assets/city-laser.wav');
 soundManager.add('tardis-fade', 'assets/tardis-fade.wav');
+soundManager.add('click', 'assets/click.wav', 0.5);

@@ -405,12 +405,15 @@ var elapsedTime = 0;
     
     $("#quickGame").on("click", function() {
         hideMenus();
+        soundManager.play('click');
         init('easy');
     });
     
     $("#difficulty .startButton").on("click", function() {
         hideMenus();
-
+        
+        soundManager.play('click');
+        
         var numDaleks = $("#dalekRange").val();
         var laserTime = $("#laserRange").val();
         var mapWidth = $("#mapRange").val();
@@ -423,6 +426,7 @@ var elapsedTime = 0;
     
     $("#chooseDifficulty").on("click", function() {
         $("#startMenu").removeClass("active");
+        soundManager.play('click');
         
         $("#difficulty").addClass("active");
     });
@@ -430,6 +434,8 @@ var elapsedTime = 0;
     $(".diff").on("click", function() {
         var $this = $(this);
         $this.addClass("active").siblings('.active').removeClass('active');
+        
+        soundManager.play('click');
         
         var numDaleks = 0;
         var laserRange = 0;
@@ -489,6 +495,8 @@ var elapsedTime = 0;
         var $this = $(this);
         $(".customDiff").addClass("active").siblings('.active').removeClass("active");
         
+        soundManager.play('click');
+        
         $this.siblings('.value').text($this.val());
     });
     
@@ -504,22 +512,27 @@ var elapsedTime = 0;
         }
         
         soundManager.setVolume(newVolume / 100);
+        
+        soundManager.play('click');
     });
     
     $("#instructionsLink").on("click", function() {
         $("#startMenu").removeClass("active");
+        soundManager.play('click');
         
         $("#instructions").addClass("active");
     });
     
     $("#settingsLink").on("click", function() {
         $("#startMenu").removeClass("active");
+        soundManager.play('click');
         
         $("#settings").addClass("active");
     });
     
     $("#aboutLink").on("click", function() {
         $("#startMenu").removeClass("active");
+        soundManager.play('click');
         
         $("#about").addClass("active");
     });
@@ -527,12 +540,13 @@ var elapsedTime = 0;
     
     $(".backButton").on("click", function() {
         hideMenus();
-        
+        soundManager.play('click');
         $("#startMenu").addClass("active");
     });
     
     $(".playAgain").on("click", function() {
         init('same');
+        soundManager.play('click');
     });
     
     function hideMenus() {
