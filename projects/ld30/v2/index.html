@@ -1,0 +1,194 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Dalek Invasion</title>
+        <link rel="stylesheet" href="css/global.css">
+    </head>
+    <body>
+        <h1 class="originalText">This is an updated/modified version of my Ludum Dare 30 Entry. If you are rating this game or looking for the original, please <a class="originalLink" href="../v1/index.html">go here</a>.</h1>
+        <div id="gameWrapper">
+            <canvas id="gameCanvas"></canvas>
+            
+            <div id="volume">
+                <i class="note"></i>
+                <input type="range" name="volume" id="volume" min="0" max="100" step="1" value="50">
+            </div>
+            <div id="startMenu" class="menu active">
+                <div class="header">
+                    <span class="dalek dalek-right"><!--  --></span>
+                    <h1>Dalek Invasion</h1>
+                    <span class="dalek dalek-left"><!--  --></span>
+                </div>
+                <hr>
+                <a href="#" id="quickGame">Quick Game (Easy)</a>
+                <a href="#" id="chooseDifficulty">Choose Difficulty</a>
+                <a href="#" id="instructionsLink">Instructions</a>
+                <a href="#" id="settingsLink">Controls</a>
+                <a href="#" id="aboutLink">About</a>
+            </div>
+            
+            <div id="difficulty" class="menu">
+                <div class="fullwidth">
+                    <h2>Choose Difficulty</h2>
+                    <hr>
+                </div>
+                <div class="left">
+                    <a href="#" class="easyDiff diff active">Easy</a>
+                    <a href="#" class="normalDiff diff">Normal</a>
+                    <a href="#" class="hardDiff diff">Hard</a>
+                    <a href="#" class="customDiff diff">Custom</a>
+                </div>
+                <div class="right">
+                    <div class="rangeChoice">
+                        <label for="dalekRange">Daleks:</label>
+                        <input id="dalekRange" name="dalekRange" type="range" min="5" max="100" step="5" value="10"/>
+                        <span class="value">10</span>
+                    </div>
+                    <div class="rangeChoice">
+                        <label for="laserRange">Laser Time:</label>
+                        <input id="laserRange" name="laserRange" type="range" min="2" max="30" step="2" value="10"/>
+                        <span class="value">10</span>
+                    </div>
+                    <div class="rangeChoice">
+                        <label for="mapRange">Map Width:</label>
+                        <input id="mapRange" name="mapRange" type="range" min="100" max="500" step="20" value="100"/>
+                        <span class="value">100</span>
+                    </div>
+                    <div class="rangeChoice">
+                        <label for="cityRange">Num Cities:</label>
+                        <input id="cityRange" name="cityRange" type="range" min="1" max="20" step="1" value="5"/>
+                        <span class="value">5</span>
+                    </div>
+                    <div class="rangeChoice">
+                        <label for="attackRange">Attack Cost:</label>
+                        <input id="attackRange" name="attackRange" type="range" min="5" max="100" step="5" value="15"/>
+                        <span class="value">15</span>
+                    </div>
+                    <div class="rangeChoice">
+                        <label for="regenRange">Attack Regen:</label>
+                        <input id="regenRange" name="regenRange" type="range" min="0" max="10" step="1" value="3"/>
+                        <span class="value">3</span>
+                    </div>
+                </div>
+                
+                <div class="fullWidth">
+                    <hr>
+                    <div class="left">
+                        <a href="#" class="backButton">Back</a>
+                    </div>
+                    <div class="right">
+                        <a href="#" class="startButton">Start</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="instructions" class="menu">
+                <h2>Instructions</h2>
+                <hr>
+                <div>
+                    <p>You are the Doctor.<i class='doctor'></i></p>
+                    <p class="inn"><i class='tardis'></i>You must get to your T.A.R.D.I.S in order to stop the Dalek invasion.<i class='dalek dalek-left'></i></p>
+                    <p>All you have to use is your trusty sonic screwdriver. Using the sonic screwdriver, you can:</p>
+                    <ul>
+                        <li>Disable (momentarily) Daleks which you are facing.</li>
+                        <li>Open/Close the T.A.R.D.I.S doors.</li>
+                    </ul>
+                    <p>Every so often, a Dalek ship will destroy a city.</p>
+                    <p>You win if you can get inside of the T.A.R.D.I.S.</p>
+                    <p>You lose if all of the cities are destroyed or you get shot by a Dalek.</p>
+                </div>
+                <hr>
+                <div>
+                    <a href="#" class="backButton">Back</a>
+                </div>
+            </div>
+            
+            <div id="settings" class="menu">
+                <h2>Controls</h2>
+                <hr>
+                <div>
+                    <p>Move Left: <span>Left Arrow</span>, <span>a</span></p>
+                    <p>Move Right: <span>Right Arrow</span>, <span>d</span></p>
+                    <p>Jump: <span>Up Arrow</span>, <span>w</span>, <span>Spacebar</span></p>
+                    <p>Attack: <span>Down Arrow</span>, <span>s</span>, <span>Control</span></p>
+                    <p>Quit: <span>q</span></p>
+                </div>
+                <hr>
+                <div>
+                    <a href="#" class="backButton">Back</a>
+                </div>
+            </div>
+            
+            <div id="about" class="menu">
+                <h2>About</h2>
+                <hr>
+                <div>
+                    <p>This game was created by Ryan Breuer for Ludum Dare 30.</p>
+                    <p>The theme of Ludum Dare 30 was 'Connected Worlds' which is used in a sense that your actions (or lack of actions) on your world (or moon in this case) directly affect those of the world in the background. (by destroying cities)</p>
+                    <p>I also used a Doctor Who theme for this competition because of the Season 8 premiere that aired during the competition and because who doesn't love Doctor Who?</p>
+                    <p>Thanks for playing!</p>
+                </div>
+                <hr>
+                <div>
+                    <a href="#" class="backButton backToHome">Back</a>
+                </div>
+            </div>
+            
+            <div id="winMenu" class="menu">
+                <h2>You have defeated the Daleks!</h2>
+                <hr>
+                <p class="cityinn">
+                    <i class="city"></i> Cities Remaining <span class="city-remain"></span> of <span class="city-start"></span>
+                </p>
+                <p>
+                    Time elapsed: <span class="timeElapsed"></span> seconds.
+                </p>
+                <hr>
+                <div>
+                    <a href="#" class="playAgain">Play again?</a>
+                    <a href="#" class="backButton backToHome">Back To Home</a>
+                </div>
+            </div>
+            
+            <div id="loseMenu" class="menu">
+                <h2 class="cities">All cities have been destroyed.</h2>
+                <h2 class="death">You have died.</h2>
+                <hr>
+                <p class="cities">
+                    You have failed to stop the destruction in time!
+                </p>
+                <p class="death">
+                    You have been exterminated be the Daleks.
+                </p>
+                
+                <p class="cityinn">
+                    <i class="city"></i> Cities Remaining <span class="city-remain"></span> of <span class="city-start"></span>
+                </p>
+                <p>
+                    Time elapsed: <span class="timeElapsed"></span> seconds.
+                </p>
+                <hr>
+                <div>
+                    <a href="#" class="playAgain">Try again?</a>
+                    <a href="#" class="backButton backToHome">Back To Home</a>
+                </div>
+            </div>
+        </div>
+        <script src="js/vendor/jquery-1.10.2.min.js" type="text/javascript"></script>
+        <script src="js/application/audio.js" type='text/javascript'></script>
+        <script src="js/application/sprites.js" type='text/javascript'></script>
+        <script src="js/application/tile.js" type='text/javascript'></script>
+        <script src="js/application/map.js" type='text/javascript'></script>
+        
+        <script src="js/application/sky.js" type='text/javascript'></script>
+        <script src="js/application/cityLaser.js" type='text/javascript'></script>
+        <script src="js/application/city.js" type='text/javascript'></script>
+        <script src="js/application/phonebooth.js" type='text/javascript'></script>
+        
+        <script src="js/application/enemy.js" type='text/javascript'></script>
+        <script src="js/application/player.js" type='text/javascript'></script>
+        <script src="js/application/game.js" type='text/javascript'></script>
+        
+        <script src="js/application/ga.js" type='text/javascript'></script>
+    </body>
+</html>
