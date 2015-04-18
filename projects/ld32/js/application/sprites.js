@@ -1,3 +1,5 @@
+var PI_180 = Math.PI / 180;
+
 var TextureMapper = function () {
     textures = [];
 }
@@ -56,11 +58,21 @@ var Sprite = function (imageName, textureName, x, y, w, h) {
     this.h = h || 32;
 }
 
-Sprite.prototype.drawImage = function (context, i, j) {
+Sprite.prototype.drawImage = function (context, i, j, degrees) {
     if (this.texture == null) {
         this.texture = textureMapper.getTexture(this.textureName);
     } else {
-        context.drawImage(this.texture, this.x, this.y, this.w, this.h, i, j, this.w, this.h);
+        if (degrees != null && degrees > 0) {
+            context.translate(i, j);
+            context.rotate(degrees * PI_180);
+        
+            context.drawImage(this.texture, this.x, this.y, this.w, this.h, 0, 0, this.w, this.h);
+
+            context.rotate(-degrees * PI_180);
+            context.translate(-i, -j);
+        } else {
+            context.drawImage(this.texture, this.x, this.y, this.w, this.h, i, j, this.w, this.h);
+        }
     }
 }
 

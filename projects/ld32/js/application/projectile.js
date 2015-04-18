@@ -5,6 +5,9 @@ var Projectile = function(x, y) {
     this.velocity = 5;
     this.sqrtVelocity = Math.sqrt(this.velocity);
     this.sprite = 'projectile';
+    this.rotation = 0;
+    this.rotationSpeed = (Math.random() * 3) + .2;
+    this.rotationDirection = Math.floor((Math.random() * 2) + 1);
 }
 
 Projectile.prototype.setRandomDirection = function() {
@@ -44,9 +47,27 @@ Projectile.prototype.move = function() {
         this.x -= this.sqrtVelocity;
         this.y -= this.sqrtVelocity;
     }
+    
+    this.rotate();
+}
+
+Projectile.prototype.rotate = function() {
+    if (this.rotationDirection == 1) {
+        this.rotation += this.rotationSpeed;
+
+        if (this.rotation >= 360) {
+            this.rotation -= 360;
+        }
+    } else {
+        this.rotation -= this.rotationSpeed;
+        
+        if (this.rotation < 0) {
+            this.rotation += 360;
+        }
+    }
 }
 
 Projectile.prototype.draw = function(context, frame) {
-    spriteMapper.getImage(this.sprite).drawImage(context, this.x, this.y);
+    spriteMapper.getImage(this.sprite).drawImage(context, this.x, this.y, this.rotation);
 }
 
