@@ -69,9 +69,11 @@ var textureMapper = new TextureMapper();
 textureMapper.addTexture('sprites', 'img/placeholder.gif');
 textureMapper.addTexture('player', 'img/player.gif');
 textureMapper.addTexture('objects', 'img/objects.png');
+textureMapper.addTexture('enemies', 'img/enemies.png');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('path', 'sprites', 0, 0);
 spriteMapper.addImage('player', 'player', 0, 0);
 spriteMapper.addImage('asteroid', 'objects', 0, 0);
 spriteMapper.addImage('projectile', 'objects', 32, 0);
+spriteMapper.addImage('enemy', 'enemies', 0, 0);

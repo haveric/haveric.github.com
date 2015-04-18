@@ -4,6 +4,8 @@ var CANVAS_WIDTH = 600,
     STORED_TIME;
 
 var projectiles = [];
+var enemies = [];
+var enemySpawnTimer = 10;
 
 (function () {
     var keysDown = [],
@@ -139,17 +141,34 @@ var projectiles = [];
     }
     
     var handleMovement = function() {
-        projectiles.forEach(function(projectile, index) {
+        projectiles.forEach(function(projectile) {
             projectile.move();
         });
+        
+        enemies.forEach(function(enemy, index) {
+            enemy.move(index);
+        });
+        
+        if (enemySpawnTimer >= 0) {
+            enemySpawnTimer --;
+        }
+        if (enemies.length < 5 && enemySpawnTimer <= 0) {
+            enemySpawnTimer = (Math.random() * 50) + 25;
+            var enemy = new Enemy((Math.random() * (CANVAS_WIDTH -64)) + 32, CANVAS_HEIGHT + 50);
+            enemies.push(enemy);
+        }
     }
     
     var render = function(){
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
 
-        projectiles.forEach(function(projectile, index) {
+        projectiles.forEach(function(projectile) {
             projectile.draw(context, numRenders);
+        });
+        
+        enemies.forEach(function(enemy) {
+            enemy.draw(context, numRenders);
         });
         
         player.draw(context, numRenders);
