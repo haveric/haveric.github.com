@@ -3,9 +3,12 @@ var CANVAS_WIDTH = 600,
     STEP = 16,
     STORED_TIME;
 
+var stars = [];
 var projectiles = [];
 var enemies = [];
 var enemySpawnTimer = 10;
+var projectileTimeout = [0, 0, 0];
+var projectileMaxTimeout = 30;
 
 (function () {
     var keysDown = [],
@@ -95,6 +98,8 @@ var enemySpawnTimer = 10;
 
         player = new Player(375, 500);
 
+        populateBackground();
+        
         gameRunning = true;
         if (!requestId) {
             animLoop();
@@ -109,6 +114,17 @@ var enemySpawnTimer = 10;
         removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
         keyUpListener = undefined;
+    }
+    
+    var populateBackground = function() {
+        var i = 400;
+        while (i > 0) {
+            var y = Math.random() * CANVAS_HEIGHT;
+            var star = new Star(y);
+            stars.push(star);
+            
+            i --;
+        }
     }
     
     var handleInput = function() {
@@ -129,36 +145,84 @@ var enemySpawnTimer = 10;
         }
         
         if (65 in keysDown) { // A
-            var projectile = new Projectile(player.x, player.y);
-            projectile.dir = "sw";
-            projectiles.push(projectile);
+            if (projectileTimeout[0] == 0) {
+                var projectile = new Projectile(player.x, player.y);
+                projectile.dir = "sw";
+                projectiles.push(projectile);
+            }
         }
         
         if (83 in keysDown) { // S
-            var projectile = new Projectile(player.x, player.y);
-            projectile.dir = "s"; 
-            projectiles.push(projectile);
+            if (projectileTimeout[1] == 0) {
+                var projectile = new Projectile(player.x, player.y);
+                projectile.dir = "s"; 
+                projectiles.push(projectile);
+            }
         }
         
         if (68 in keysDown) { // D
-            var projectile = new Projectile(player.x, player.y);
-            projectile.dir = "se";
-            projectiles.push(projectile);
+            if (projectileTimeout[2] == 0) {
+                var projectile = new Projectile(player.x, player.y);
+                projectile.dir = "se";
+                projectiles.push(projectile);
+            }
         }
         
         if (17 in keysDown) { // CTRL
-            var projectile = new Projectile(player.x, player.y);
-            projectile.setRandomDirection();
-            projectiles.push(projectile);
+            if (projectileTimeout[0] == 0) {
+                var projectile = new Projectile(player.x, player.y);
+                projectile.dir = "sw";
+                projectiles.push(projectile);
+            }
+            
+            if (projectileTimeout[1] == 0) {
+                var projectile = new Projectile(player.x, player.y);
+                projectile.dir = "s"; 
+                projectiles.push(projectile);
+            }
+            
+            if (projectileTimeout[2] == 0) {
+                var projectile = new Projectile(player.x, player.y);
+                projectile.dir = "se";
+                projectiles.push(projectile);
+            }
         }
         
         
         if (81 in keysDown) { // q
             stop("menu");
         }
+        
+        if (65 in keysDown || 17 in keysDown || projectileTimeout[0] > 0) {
+            projectileTimeout[0] ++;
+            
+            if (projectileTimeout[0] >= projectileMaxTimeout) {
+                projectileTimeout[0] = 0;
+            }
+        }
+        
+        if (83 in keysDown || 17 in keysDown || projectileTimeout[1] > 0) {
+            projectileTimeout[1] ++;
+            
+            if (projectileTimeout[1] >= projectileMaxTimeout) {
+                projectileTimeout[1] = 0;
+            }
+        }
+        
+        if (68 in keysDown || 17 in keysDown || projectileTimeout[2] > 0) {
+            projectileTimeout[2] ++;
+            
+            if (projectileTimeout[2] >= projectileMaxTimeout) {
+                projectileTimeout[2] = 0;
+            }
+        }
     }
     
     var handleMovement = function() {
+        stars.forEach(function(star, index) {
+            star.move(index);
+        });
+        
         projectiles.forEach(function(projectile) {
             projectile.move();
         });
@@ -181,6 +245,10 @@ var enemySpawnTimer = 10;
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
 
+        stars.forEach(function(star) {
+            star.draw(context, numRenders);
+        });
+        
         projectiles.forEach(function(projectile) {
             projectile.draw(context, numRenders);
         });
@@ -191,6 +259,13 @@ var enemySpawnTimer = 10;
         
         player.draw(context, numRenders);
         
+        /*
+        context.fillStyle="#ffffff";
+        context.font = "16px Arial";
+        context.fillText(projectileTimeout[0], 10,10);
+        context.fillText(projectileTimeout[1], 10,40);
+        context.fillText(projectileTimeout[2], 10,70);
+        */
         
         numRenders++;
         if (numRenders == 60) {
