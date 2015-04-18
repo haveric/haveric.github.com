@@ -1,5 +1,7 @@
 var CANVAS_WIDTH = 600,
-    CANVAS_HEIGHT = 600;
+    CANVAS_HEIGHT = 600,
+    STEP = 16,
+    STORED_TIME;
 
 (function () {
     var keysDown = [],
@@ -14,6 +16,9 @@ var CANVAS_WIDTH = 600,
         numRenders = 0,
         keyDownListener,
         keyUpListener;
+    
+    var lastTime = null;
+    
     
     // shim layer with setTimeout fallback
     window.requestAnimFrame = (function(){
@@ -42,13 +47,27 @@ var CANVAS_WIDTH = 600,
     })();
         
     
-    var animLoop = function(){
+    var animLoop = function(timestamp){
         if (gameRunning) {
-            requestId = requestAnimFrame(animLoop);
+            if (lastTime == null) {
+                lastTime = timestamp;
+            }
             
-            handleInput();
-            
+            var dt = timestamp - lastTime;
+            // Cap delta time to 1 second
+            if (dt > 1000) {
+                dt = 1000;
+            }
+            STORED_TIME += dt;
+
+            if (dt >= STEP) {
+                handleInput();
+                dt -= STEP;
+            }
             render();
+            
+            lastTime = timestamp;
+            requestId = requestAnimFrame(animLoop);
         }
     }
     
