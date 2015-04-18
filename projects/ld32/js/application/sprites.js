@@ -63,13 +63,13 @@ Sprite.prototype.drawImage = function (context, i, j, degrees) {
         this.texture = textureMapper.getTexture(this.textureName);
     } else {
         if (degrees != null && degrees > 0) {
-            context.translate(i, j);
+            context.save();
+            context.translate(i+this.w/2, j+this.h/2);
             context.rotate(degrees * PI_180);
         
-            context.drawImage(this.texture, this.x, this.y, this.w, this.h, 0, 0, this.w, this.h);
+            context.drawImage(this.texture, this.x, this.y, this.w, this.h, -this.w/2, -this.h/2, this.w, this.h);
 
-            context.rotate(-degrees * PI_180);
-            context.translate(-i, -j);
+            context.restore();
         } else {
             context.drawImage(this.texture, this.x, this.y, this.w, this.h, i, j, this.w, this.h);
         }

@@ -128,7 +128,25 @@ var enemySpawnTimer = 10;
             player.xVelocity = 0;
         }
         
-        if (17 in keysDown) {
+        if (65 in keysDown) { // A
+            var projectile = new Projectile(player.x, player.y);
+            projectile.dir = "sw";
+            projectiles.push(projectile);
+        }
+        
+        if (83 in keysDown) { // S
+            var projectile = new Projectile(player.x, player.y);
+            projectile.dir = "s"; 
+            projectiles.push(projectile);
+        }
+        
+        if (68 in keysDown) { // D
+            var projectile = new Projectile(player.x, player.y);
+            projectile.dir = "se";
+            projectiles.push(projectile);
+        }
+        
+        if (17 in keysDown) { // CTRL
             var projectile = new Projectile(player.x, player.y);
             projectile.setRandomDirection();
             projectiles.push(projectile);
