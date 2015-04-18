@@ -34,7 +34,11 @@ var Star = function(y) {
         this.velocity = 10;
     }
     
-    this.color = "#ffffff";
+    this.color = {
+        red: 255,
+        green: 255,
+        blue: 255
+    }
     this.generateRandomColor(64, 196, 64);
 }
 
@@ -47,7 +51,21 @@ Star.prototype.move = function(index) {
 }
 
 Star.prototype.draw = function(context, frame) {
-    context.fillStyle = this.color;
+    if (this.radius < 10) {
+        context.fillStyle = this.getRGBColor();
+    } else {
+        var gradient = context.createRadialGradient(this.x - this.radius*.3, this.y - this.radius*.3, this.radius*.2, this.x, this.y, this.radius);
+        
+        var blendRed = Math.floor((this.color.red + 255) / 2);
+        var blendGreen = Math.floor((this.color.green + 255) / 2);
+        var blendBlue = Math.floor((this.color.blue + 255) / 2);
+        
+        var rgbBlend = "rgb(" + blendRed + "," + blendGreen + "," + blendBlue + ")";
+        gradient.addColorStop(0, rgbBlend);
+        gradient.addColorStop(1, this.getRGBColor());
+        context.fillStyle = gradient;
+    }
+    
     context.beginPath();
     context.arc(this.x, this.y, this.radius, 0, PI_2);
     context.fill();
@@ -62,7 +80,15 @@ Star.prototype.generateRandomColor = function(mixR, mixG, mixB) {
     green = Math.floor((green + mixG) / 2);
     blue = Math.floor((blue + mixB) / 2);
     
-    this.color = "rgb(" + red + "," + green + "," + blue + ")";
+    this.color = {
+        red: red,
+        green: green,
+        blue: blue
+    }
+}
+
+Star.prototype.getRGBColor = function() {
+    return "rgb(" + this.color.red + "," + this.color.green + "," + this.color.blue + ")";
 }
 
 function killStar(index) {
