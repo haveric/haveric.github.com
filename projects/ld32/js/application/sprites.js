@@ -71,7 +71,4 @@ textureMapper.addTexture('player', 'img/player.gif');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('path', 'sprites', 0, 0);
-spriteMapper.addImage('player-up', 'player', 0, 0);
-spriteMapper.addImage('player-down', 'player', 0, 0);
-spriteMapper.addImage('player-left', 'player', 0, 0);
-spriteMapper.addImage('player-right', 'player', 0, 0);
+spriteMapper.addImage('player', 'player', 0, 0);

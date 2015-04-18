@@ -1,5 +1,5 @@
 body {
-    width: 800px;
+    width: 600px;
     margin: 0 auto;
     position: relative;
 }
@@ -9,7 +9,7 @@ body {
 }
 
 #gameCanvas {
-    width: 800px;
-    height: 640px;
+    width: 600px;
+    height: 576px;
     z-index:0;
 }
