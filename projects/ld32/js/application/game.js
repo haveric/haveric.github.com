@@ -3,6 +3,8 @@ var CANVAS_WIDTH = 600,
     STEP = 16,
     STORED_TIME;
 
+var projectiles = [];
+
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -62,6 +64,7 @@ var CANVAS_WIDTH = 600,
 
             if (dt >= STEP) {
                 handleInput();
+                handleMovement();
                 dt -= STEP;
             }
             render();
@@ -74,6 +77,7 @@ var CANVAS_WIDTH = 600,
     
     var init = function() {
         keyDownListener = addEventListener("keydown", function (e) {
+            console.log("Keycode: " + e.keyCode);
             keysDown[e.keyCode] = true;
         }, false);
 
@@ -122,20 +126,34 @@ var CANVAS_WIDTH = 600,
             player.xVelocity = 0;
         }
         
+        if (17 in keysDown) {
+            var projectile = new Projectile(player.x, player.y);
+            projectile.setRandomDirection();
+            projectiles.push(projectile);
+        }
+        
         
         if (81 in keysDown) { // q
             stop("menu");
         }
-        
+    }
+    
+    var handleMovement = function() {
+        projectiles.forEach(function(projectile, index) {
+            projectile.move();
+        });
     }
     
     var render = function(){
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
 
+        projectiles.forEach(function(projectile, index) {
+            projectile.draw(context, numRenders);
+        });
+        
         player.draw(context, numRenders);
         
-
         
         numRenders++;
         if (numRenders == 60) {
