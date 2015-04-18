@@ -70,6 +70,7 @@ var projectileMaxTimeout = 30;
             if (dt >= STEP) {
                 handleInput();
                 handleMovement();
+                handleCollision();
                 dt -= STEP;
             }
             render();
@@ -239,6 +240,19 @@ var projectileMaxTimeout = 30;
             var enemy = new Enemy((Math.random() * (CANVAS_WIDTH -64)) + 32, CANVAS_HEIGHT + 50);
             enemies.push(enemy);
         }
+    }
+    
+    var handleCollision = function() {
+        enemies.forEach(function(e, eIndex) {
+            
+            projectiles.forEach(function(p, pIndex) {
+                // dumb 2d collision
+                if (!(p.x > e.x + 32 || p.x + 32 < e.x || p.y > e.y + 32 || p.y + 32 < e.y)) {
+                    killEnemy(eIndex);
+                    killProjectile(pIndex);
+                }
+            });
+        });
     }
     
     var render = function(){
