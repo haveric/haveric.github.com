@@ -25,7 +25,7 @@ Projectile.prototype.setRandomDirection = function() {
     }
 }
 
-Projectile.prototype.move = function() {
+Projectile.prototype.move = function(index) {
     if (this.dir == "n") {
         this.y -= this.velocity;
     } else if (this.dir == "ne") {
@@ -46,6 +46,10 @@ Projectile.prototype.move = function() {
     } else if (this.dir == "nw") {
         this.x -= this.sqrtVelocity;
         this.y -= this.sqrtVelocity;
+    }
+    
+    if (this.x < -50 || this.x > CANVAS_WIDTH + 50 || this.y < -50 || this.y > CANVAS_HEIGHT) {
+        killProjectile(index);
     }
     
     this.rotate();

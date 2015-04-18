@@ -223,8 +223,8 @@ var projectileMaxTimeout = 30;
             star.move(index);
         });
         
-        projectiles.forEach(function(projectile) {
-            projectile.move();
+        projectiles.forEach(function(projectile, index) {
+            projectile.move(index);
         });
         
         enemies.forEach(function(enemy, index) {
@@ -270,13 +270,17 @@ var projectileMaxTimeout = 30;
         
         player.draw(context, numRenders);
         
-        /*
+        
         context.fillStyle="#ffffff";
         context.font = "16px Arial";
-        context.fillText(projectileTimeout[0], 10,10);
+        context.fillText(projectileTimeout[0], 10,20);
         context.fillText(projectileTimeout[1], 10,40);
-        context.fillText(projectileTimeout[2], 10,70);
-        */
+        context.fillText(projectileTimeout[2], 10,60);
+        
+        context.fillText(enemies.length, 10, 80);
+        context.fillText(projectiles.length, 10, 100);
+        context.fillText(stars.length, 10, 120);
+        
         
         numRenders++;
         if (numRenders == 60) {
