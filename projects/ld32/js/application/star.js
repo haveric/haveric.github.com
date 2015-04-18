@@ -2,20 +2,29 @@ var PI_2 = 2 * Math.PI;
 var Star = function(y) {
     this.x = Math.random() * 800;
     
-    
-    var weighted = Math.random() * 10;
-    if (weighted < 7) {
-        this.radius = Math.random() * 1.5;
-    } else if (weighted > 9.95 && weighted <= 9.99) {
-        this.radius = (Math.random() * 25) + 25;
-    } else if (weighted > 9.99) {
-        this.radius = (Math.random() * 250) + 75;
+    // Don't start with big stars 
+    if (y) {
+        var weighted = Math.random() * 10;
+        if (weighted < 9) {
+            this.radius = Math.random() * 1.5;
+        } else {
+            this.radius = (Math.random() * 2) + 1;
+        }
     } else {
-        this.radius = (Math.random() * 2) + 1;
+        var weighted = Math.random() * 10;
+        if (weighted < 7) {
+            this.radius = Math.random() * 1.5;
+        } else if (weighted > 9.95 && weighted <= 9.99) {
+            this.radius = (Math.random() * 25) + 25;
+        } else if (weighted > 9.99) {
+            this.radius = (Math.random() * 250) + 75;
+        } else {
+            this.radius = (Math.random() * 2) + 1;
+        }
     }
     
-    if (this.radius < 1) {
-        this.radius = 1;
+    if (this.radius < 0.5) {
+        this.radius = 0.5;
     }
     
     this.y = y || -50 - this.radius*2;
