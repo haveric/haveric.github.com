@@ -71,3 +71,9 @@ Projectile.prototype.draw = function(context, frame) {
     spriteMapper.getImage(this.sprite).drawImage(context, this.x, this.y, this.rotation);
 }
 
+function killProjectile(index) {
+    if (index >= 0 && index < projectiles.length) {
+        projectiles.splice(index, 1);
+    }
+}
+

@@ -58,9 +58,9 @@ Star.prototype.generateRandomColor = function(mixR, mixG, mixB) {
     var green = Math.floor(Math.random() * 256);
     var blue = Math.floor(Math.random() * 256);
     
-    red = (red + mixR) / 2;
-    green = (green + mixG) / 2;
-    blue = (blue + mixB) / 2;
+    red = Math.floor((red + mixR) / 2);
+    green = Math.floor((green + mixG) / 2);
+    blue = Math.floor((blue + mixB) / 2);
     
     this.color = "rgb(" + red + "," + green + "," + blue + ")";
 }

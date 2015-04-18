@@ -245,9 +245,20 @@ var projectileMaxTimeout = 30;
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
 
+        var bigStars = [];
         stars.forEach(function(star) {
+            if (star.radius < 10) {
+                star.draw(context, numRenders);
+            } else {
+                bigStars.push(star);
+            }
+        });
+        
+        bigStars.forEach(function(star) {
             star.draw(context, numRenders);
         });
+        
+        bigStars = [];
         
         projectiles.forEach(function(projectile) {
             projectile.draw(context, numRenders);
