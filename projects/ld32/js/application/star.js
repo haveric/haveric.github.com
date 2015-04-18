@@ -56,9 +56,9 @@ Star.prototype.draw = function(context, frame) {
     } else {
         var gradient = context.createRadialGradient(this.x - this.radius*.3, this.y - this.radius*.3, this.radius*.2, this.x, this.y, this.radius);
         
-        var blendRed = Math.floor((this.color.red + 255) / 2);
-        var blendGreen = Math.floor((this.color.green + 255) / 2);
-        var blendBlue = Math.floor((this.color.blue + 255) / 2);
+        var blendRed = Math.floor((this.color.red + 220) / 2);
+        var blendGreen = Math.floor((this.color.green + 220) / 2);
+        var blendBlue = Math.floor((this.color.blue + 220) / 2);
         
         var rgbBlend = "rgb(" + blendRed + "," + blendGreen + "," + blendBlue + ")";
         gradient.addColorStop(0, rgbBlend);
