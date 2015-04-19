@@ -16,6 +16,8 @@ var Player = function(x, y) {
         this.airlocks[i] = new Airlock();
     }
     
+    this.frameMod = 10;
+    this.curFrame = 1;
 }
 
 Player.prototype.moveUp = function() {
@@ -90,6 +92,22 @@ Player.prototype.getY = function() {
 
 Player.prototype.draw = function(context, frame) {
     var sprite = "player";
+    
+    if (frame % this.frameMod == 0) {
+        this.curFrame ++;
+        
+        if (this.curFrame > 4) {
+            this.curFrame = 1;
+        }
+    }
+    
+    if (this.yVelocity < 0) {
+        sprite += "-boost";
+    }
+    
+    if (this.curFrame > 0) {
+        sprite += this.curFrame;
+    }
 
     spriteMapper.getImage(sprite).drawImage(context, this.x, this.y);
 }

@@ -3,6 +3,9 @@ var Enemy = function(x, y) {
     this.y = y;
     this.velocity = Math.floor((Math.random() * 2) + 1); 
     this.sprite = "enemy";
+    
+    this.curFrame = 1;
+    this.frameMod = 10;
 }
 
 Enemy.prototype.move = function(index) {
@@ -23,7 +26,16 @@ Enemy.prototype.shoot = function(playerX, playerY) {
 }
 
 Enemy.prototype.draw = function(context, frame) {
-    spriteMapper.getImage(this.sprite).drawImage(context, this.x, this.y);
+    
+    if (frame % this.frameMod == 0) {
+        this.curFrame ++;
+        
+        if (this.curFrame > 3) {
+            this.curFrame = 1;
+        }
+    }
+    
+    spriteMapper.getImage(this.sprite + this.curFrame).drawImage(context, this.x, this.y);
 }
 
 var RapidFireEnemy = function(x, y) {

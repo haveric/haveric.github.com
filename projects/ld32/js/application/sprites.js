@@ -76,7 +76,6 @@ Sprite.prototype.drawImage = function (context, i, j, degrees) {
 
 
 var textureMapper = new TextureMapper();
-textureMapper.addTexture('sprites', 'img/placeholder.gif');
 textureMapper.addTexture('player', 'img/player.png');
 textureMapper.addTexture('objects', 'img/objects.png');
 textureMapper.addTexture('enemies', 'img/enemies.png');
@@ -90,7 +89,7 @@ spriteMapper.addImage('player2', 'player', 64, 0, 32, 64);
 spriteMapper.addImage('player3', 'player', 96, 0, 32, 64);
 spriteMapper.addImage('player4', 'player', 128, 0, 32, 64);
 
-spriteMapper.addImage('player-boost0', 'player', 0, 64, 32, 64);
+spriteMapper.addImage('player-boost', 'player', 0, 64, 32, 64);
 spriteMapper.addImage('player-boost1', 'player', 32, 64, 32, 64);
 spriteMapper.addImage('player-boost2', 'player', 64, 64, 32, 64);
 spriteMapper.addImage('player-boost3', 'player', 96, 64, 32, 64);
