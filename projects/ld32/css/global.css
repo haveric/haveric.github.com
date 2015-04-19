@@ -123,6 +123,22 @@ a.back {
     pointer-events: none;
 }
 
+.leftDoor.blue {
+    background: url('../img/door-left-blue.png');
+}
+
+.leftDoor.lightblue {
+    background: url('../img/door-left-lightblue.png');
+}
+
+.leftDoor.orange {
+    background: url('../img/door-left-orange.png');
+}
+
+.leftDoor.pink {
+    background: url('../img/door-left-pink.png');
+}
+
 .leftDoor.closed {
     -moz-transform: translateX(0px);
     -webkit-transform: translateX(0px);
@@ -145,6 +161,22 @@ a.back {
     -ms-transform: translateX(336px);
     transform: translateX(336px);
     pointer-events: none;
+}
+
+.rightDoor.blue {
+    background: url('../img/door-right-blue.png');
+}
+
+.rightDoor.lightblue {
+    background: url('../img/door-right-lightblue.png');
+}
+
+.rightDoor.orange {
+    background: url('../img/door-right-orange.png');
+}
+
+.rightDoor.pink {
+    background: url('../img/door-right-pink.png');
 }
 
 .rightDoor.closed {
