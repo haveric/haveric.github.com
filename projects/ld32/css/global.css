@@ -20,6 +20,7 @@ body {
     position: absolute;
     top: 0;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .menu a {
@@ -60,6 +61,15 @@ body {
     transition: all 1s ease-in;
 }
 
+.leftDoor.closed,
+.rightDoor.closed {
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -ms-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+}
+
 .leftDoor {
     background: url('../img/door-left.png');
     position: absolute;
@@ -73,6 +83,7 @@ body {
     -o-transform: translateX(-339px);
     -ms-transform: translateX(-339px);
     transform: translateX(-339px);
+    pointer-events: none;
 }
 
 .leftDoor.closed {
@@ -81,6 +92,7 @@ body {
     -o-transform: translateX(0px);
     -ms-transform: translateX(0px);
     transform: translateX(0px);
+    pointer-events: auto;
 }
 
 .rightDoor {
@@ -95,6 +107,7 @@ body {
     -o-transform: translateX(336px);
     -ms-transform: translateX(336px);
     transform: translateX(336px);
+    pointer-events: none;
 }
 
 .rightDoor.closed {
@@ -103,10 +116,12 @@ body {
     -o-transform: translateX(0px);
     -ms-transform: translateX(0px);
     transform: translateX(0px);
+    pointer-events: auto;
 }
 
 .title {
     font-family: Impact, Charcoal, sans-serif;
     font-size: 28px;
     margin: 10px 15px;
+    text-transform: uppercase;
 }

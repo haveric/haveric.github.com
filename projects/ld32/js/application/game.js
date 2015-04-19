@@ -22,6 +22,7 @@ var enemiesDifficultyOriginal = 5;
 var enemiesDifficulty = 5;
 var enemiesDifficultyDelta = 1;
 var playerRank = 0;
+var gameOver = false;
 
 (function () {
     var keysDown = [],
@@ -96,6 +97,7 @@ var playerRank = 0;
     
     
     var init = function() {
+        $("#scoring .door").removeClass("closed");
         keyDownListener = addEventListener("keydown", function (e) {
             if (debug) {
                 console.log("Keycode: " + e.keyCode);
@@ -106,6 +108,8 @@ var playerRank = 0;
         keyUpListener = addEventListener("keyup", function (e) {
             delete keysDown[e.keyCode];
         }, false);
+        
+        initGameSettings();
 
         canvas = document.getElementById("gameCanvas");
         canvas.setAttribute("width", CANVAS_WIDTH);
@@ -122,6 +126,31 @@ var playerRank = 0;
             animLoop();
         }
     }
+    
+    var initGameSettings = function() {
+        debug = false;
+        stars = [];
+        projectiles = [];
+        enemies = [];
+        bullets = [];
+        explosions = [];
+
+        enemySpawnTimer = 10;
+        projectileTimeout = [0, 0, 0];
+        projectileMaxTimeout = 60;
+        spritesRendered = false;
+        projectilesLaunched = [0,0,0,0,0]
+        enemiesKilled = [0,0,0,0,0,0];
+        enemyBulletsFired = 0;
+        maxEnemies = 5;
+        enemiesDifficultyOriginal = 5;
+        enemiesDifficulty = 5;
+        enemiesDifficultyDelta = 1;
+        playerRank = 0;
+        gameOver = false;
+        requestId = null;
+    }
+    
     var reset = function() {
         player = null;
     }
@@ -382,8 +411,18 @@ var playerRank = 0;
             }
         });
         
+        if (player.hp <= 0 && player.curFrame == 0) {
+            if (!gameOver) {
+                preShowScoreMenu();
+            }
+        }
+        
         if (player.hp <= 0 && player.curFrame >= 12) {
-            // TODO: END GAME
+            if (!gameOver) {
+                showScoreMenu();
+                gameOver = true;
+                stop();
+            }
         }
     }
     
@@ -479,16 +518,79 @@ var playerRank = 0;
         }
     }
     
-    var showMenu = function() {
+    var showMainMenu = function() {
         $("#mainMenu").show();
         $("#mainMenu .door").addClass("closed");
+        $("#scoring .door").removeClass("closed");
     }
+    
+    var preShowScoreMenu = function() {
+        $("#scoring").show();
+    }
+    var showScoreMenu = function() {
+        $("#scoring .door").addClass("closed");
+        $("#mainMenu .door").removeClass("closed");
+        $("#mainMenu").show();
+    }
+    
+    $("#backToMenu").on("click", function() {
+        $("#mainMenu .door").addClass("closed");
+        
+        return false;
+    });
     
     $("#startGame").on("click", function() {
         $(".menu:not(#mainMenu)").hide();
         $("#mainMenu .door").removeClass("closed");
         init();
+        
+        return false;
     });
     
-    showMenu();
+    $("#playAgain").on("click", function() {
+        $(".menu:not(#scoring)").hide();
+        $("#scoring .door").removeClass("closed");
+        init();
+        
+        return false;
+    });
+    
+    $("#instructionsButton").on("click", function() {
+        $(".menu:not(#mainMenu)").hide();
+        $("#instructions").show();
+        $("#instructions .door").addClass("closed");
+        
+        $("#mainMenu .door").removeClass("closed");
+        
+        return false;
+    });
+    
+    $("#controlsButton").on("click", function() {
+        $(".menu:not(#mainMenu)").hide();
+        $("#controls").show();
+        $("#controls .door").addClass("closed");
+        
+        $("#mainMenu .door").removeClass("closed");
+        
+        return false;
+    });
+    
+    $("#aboutButton").on("click", function() {
+        $(".menu:not(#mainMenu)").hide();
+        
+        $("#about").show();
+        $("#about .door").addClass("closed");
+        
+        $("#mainMenu .door").removeClass("closed");
+        
+        return false;
+    });
+    
+    $(".back").on("click", function() {
+        $("#mainMenu .door").addClass("closed");
+        
+        return false;
+    });
+    
+    showMainMenu();
 }());
