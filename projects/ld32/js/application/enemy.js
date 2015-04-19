@@ -31,6 +31,7 @@ Enemy.prototype.shoot = function(playerX, playerY) {
         var bullet = new Bullet(this.x+16, this.y+16, angle);
         bullets.push(bullet);
     }
+    enemyBulletsFired ++;
 }
 
 Enemy.prototype.draw = function(context, frame) {

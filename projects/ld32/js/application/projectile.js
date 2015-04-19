@@ -81,6 +81,7 @@ var Needles = function(x, y) {
     Projectile.call(this, x, y);
     this.name = "Needles";
     this.sprite = "needlesItem";
+    this.id = 0;
 }
 
 Needles.prototype = new Projectile();
@@ -90,6 +91,7 @@ var Fridge = function(x, y) {
     Projectile.call(this, x, y);
     this.name = "Fridge";
     this.sprite = "fridgeItem";
+    this.id = 1;
     this.bulletHits = 5;
 }
 
@@ -101,6 +103,7 @@ var Turret = function(x, y) {
     Projectile.call(this, x, y);
     this.name = "Turret";
     this.sprite = "turretItem";
+    this.id = 2;
 }
 
 Turret.prototype = new Projectile();
@@ -110,6 +113,7 @@ var Crate = function(x, y) {
     Projectile.call(this, x, y);
     this.name = "Crate";
     this.sprite = "crateItem";
+    this.id = 3;
 }
 
 Crate.prototype = new Projectile();
@@ -120,6 +124,7 @@ var ControlPanel = function(x, y) {
     Projectile.call(this, x, y);
     this.name = "Control Panel";
     this.sprite = "controlpanelItem";
+    this.id = 4;
 }
 
 ControlPanel.prototype = new Projectile();

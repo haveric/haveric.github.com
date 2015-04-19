@@ -84,6 +84,7 @@ textureMapper.addTexture('player', 'img/player.png');
 textureMapper.addTexture('objects', 'img/objects.png');
 textureMapper.addTexture('enemies', 'img/enemies.png');
 textureMapper.addTexture('projectiles', 'img/projectiles.png');
+textureMapper.addTexture('ui', 'img/ui.png');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('player', 'player', 0, 0, 32, 64);
@@ -133,3 +134,20 @@ spriteMapper.addImage('airlock5', 'projectiles', 200,464,40,40);
 spriteMapper.addImage('airlock6', 'projectiles', 240,464,40,40);
 spriteMapper.addImage('airlock7', 'projectiles', 280,464,40,40);
 spriteMapper.addImage('airlock8', 'projectiles', 320,464,40,40);
+
+spriteMapper.addImage('hp15', 'ui', 0, 0, 200, 40);
+spriteMapper.addImage('hp14', 'ui', 0, 40, 200, 40);
+spriteMapper.addImage('hp13', 'ui', 0, 80, 200, 40);
+spriteMapper.addImage('hp12', 'ui', 0, 120, 200, 40);
+spriteMapper.addImage('hp11', 'ui', 0, 160, 200, 40);
+spriteMapper.addImage('hp10', 'ui', 0, 200, 200, 40);
+spriteMapper.addImage('hp9', 'ui', 0, 240, 200, 40);
+spriteMapper.addImage('hp8', 'ui', 0, 280, 200, 40);
+spriteMapper.addImage('hp7', 'ui', 0, 320, 200, 40);
+spriteMapper.addImage('hp6', 'ui', 0, 360, 200, 40);
+spriteMapper.addImage('hp5', 'ui', 0, 400, 200, 40);
+spriteMapper.addImage('hp4', 'ui', 0, 440, 200, 40);
+spriteMapper.addImage('hp3', 'ui', 0, 480, 200, 40);
+spriteMapper.addImage('hp2', 'ui', 0, 520, 200, 40);
+spriteMapper.addImage('hp1', 'ui', 0, 560, 200, 40);
+spriteMapper.addImage('hp0', 'ui', 0, 600, 200, 40);

@@ -3,6 +3,7 @@ var CANVAS_WIDTH = 600,
     STEP = 16,
     STORED_TIME;
 
+var debug = false;
 var stars = [];
 var projectiles = [];
 var enemies = [];
@@ -11,6 +12,14 @@ var enemySpawnTimer = 10;
 var projectileTimeout = [0, 0, 0];
 var projectileMaxTimeout = 60;
 var spritesRendered = false;
+var projectilesLaunched = [0,0,0,0,0]
+var enemiesKilled = [0,0,0,0,0,0];
+var enemyBulletsFired = 0;
+var maxEnemies = 5;
+var enemiesDifficultyOriginal = 5;
+var enemiesDifficulty = 5;
+var enemiesDifficultyDelta = 1;
+var playerRank = 0;
 
 (function () {
     var keysDown = [],
@@ -86,7 +95,9 @@ var spritesRendered = false;
     
     var init = function() {
         keyDownListener = addEventListener("keydown", function (e) {
-            console.log("Keycode: " + e.keyCode);
+            if (debug) {
+                console.log("Keycode: " + e.keyCode);
+            }
             keysDown[e.keyCode] = true;
         }, false);
 
@@ -149,6 +160,16 @@ var spritesRendered = false;
     }
     
     var handleInput = function() {
+        if (115 in keysDown) {
+            if (debug) {
+                debug = false;
+            } else {
+                debug = true;
+            }
+            var index = keysDown['115'].index;
+            keysDown.splice(index, 1);
+        }
+        
         if (38 in keysDown) { // Player holding up
             player.moveUp();
         } else if (40 in keysDown) { // Player holding down
@@ -168,6 +189,7 @@ var spritesRendered = false;
         if (65 in keysDown) { // A
             if (projectileTimeout[0] == 0) {
                 var projectile = player.airlocks[0].projectile;
+                projectilesLaunched[projectile.id] ++;
                 projectile.x = player.x;
                 projectile.y = player.y;
                 projectile.dir = "sw";
@@ -180,6 +202,7 @@ var spritesRendered = false;
         if (83 in keysDown) { // S
             if (projectileTimeout[1] == 0) {
                 var projectile = player.airlocks[1].projectile;
+                projectilesLaunched[projectile.id] ++;
                 projectile.x = player.x;
                 projectile.y = player.y;
                 projectile.dir = "s"; 
@@ -192,6 +215,7 @@ var spritesRendered = false;
         if (68 in keysDown) { // D
             if (projectileTimeout[2] == 0) {
                 var projectile = player.airlocks[2].projectile;
+                projectilesLaunched[projectile.id] ++;
                 projectile.x = player.x;
                 projectile.y = player.y;
                 projectile.dir = "se";
@@ -269,11 +293,25 @@ var spritesRendered = false;
         if (enemySpawnTimer >= 0) {
             enemySpawnTimer --;
         }
-        if (enemies.length < 5 && enemySpawnTimer <= 0) {
-            enemySpawnTimer = (Math.random() * 150) + 25;
+        if (enemies.length < maxEnemies && enemySpawnTimer <= 0) {
+            var rand = 150 - (playerRank * 15);
+            if (rand < 0) {
+                rand = 0;
+            }
+            
+            var delay = 25;
+            if (playerRank > 10) {
+                delay -= (playerRank - 10);
+            }
+            
+            if (delay < 0) {
+                delay = 0;
+            }
+            
+            enemySpawnTimer = (Math.random() * rand) + delay;
             
             var chance = Math.random() * 20;
-            if (chance < 5) {
+            if (chance < maxEnemies) {
                 var enemy = new RapidFireEnemy((Math.random() * (CANVAS_WIDTH -64)) + 32, CANVAS_HEIGHT + 50);
                 enemies.push(enemy);
             } else if (chance >= 5 && chance < 7) {
@@ -284,6 +322,17 @@ var spritesRendered = false;
                 enemies.push(enemy);
             }
         }
+        
+        var totalEnemiesKilled = enemiesKilled[0] + enemiesKilled[1] + enemiesKilled[2] + enemiesKilled[3] + enemiesKilled[4];
+        
+        if (totalEnemiesKilled >= enemiesDifficulty) {
+            maxEnemies ++;
+            playerRank ++;
+            
+            enemiesDifficulty += enemiesDifficultyOriginal;
+            enemiesDifficulty += enemiesDifficultyDelta;
+            enemiesDifficultyDelta ++;
+        }
     }
     
     var handleCollision = function() {
@@ -291,6 +340,7 @@ var spritesRendered = false;
             enemies.forEach(function(e, eIndex) {
                 // dumb 2d collision
                 if (!(p.x + 4 > e.x + 32 || p.x + 28 < e.x || p.y + 4 > e.y + 32 || p.y + 28 < e.y)) {
+                    enemiesKilled[p.id] ++;
                     killProjectile(pIndex);
                     killEnemy(eIndex);
                 }
@@ -309,9 +359,22 @@ var spritesRendered = false;
         
         bullets.forEach(function(b, bIndex) {
             if (!(b.x > player.x + 26 || b.x + 6 < player.x+6 || b.y > player.y + 58 || b.y + 6 < player.y+6)) {
+                player.hp --;
                 killBullet(bIndex);
             }
         });
+        
+        enemies.forEach(function(e, eIndex) {
+            if (!(e.x + 5 > player.x + 26 || e.x + 27 < player.x + 6 || e.y + 5 > player.y + 58 || e.y + 5 < player.y + 6)) {
+                player.hp -= 2;
+                enemiesKilled[5] ++;
+                killEnemy(eIndex);
+            }
+        });
+        
+        if (player.hp <= 0) {
+            // TODO: END GAME
+        }
     }
     
     var render = function() {
@@ -357,21 +420,36 @@ var spritesRendered = false;
             airlock.draw(context, numRenders);
         });
         
-        context.fillStyle="#ffffff";
-        context.font = "16px Arial";
-        context.fillText(projectileTimeout[0], 10,20);
-        context.fillText(projectileTimeout[1], 10,40);
-        context.fillText(projectileTimeout[2], 10,60);
+        var displayHp = player.hp;
         
-        context.fillText(enemies.length, 10, 80);
-        context.fillText(projectiles.length, 10, 100);
-        context.fillText(stars.length, 10, 120);
-        context.fillText(bullets.length, 10, 140);
+        if (displayHp < 0) {
+            displayHp = 0;
+        }
         
-        context.fillText(player.airlocks[0].curFrame + ", " + player.airlocks[0].open, 10, 180);
-        context.fillText(player.airlocks[1].curFrame + ", " + player.airlocks[1].open, 10, 200);
-        context.fillText(player.airlocks[2].curFrame + ", " + player.airlocks[2].open, 10, 220);
+        var hpSprite = "hp" + displayHp;
+        spriteMapper.getImage(hpSprite).drawImage(context, 10, 10);
         
+        if (debug) {
+            context.fillStyle="#ffffff";
+            context.font = "16px Arial";
+            context.fillText(projectileTimeout[0], 10,20);
+            context.fillText(projectileTimeout[1], 10,40);
+            context.fillText(projectileTimeout[2], 10,60);
+            
+            context.fillText(enemies.length, 10, 80);
+            context.fillText(projectiles.length, 10, 100);
+            context.fillText(stars.length, 10, 120);
+            context.fillText(bullets.length, 10, 140);
+            
+            context.fillText(player.airlocks[0].curFrame + ", " + player.airlocks[0].open, 10, 180);
+            context.fillText(player.airlocks[1].curFrame + ", " + player.airlocks[1].open, 10, 200);
+            context.fillText(player.airlocks[2].curFrame + ", " + player.airlocks[2].open, 10, 220);
+            context.fillText(player.hp, 10, 240);
+            context.fillText(enemiesKilled, 10, 260);
+            context.fillText(projectilesLaunched, 10, 280);
+            context.fillText(enemyBulletsFired, 10, 300);
+            context.fillText(enemiesDifficulty, 10, 320);
+        }
         
         numRenders++;
         if (numRenders == 60) {
