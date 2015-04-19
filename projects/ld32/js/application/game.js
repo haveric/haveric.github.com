@@ -256,12 +256,7 @@ var gameOver = false;
             }
         }
         
-        
-        if (81 in keysDown) { // q
-            stop("menu");
-        }
-        
-        if (65 in keysDown || 17 in keysDown || projectileTimeout[0] > 0) {
+        if (65 in keysDown || projectileTimeout[0] > 0) {
             projectileTimeout[0] ++;
             
             if (projectileTimeout[0] == projectileMaxTimeout - 8) {
@@ -272,7 +267,7 @@ var gameOver = false;
             }
         }
         
-        if (83 in keysDown || 17 in keysDown || projectileTimeout[1] > 0) {
+        if (83 in keysDown || projectileTimeout[1] > 0) {
             projectileTimeout[1] ++;
             
             if (projectileTimeout[1] == projectileMaxTimeout - 8) {
@@ -283,7 +278,7 @@ var gameOver = false;
             }
         }
         
-        if (68 in keysDown || 17 in keysDown || projectileTimeout[2] > 0) {
+        if (68 in keysDown || projectileTimeout[2] > 0) {
             projectileTimeout[2] ++;
             
             if (projectileTimeout[2] == projectileMaxTimeout - 8) {
