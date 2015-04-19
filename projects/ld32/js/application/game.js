@@ -10,6 +10,7 @@ var bullets = [];
 var enemySpawnTimer = 10;
 var projectileTimeout = [0, 0, 0];
 var projectileMaxTimeout = 60;
+var spritesRendered = false;
 
 (function () {
     var keysDown = [],
@@ -100,7 +101,7 @@ var projectileMaxTimeout = 60;
         context = canvas.getContext('2d');
 
         player = new Player(275, 200);
-
+        
         populateBackground();
         
         gameRunning = true;
@@ -117,6 +118,23 @@ var projectileMaxTimeout = 60;
         removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
         keyUpListener = undefined;
+    }
+    
+    var prerenderSprites = function() {
+        var numSprites = spriteMapper.getSprites().length;
+        var numLoaded = 0;
+        
+        spriteMapper.getSprites().forEach(function(sprite) {
+            if (sprite.texture != null) {
+                numLoaded ++;
+            } else {
+                sprite.drawImage(context, 0, 0);
+            }
+        });
+
+        if (numLoaded == numSprites) {
+            spritesRendered = true;
+        }
     }
     
     var populateBackground = function() {
@@ -296,7 +314,10 @@ var projectileMaxTimeout = 60;
         });
     }
     
-    var render = function(){
+    var render = function() {
+        if (!spritesRendered) {
+            prerenderSprites();
+        }
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
 

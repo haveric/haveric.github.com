@@ -32,6 +32,10 @@ var SpriteMapper = function () {
     sprites = [];
 }
 
+SpriteMapper.prototype.getSprites = function() {
+    return sprites;
+}
+
 SpriteMapper.prototype.addImage = function (imageName, textureName, x, y, w, h) {
     sprites.push(new Sprite(imageName, textureName, x, y, w, h));
 }
@@ -82,7 +86,6 @@ textureMapper.addTexture('enemies', 'img/enemies.png');
 textureMapper.addTexture('projectiles', 'img/projectiles.png');
 
 var spriteMapper = new SpriteMapper();
-spriteMapper.addImage('path', 'sprites', 0, 0);
 spriteMapper.addImage('player', 'player', 0, 0, 32, 64);
 spriteMapper.addImage('player1', 'player', 32, 0, 32, 64);
 spriteMapper.addImage('player2', 'player', 64, 0, 32, 64);
