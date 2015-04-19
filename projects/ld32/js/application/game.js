@@ -154,6 +154,7 @@ var projectileMaxTimeout = 60;
                 projectile.y = player.y;
                 projectile.dir = "sw";
                 projectiles.push(projectile);
+                player.airlocks[0].closeDoor();
                 player.airlocks[0].updateProjectile();
             }
         }
@@ -165,6 +166,7 @@ var projectileMaxTimeout = 60;
                 projectile.y = player.y;
                 projectile.dir = "s"; 
                 projectiles.push(projectile);
+                player.airlocks[1].closeDoor();
                 player.airlocks[1].updateProjectile();
             }
         }
@@ -176,6 +178,7 @@ var projectileMaxTimeout = 60;
                 projectile.y = player.y;
                 projectile.dir = "se";
                 projectiles.push(projectile);
+                player.airlocks[2].closeDoor();
                 player.airlocks[2].updateProjectile();
             }
         }
@@ -188,6 +191,9 @@ var projectileMaxTimeout = 60;
         if (65 in keysDown || 17 in keysDown || projectileTimeout[0] > 0) {
             projectileTimeout[0] ++;
             
+            if (projectileTimeout[0] == projectileMaxTimeout - 8) {
+                player.airlocks[0].openDoor();
+            }
             if (projectileTimeout[0] >= projectileMaxTimeout) {
                 projectileTimeout[0] = 0;
             }
@@ -196,6 +202,9 @@ var projectileMaxTimeout = 60;
         if (83 in keysDown || 17 in keysDown || projectileTimeout[1] > 0) {
             projectileTimeout[1] ++;
             
+            if (projectileTimeout[1] == projectileMaxTimeout - 8) {
+                player.airlocks[1].openDoor();
+            }
             if (projectileTimeout[1] >= projectileMaxTimeout) {
                 projectileTimeout[1] = 0;
             }
@@ -204,6 +213,9 @@ var projectileMaxTimeout = 60;
         if (68 in keysDown || 17 in keysDown || projectileTimeout[2] > 0) {
             projectileTimeout[2] ++;
             
+            if (projectileTimeout[0] == projectileMaxTimeout - 8) {
+                player.airlocks[2].openDoor();
+            }
             if (projectileTimeout[2] >= projectileMaxTimeout) {
                 projectileTimeout[2] = 0;
             }
@@ -314,6 +326,12 @@ var projectileMaxTimeout = 60;
         
         player.draw(context, numRenders);
         
+        
+        // UI
+        
+        player.airlocks.forEach(function(airlock) {
+            airlock.draw(context, numRenders);
+        });
         
         context.fillStyle="#ffffff";
         context.font = "16px Arial";

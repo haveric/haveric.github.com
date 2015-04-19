@@ -116,3 +116,14 @@ spriteMapper.addImage('bullet3', 'enemies', 128, 64, 6, 6);
 spriteMapper.addImage('needlesItem', 'projectiles', 0, 0);
 spriteMapper.addImage('fridgeItem', 'projectiles', 32, 0);
 spriteMapper.addImage('turretItem', 'projectiles', 64, 0);
+
+spriteMapper.addImage('airlockempty', 'projectiles', 0, 424, 40, 40);
+spriteMapper.addImage('airlock0', 'projectiles', 0,464,40,40);
+spriteMapper.addImage('airlock1', 'projectiles', 40,464,40,40);
+spriteMapper.addImage('airlock2', 'projectiles', 80,464,40,40);
+spriteMapper.addImage('airlock3', 'projectiles', 120,464,40,40);
+spriteMapper.addImage('airlock4', 'projectiles', 160,464,40,40);
+spriteMapper.addImage('airlock5', 'projectiles', 200,464,40,40);
+spriteMapper.addImage('airlock6', 'projectiles', 240,464,40,40);
+spriteMapper.addImage('airlock7', 'projectiles', 280,464,40,40);
+spriteMapper.addImage('airlock8', 'projectiles', 320,464,40,40);

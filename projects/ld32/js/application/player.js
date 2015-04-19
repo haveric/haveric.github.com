@@ -13,7 +13,7 @@ var Player = function(x, y) {
     this.airlocks = [];
     
     for (var i = 0; i < this.numAirlocks; i++) {
-        this.airlocks[i] = new Airlock();
+        this.airlocks[i] = new Airlock(CANVAS_WIDTH - 150 + (50 * i), 10);
     }
     
     this.frameMod = 10;
