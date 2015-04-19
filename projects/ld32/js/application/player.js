@@ -5,8 +5,17 @@ var Player = function(x, y) {
     this.yVelocity = 0;
     this.xSpeed = .5;
     this.ySpeed = .5;
-    this.maxXVelocity = 8;
+    this.maxXVelocity = 5;
     this.maxYVelocity = 5;
+    
+    this.hp = 15;
+    this.numAirlocks = 3;
+    this.airlocks = [];
+    
+    for (var i = 0; i < this.numAirlocks; i++) {
+        this.airlocks[i] = new Airlock();
+    }
+    
 }
 
 Player.prototype.moveUp = function() {

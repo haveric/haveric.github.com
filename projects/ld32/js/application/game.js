@@ -6,9 +6,10 @@ var CANVAS_WIDTH = 600,
 var stars = [];
 var projectiles = [];
 var enemies = [];
+var bullets = [];
 var enemySpawnTimer = 10;
 var projectileTimeout = [0, 0, 0];
-var projectileMaxTimeout = 30;
+var projectileMaxTimeout = 60;
 
 (function () {
     var keysDown = [],
@@ -69,6 +70,7 @@ var projectileMaxTimeout = 30;
 
             if (dt >= STEP) {
                 handleInput();
+                handleAI();
                 handleMovement();
                 handleCollision();
                 dt -= STEP;
@@ -147,45 +149,34 @@ var projectileMaxTimeout = 30;
         
         if (65 in keysDown) { // A
             if (projectileTimeout[0] == 0) {
-                var projectile = new Projectile(player.x, player.y);
+                var projectile = player.airlocks[0].projectile;
+                projectile.x = player.x;
+                projectile.y = player.y;
                 projectile.dir = "sw";
                 projectiles.push(projectile);
+                player.airlocks[0].updateProjectile();
             }
         }
         
         if (83 in keysDown) { // S
             if (projectileTimeout[1] == 0) {
-                var projectile = new Projectile(player.x, player.y);
+                var projectile = player.airlocks[1].projectile;
+                projectile.x = player.x;
+                projectile.y = player.y;
                 projectile.dir = "s"; 
                 projectiles.push(projectile);
+                player.airlocks[1].updateProjectile();
             }
         }
         
         if (68 in keysDown) { // D
             if (projectileTimeout[2] == 0) {
-                var projectile = new Projectile(player.x, player.y);
+                var projectile = player.airlocks[2].projectile;
+                projectile.x = player.x;
+                projectile.y = player.y;
                 projectile.dir = "se";
                 projectiles.push(projectile);
-            }
-        }
-        
-        if (17 in keysDown) { // CTRL
-            if (projectileTimeout[0] == 0) {
-                var projectile = new Projectile(player.x, player.y);
-                projectile.dir = "sw";
-                projectiles.push(projectile);
-            }
-            
-            if (projectileTimeout[1] == 0) {
-                var projectile = new Projectile(player.x, player.y);
-                projectile.dir = "s"; 
-                projectiles.push(projectile);
-            }
-            
-            if (projectileTimeout[2] == 0) {
-                var projectile = new Projectile(player.x, player.y);
-                projectile.dir = "se";
-                projectiles.push(projectile);
+                player.airlocks[2].updateProjectile();
             }
         }
         
@@ -219,6 +210,15 @@ var projectileMaxTimeout = 30;
         }
     }
     
+    var handleAI = function() {
+        enemies.forEach(function(enemy) {
+            var chance = Math.random() * 100;
+            if (chance < 1) {
+                enemy.shoot(player.x, player.y);
+            }
+        });
+    }
+    
     var handleMovement = function() {
         stars.forEach(function(star, index) {
             star.move(index);
@@ -226,6 +226,10 @@ var projectileMaxTimeout = 30;
         
         projectiles.forEach(function(projectile, index) {
             projectile.move(index);
+        });
+        
+        bullets.forEach(function(bullet, index) {
+            bullet.move(index);
         });
         
         enemies.forEach(function(enemy, index) {
@@ -236,22 +240,44 @@ var projectileMaxTimeout = 30;
             enemySpawnTimer --;
         }
         if (enemies.length < 5 && enemySpawnTimer <= 0) {
-            enemySpawnTimer = (Math.random() * 50) + 25;
-            var enemy = new Enemy((Math.random() * (CANVAS_WIDTH -64)) + 32, CANVAS_HEIGHT + 50);
-            enemies.push(enemy);
+            enemySpawnTimer = (Math.random() * 150) + 25;
+            
+            var chance = Math.random() * 20;
+            if (chance < 5) {
+                var enemy = new RapidFireEnemy((Math.random() * (CANVAS_WIDTH -64)) + 32, CANVAS_HEIGHT + 50);
+                enemies.push(enemy);
+            } else if (chance >= 5 && chance < 7) {
+                var enemy = new SpiralFireEnemy((Math.random() * (CANVAS_WIDTH -64)) + 32, CANVAS_HEIGHT + 50);
+                enemies.push(enemy);
+            } else {
+                var enemy = new Enemy((Math.random() * (CANVAS_WIDTH -64)) + 32, CANVAS_HEIGHT + 50);
+                enemies.push(enemy);
+            }
         }
     }
     
     var handleCollision = function() {
-        enemies.forEach(function(e, eIndex) {
-            
-            projectiles.forEach(function(p, pIndex) {
+        projectiles.forEach(function(p, pIndex) {
+            enemies.forEach(function(e, eIndex) {
                 // dumb 2d collision
                 if (!(p.x > e.x + 32 || p.x + 32 < e.x || p.y > e.y + 32 || p.y + 32 < e.y)) {
-                    killEnemy(eIndex);
                     killProjectile(pIndex);
+                    killEnemy(eIndex);
                 }
             });
+            
+            bullets.forEach(function(b, bIndex) {
+                if (!(p.x > b.x + 32 || p.x + 32 < b.x || p.y > b.y + 32 || p.y + 32 < b.y)) {
+                    killProjectile(pIndex);
+                    killBullet(bIndex);
+                }
+            });
+        });
+        
+        bullets.forEach(function(b, bIndex) {
+            if (!(b.x > player.x + 32 || b.x + 5 < player.x || b.y > player.y + 32 || b.y + 5 < player.y)) {
+                killBullet(bIndex);
+            }
         });
     }
     
@@ -278,6 +304,10 @@ var projectileMaxTimeout = 30;
             projectile.draw(context, numRenders);
         });
         
+        bullets.forEach(function(bullet) {
+            bullet.draw(context, numRenders);
+        });
+        
         enemies.forEach(function(enemy) {
             enemy.draw(context, numRenders);
         });
@@ -294,6 +324,7 @@ var projectileMaxTimeout = 30;
         context.fillText(enemies.length, 10, 80);
         context.fillText(projectiles.length, 10, 100);
         context.fillText(stars.length, 10, 120);
+        context.fillText(bullets.length, 10, 140);
         
         
         numRenders++;

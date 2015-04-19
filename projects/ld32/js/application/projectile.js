@@ -1,6 +1,6 @@
 var Projectile = function(x, y) {
-    this.x = x;
-    this.y = y;
+    this.x = x || 0;
+    this.y = y || 0;
     this.dir = "n";
     this.velocity = 5;
     this.sqrtVelocity = Math.sqrt(this.velocity);
@@ -8,6 +8,7 @@ var Projectile = function(x, y) {
     this.rotation = 0;
     this.rotationSpeed = (Math.random() * 3) + .2;
     this.rotationDirection = Math.floor((Math.random() * 2) + 1);
+    this.name = "";
 }
 
 Projectile.prototype.setRandomDirection = function() {
@@ -74,6 +75,34 @@ Projectile.prototype.rotate = function() {
 Projectile.prototype.draw = function(context, frame) {
     spriteMapper.getImage(this.sprite).drawImage(context, this.x, this.y, this.rotation);
 }
+
+var Needles = function(x, y) {
+    Projectile.call(this, x, y);
+    this.name = "Needles";
+    this.sprite = "needlesItem";
+}
+
+Needles.prototype = new Projectile();
+Needles.prototype.constructor = Needles;
+
+var Fridge = function(x, y) {
+    Projectile.call(this, x, y);
+    this.name = "Fridge";
+    this.sprite = "fridgeItem";
+}
+
+Fridge.prototype = new Projectile();
+Fridge.prototype.constructor = Fridge;
+
+
+var Turret = function(x, y) {
+    Projectile.call(this, x, y);
+    this.name = "Turret";
+    this.sprite = "turretItem";
+}
+
+Turret.prototype = new Projectile();
+Turret.prototype.constructor = Turret;
 
 function killProjectile(index) {
     if (index >= 0 && index < projectiles.length) {

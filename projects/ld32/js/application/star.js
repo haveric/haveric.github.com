@@ -1,4 +1,3 @@
-var PI_2 = 2 * Math.PI;
 var Star = function(y) {
     this.x = Math.random() * 800;
     
@@ -8,11 +7,11 @@ var Star = function(y) {
         if (weighted < 9) {
             this.radius = Math.random() * 1.5;
         } else {
-            this.radius = (Math.random() * 2) + 1;
+            this.radius = (Math.random() * 1.75) + .25;
         }
     } else {
         var weighted = Math.random() * 10;
-        if (weighted < 7) {
+        if (weighted < 8) {
             this.radius = Math.random() * 1.5;
         } else if (weighted > 9.95 && weighted <= 9.99) {
             this.radius = (Math.random() * 25) + 25;
@@ -30,8 +29,8 @@ var Star = function(y) {
     this.y = y || -50 - this.radius*2;
     this.velocity = this.radius * 0.8;
     
-    if (this.velocity > 10) {
-        this.velocity = 10;
+    if (this.velocity > 5) {
+        this.velocity = 5;
     }
     
     this.color = {
@@ -67,7 +66,7 @@ Star.prototype.draw = function(context, frame) {
     }
     
     context.beginPath();
-    context.arc(this.x, this.y, this.radius, 0, PI_2);
+    context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     context.fill();
 }
 

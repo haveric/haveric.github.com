@@ -1,5 +1,3 @@
-var PI_180 = Math.PI / 180;
-
 var TextureMapper = function () {
     textures = [];
 }
@@ -65,7 +63,7 @@ Sprite.prototype.drawImage = function (context, i, j, degrees) {
         if (degrees != null && degrees > 0) {
             context.save();
             context.translate(i+this.w/2, j+this.h/2);
-            context.rotate(degrees * PI_180);
+            context.rotate(degrees * Math.PI / 180);
         
             context.drawImage(this.texture, this.x, this.y, this.w, this.h, -this.w/2, -this.h/2, this.w, this.h);
 
@@ -79,13 +77,43 @@ Sprite.prototype.drawImage = function (context, i, j, degrees) {
 
 var textureMapper = new TextureMapper();
 textureMapper.addTexture('sprites', 'img/placeholder.gif');
-textureMapper.addTexture('player', 'img/player.gif');
+textureMapper.addTexture('player', 'img/player.png');
 textureMapper.addTexture('objects', 'img/objects.png');
 textureMapper.addTexture('enemies', 'img/enemies.png');
+textureMapper.addTexture('projectiles', 'img/projectiles.png');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('path', 'sprites', 0, 0);
-spriteMapper.addImage('player', 'player', 0, 0);
+spriteMapper.addImage('player', 'player', 0, 0, 32, 64);
+spriteMapper.addImage('player1', 'player', 32, 0, 32, 64);
+spriteMapper.addImage('player2', 'player', 64, 0, 32, 64);
+spriteMapper.addImage('player3', 'player', 96, 0, 32, 64);
+spriteMapper.addImage('player4', 'player', 128, 0, 32, 64);
+
+spriteMapper.addImage('player-boost0', 'player', 0, 64, 32, 64);
+spriteMapper.addImage('player-boost1', 'player', 32, 64, 32, 64);
+spriteMapper.addImage('player-boost2', 'player', 64, 64, 32, 64);
+spriteMapper.addImage('player-boost3', 'player', 96, 64, 32, 64);
+spriteMapper.addImage('player-boost4', 'player', 128, 64, 32, 64);
+
+
 spriteMapper.addImage('asteroid', 'objects', 0, 0);
 spriteMapper.addImage('projectile', 'objects', 32, 0);
 spriteMapper.addImage('enemy', 'enemies', 0, 0);
+spriteMapper.addImage('enemy1', 'enemies', 32, 0);
+spriteMapper.addImage('enemy2', 'enemies', 64, 0);
+spriteMapper.addImage('enemy3', 'enemies', 96, 0);
+spriteMapper.addImage('spiralEnemy', 'enemies', 0, 32);
+spriteMapper.addImage('spiralEnemy1', 'enemies', 32, 32);
+spriteMapper.addImage('spiralEnemy2', 'enemies', 64, 32);
+spriteMapper.addImage('spiralEnemy3', 'enemies', 96, 32);
+spriteMapper.addImage('rapidEnemy', 'enemies', 0, 64);
+spriteMapper.addImage('rapidEnemy1', 'enemies', 32, 64);
+spriteMapper.addImage('rapidEnemy2', 'enemies', 64, 64);
+spriteMapper.addImage('rapidEnemy3', 'enemies', 96, 64);
+spriteMapper.addImage('bullet1', 'enemies', 128, 0, 6, 6);
+spriteMapper.addImage('bullet2', 'enemies', 128, 32, 6, 6);
+spriteMapper.addImage('bullet3', 'enemies', 128, 64, 6, 6);
+spriteMapper.addImage('needlesItem', 'projectiles', 0, 0);
+spriteMapper.addImage('fridgeItem', 'projectiles', 32, 0);
+spriteMapper.addImage('turretItem', 'projectiles', 64, 0);
