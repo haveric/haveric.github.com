@@ -117,6 +117,7 @@ spriteMapper.addImage('needlesItem', 'projectiles', 0, 0);
 spriteMapper.addImage('fridgeItem', 'projectiles', 32, 0);
 spriteMapper.addImage('turretItem', 'projectiles', 64, 0);
 spriteMapper.addImage('crateItem', 'projectiles', 96, 0);
+spriteMapper.addImage('controlpanelItem', 'projectiles', 128, 0);
 
 
 spriteMapper.addImage('airlockempty', 'projectiles', 0, 424, 40, 40);

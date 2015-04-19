@@ -115,6 +115,16 @@ var Crate = function(x, y) {
 Crate.prototype = new Projectile();
 Crate.prototype.constructor = Crate;
 
+
+var ControlPanel = function(x, y) {
+    Projectile.call(this, x, y);
+    this.name = "Control Panel";
+    this.sprite = "controlpanelItem";
+}
+
+ControlPanel.prototype = new Projectile();
+ControlPanel.prototype.constructor = ControlPanel;
+
 function killProjectile(index) {
     if (index >= 0 && index < projectiles.length) {
         projectiles.splice(index, 1);
