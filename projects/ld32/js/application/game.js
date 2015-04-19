@@ -425,8 +425,16 @@ var playerRank = 0;
         if (displayHp < 0) {
             displayHp = 0;
         }
-        
-        var hpSprite = "hp" + displayHp;
+        var hpSprite = "hp";
+        if (displayHp > 5 || displayHp == 0) {
+            hpSprite += displayHp;
+        } else {
+            if (numRenders > 50) {
+                hpSprite += "0";
+            } else {
+                hpSprite += displayHp;
+            }
+        }
         spriteMapper.getImage(hpSprite).drawImage(context, 10, 10);
         
         if (debug) {
