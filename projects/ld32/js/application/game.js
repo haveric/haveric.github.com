@@ -479,5 +479,16 @@ var playerRank = 0;
         }
     }
     
-    init();
+    var showMenu = function() {
+        $("#mainMenu").show();
+        $("#mainMenu .door").addClass("closed");
+    }
+    
+    $("#startGame").on("click", function() {
+        $(".menu:not(#mainMenu)").hide();
+        $("#mainMenu .door").removeClass("closed");
+        init();
+    });
+    
+    showMenu();
 }());

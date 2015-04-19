@@ -13,3 +13,100 @@ body {
     height: 576px;
     z-index:0;
 }
+
+.menu {
+    width: 600px;
+    height: 576px;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+}
+
+.menu a {
+    padding: 10px 15px 12px;
+    font-size: 18px;
+    line-height: 18px;
+    background: #7B7D7B;
+    border-left: 1px solid #999;
+    border-top: 1px solid #999;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    box-sizing: border-box;
+    display: block;
+    text-decoration: none;
+    font-family: "Lucida Console", Monaco, monospace;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.menu a:hover {
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    background: #ccc;
+    color: #000;
+}
+
+.mainLinks {
+    padding: 40px 40px 0px 120px;
+}
+
+.leftDoor,
+.rightDoor {
+    -webkit-transition: all 1s ease-in;
+    -moz-transition: all 1s ease-in;
+    -ms-transition: all 1s ease-in;
+    -o-transition: all 1s ease-in;
+    transition: all 1s ease-in;
+}
+
+.leftDoor {
+    background: url('../img/door-left.png');
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 339px;
+    height: 576px;
+    
+    -moz-transform: translateX(-339px);
+    -webkit-transform: translateX(-339px);
+    -o-transform: translateX(-339px);
+    -ms-transform: translateX(-339px);
+    transform: translateX(-339px);
+}
+
+.leftDoor.closed {
+    -moz-transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    -o-transform: translateX(0px);
+    -ms-transform: translateX(0px);
+    transform: translateX(0px);
+}
+
+.rightDoor {
+    background: url('../img/door-right.png');
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 336px;
+    height: 576px;
+    -moz-transform: translateX(336px);
+    -webkit-transform: translateX(336px);
+    -o-transform: translateX(336px);
+    -ms-transform: translateX(336px);
+    transform: translateX(336px);
+}
+
+.rightDoor.closed {
+    -moz-transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    -o-transform: translateX(0px);
+    -ms-transform: translateX(0px);
+    transform: translateX(0px);
+}
+
+.title {
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 28px;
+    margin: 10px 15px;
+}
