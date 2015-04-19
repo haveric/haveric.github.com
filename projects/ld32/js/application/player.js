@@ -18,10 +18,12 @@ var Player = function(x, y) {
     
     this.frameMod = 10;
     this.curFrame = 1;
+    
+    this.dying = false;
 }
 
 Player.prototype.moveUp = function() {
-    if (this.y > 0) {
+    if (this.y > 0 && !this.dying) {
         if (this.yVelocity > 0) {
             this.yVelocity = 0;
         }
@@ -31,12 +33,10 @@ Player.prototype.moveUp = function() {
             this.yVelocity = -this.maxYVelocity;
         }
         this.y += this.yVelocity;
-    } else {
-        soundManager.play('blip');
     }
 }
 Player.prototype.moveDown = function() {
-    if (this.y < CANVAS_HEIGHT - 64) {
+    if (this.y < CANVAS_HEIGHT - 64 && !this.dying) {
         if (this.yVelocity < 0) {
             this.yVelocity = 0;
         }
@@ -46,12 +46,10 @@ Player.prototype.moveDown = function() {
             this.yVelocity = this.maxYVelocity;
         }
         this.y += this.yVelocity;
-    } else {
-        soundManager.play('blip');
     }
 }
 Player.prototype.moveLeft = function() {
-    if (this.x > 0) {
+    if (this.x > 0 && !this.dying) {
         if (this.xVelocity > 0) {
             this.xVelocity = 0;
         }
@@ -61,13 +59,11 @@ Player.prototype.moveLeft = function() {
             this.xVelocity = -this.maxXVelocity;
         }
         this.x += this.xVelocity;
-    } else {
-        soundManager.play('blip');
     }
 }
 
 Player.prototype.moveRight = function() {
-    if (this.x < CANVAS_WIDTH - 32) {
+    if (this.x < CANVAS_WIDTH - 32 && !this.dying) {
         if (this.xVelocity < 0) {
             this.xVelocity = 0;
         }
@@ -77,8 +73,6 @@ Player.prototype.moveRight = function() {
             this.xVelocity = this.maxXVelocity;
         }
         this.x += this.xVelocity;
-    } else {
-        soundManager.play('blip');
     }
 }
 
@@ -96,18 +90,33 @@ Player.prototype.draw = function(context, frame) {
     if (frame % this.frameMod == 0) {
         this.curFrame ++;
         
-        if (this.curFrame > 4) {
+        if (!this.dying && this.curFrame > 4) {
             this.curFrame = 1;
+        }
+        
+        if (this.dying && this.curFrame > 12) {
+            this.curFrame = 12;
         }
     }
     
-    if (this.yVelocity < 0) {
+    if (!this.dying && this.yVelocity < 0) {
         sprite += "-boost";
+    }
+    
+    if (this.dying) {
+        sprite += "-death";
     }
     
     if (this.curFrame > 0) {
         sprite += this.curFrame;
     }
-
-    spriteMapper.getImage(sprite).drawImage(context, this.x, this.y);
+    
+    if (!this.dying || this.curFrame <= 12) {
+        spriteMapper.getImage(sprite).drawImage(context, this.x, this.y);
+    }
+    
+    if (!this.dying && this.hp <= 0) {
+        this.dying = true;
+        this.curFrame = 0;
+    }
 }

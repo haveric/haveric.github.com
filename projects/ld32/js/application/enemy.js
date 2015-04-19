@@ -1,3 +1,5 @@
+var globalEnemyId = 0;
+
 var Enemy = function(x, y) {
     this.x = x;
     this.y = y;
@@ -6,10 +8,16 @@ var Enemy = function(x, y) {
     
     this.curFrame = 1;
     this.frameMod = 10;
+    this.dying = false;
+    
+    this.id = globalEnemyId;
+    globalEnemyId ++;
 }
 
 Enemy.prototype.move = function(index) {
-    this.y -= this.velocity;
+    if (!this.dying) {
+        this.y -= this.velocity;
+    }
     
     if (this.y < -50) {
         killEnemy(index);
@@ -17,21 +25,23 @@ Enemy.prototype.move = function(index) {
 }
 
 Enemy.prototype.shoot = function(playerX, playerY) {
-    var randX = (Math.random() * 100) - 50;
-    var randY = (Math.random() * 100) - 50;
-    var angle = Math.atan2(playerY + randX - this.y, playerX + randY - this.x) * 180 / Math.PI;
-    
-    if (this instanceof RapidFireEnemy) {
-        var bullet = new Bullet3(this.x+16, this.y+16, angle);
-        bullets.push(bullet);
-    } else if (this instanceof SpiralFireEnemy) {
-        var bullet = new Bullet2(this.x+16, this.y+16, angle);
-        bullets.push(bullet);
-    } else {
-        var bullet = new Bullet(this.x+16, this.y+16, angle);
-        bullets.push(bullet);
+    if (!this.dying) {
+        var randX = (Math.random() * 100) - 50;
+        var randY = (Math.random() * 100) - 50;
+        var angle = Math.atan2(playerY + randX - this.y, playerX + randY - this.x) * 180 / Math.PI;
+        
+        if (this instanceof RapidFireEnemy) {
+            var bullet = new Bullet3(this.x+16, this.y+16, angle);
+            bullets.push(bullet);
+        } else if (this instanceof SpiralFireEnemy) {
+            var bullet = new Bullet2(this.x+16, this.y+16, angle);
+            bullets.push(bullet);
+        } else {
+            var bullet = new Bullet(this.x+16, this.y+16, angle);
+            bullets.push(bullet);
+        }
+        enemyBulletsFired ++;
     }
-    enemyBulletsFired ++;
 }
 
 Enemy.prototype.draw = function(context, frame) {

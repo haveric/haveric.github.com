@@ -8,6 +8,8 @@ var stars = [];
 var projectiles = [];
 var enemies = [];
 var bullets = [];
+var explosions = [];
+
 var enemySpawnTimer = 10;
 var projectileTimeout = [0, 0, 0];
 var projectileMaxTimeout = 60;
@@ -265,6 +267,10 @@ var playerRank = 0;
     }
     
     var handleAI = function() {
+        explosions.forEach(function(explosion, index) {
+            explosion.update(index);
+        })
+        
         enemies.forEach(function(enemy) {
             var chance = Math.random() * 100;
             if (chance < 1) {
@@ -342,7 +348,9 @@ var playerRank = 0;
                 if (!(p.x + 4 > e.x + 32 || p.x + 28 < e.x || p.y + 4 > e.y + 32 || p.y + 28 < e.y)) {
                     enemiesKilled[p.id] ++;
                     killProjectile(pIndex);
-                    killEnemy(eIndex);
+                    e.dying = true;
+                    var explosion = new Explosion(e.x, e.y, e.id);
+                    explosions.push(explosion);
                 }
             });
             
@@ -365,14 +373,16 @@ var playerRank = 0;
         });
         
         enemies.forEach(function(e, eIndex) {
-            if (!(e.x + 5 > player.x + 26 || e.x + 27 < player.x + 6 || e.y + 5 > player.y + 58 || e.y + 5 < player.y + 6)) {
+            if (!e.dying && !(e.x + 5 > player.x + 26 || e.x + 27 < player.x + 6 || e.y + 5 > player.y + 58 || e.y + 5 < player.y + 6)) {
                 player.hp -= 2;
                 enemiesKilled[5] ++;
-                killEnemy(eIndex);
+                e.dying = true;
+                var explosion = new Explosion(e.x, e.y, e.id);
+                explosions.push(explosion);
             }
         });
         
-        if (player.hp <= 0) {
+        if (player.hp <= 0 && player.curFrame >= 12) {
             // TODO: END GAME
         }
     }
@@ -410,6 +420,10 @@ var playerRank = 0;
         enemies.forEach(function(enemy) {
             enemy.draw(context, numRenders);
         });
+        
+        explosions.forEach(function(explosion) {
+            explosion.draw(context, numRenders);
+        })
         
         player.draw(context, numRenders);
         

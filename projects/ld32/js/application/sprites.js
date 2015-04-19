@@ -99,6 +99,20 @@ spriteMapper.addImage('player-boost2', 'player', 64, 64, 32, 64);
 spriteMapper.addImage('player-boost3', 'player', 96, 64, 32, 64);
 spriteMapper.addImage('player-boost4', 'player', 128, 64, 32, 64);
 
+spriteMapper.addImage('player-death', 'player', 0, 128, 32, 64);
+spriteMapper.addImage('player-death1', 'player', 32, 128, 32, 64);
+spriteMapper.addImage('player-death2', 'player', 64, 128, 32, 64);
+spriteMapper.addImage('player-death3', 'player', 96, 128, 32, 64);
+spriteMapper.addImage('player-death4', 'player', 128, 128, 32, 64);
+spriteMapper.addImage('player-death5', 'player', 160, 128, 32, 64);
+spriteMapper.addImage('player-death6', 'player', 192, 128, 32, 64);
+spriteMapper.addImage('player-death7', 'player', 224, 128, 32, 64);
+spriteMapper.addImage('player-death8', 'player', 256, 128, 32, 64);
+spriteMapper.addImage('player-death9', 'player', 288, 128, 32, 64);
+spriteMapper.addImage('player-death10', 'player', 320, 128, 32, 64);
+spriteMapper.addImage('player-death11', 'player', 352, 128, 32, 64);
+spriteMapper.addImage('player-death12', 'player', 384, 128, 32, 64);
+
 
 spriteMapper.addImage('asteroid', 'objects', 0, 0);
 spriteMapper.addImage('projectile', 'objects', 32, 0);
@@ -114,6 +128,18 @@ spriteMapper.addImage('rapidEnemy', 'enemies', 0, 64);
 spriteMapper.addImage('rapidEnemy1', 'enemies', 32, 64);
 spriteMapper.addImage('rapidEnemy2', 'enemies', 64, 64);
 spriteMapper.addImage('rapidEnemy3', 'enemies', 96, 64);
+
+spriteMapper.addImage('enemy-explosion0', 'enemies', 0, 96);
+spriteMapper.addImage('enemy-explosion1', 'enemies', 32, 96);
+spriteMapper.addImage('enemy-explosion2', 'enemies', 64, 96);
+spriteMapper.addImage('enemy-explosion3', 'enemies', 96, 96);
+spriteMapper.addImage('enemy-explosion4', 'enemies', 128, 96);
+spriteMapper.addImage('enemy-explosion5', 'enemies', 160, 96);
+spriteMapper.addImage('enemy-explosion6', 'enemies', 192, 96);
+spriteMapper.addImage('enemy-explosion7', 'enemies', 224, 96);
+spriteMapper.addImage('enemy-explosion8', 'enemies', 256, 96);
+
+
 spriteMapper.addImage('bullet1', 'enemies', 128, 0, 6, 6);
 spriteMapper.addImage('bullet2', 'enemies', 128, 32, 6, 6);
 spriteMapper.addImage('bullet3', 'enemies', 128, 64, 6, 6);
