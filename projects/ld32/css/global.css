@@ -41,6 +41,21 @@ body {
     text-align: center;
 }
 
+.key {
+    background: url('../img/key.png') no-repeat;
+    padding: 2px 5px;
+    width: 25px;
+    height: 25px;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    display: inline-block;
+    margin-right: 3px;
+}
+
 .menu a:hover {
     border-right: 1px solid #fff;
     border-bottom: 1px solid #fff;
@@ -48,6 +63,18 @@ body {
     color: #000;
 }
 
+a.back {
+    margin-top: 190px;
+}
+.leftContents {
+    padding: 200px 115px 0px 10px;
+}
+
+.leftContents p {
+    margin: 5px 0 15px;
+    font-size: 14px;
+    color: #222;
+}
 .mainLinks {
     padding: 40px 40px 0px 120px;
 }
