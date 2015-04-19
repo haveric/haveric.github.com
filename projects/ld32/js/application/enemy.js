@@ -20,9 +20,17 @@ Enemy.prototype.shoot = function(playerX, playerY) {
     var randX = (Math.random() * 100) - 50;
     var randY = (Math.random() * 100) - 50;
     var angle = Math.atan2(playerY + randX - this.y, playerX + randY - this.x) * 180 / Math.PI;
-    var bullet = new Bullet(this.x+16, this.y+16, angle);
-
-    bullets.push(bullet);
+    
+    if (this instanceof RapidFireEnemy) {
+        var bullet = new Bullet3(this.x+16, this.y+16, angle);
+        bullets.push(bullet);
+    } else if (this instanceof SpiralFireEnemy) {
+        var bullet = new Bullet2(this.x+16, this.y+16, angle);
+        bullets.push(bullet);
+    } else {
+        var bullet = new Bullet(this.x+16, this.y+16, angle);
+        bullets.push(bullet);
+    }
 }
 
 Enemy.prototype.draw = function(context, frame) {
