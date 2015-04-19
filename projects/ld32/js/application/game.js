@@ -99,7 +99,7 @@ var projectileMaxTimeout = 60;
         
         context = canvas.getContext('2d');
 
-        player = new Player(375, 500);
+        player = new Player(275, 200);
 
         populateBackground();
         
@@ -213,7 +213,7 @@ var projectileMaxTimeout = 60;
         if (68 in keysDown || 17 in keysDown || projectileTimeout[2] > 0) {
             projectileTimeout[2] ++;
             
-            if (projectileTimeout[0] == projectileMaxTimeout - 8) {
+            if (projectileTimeout[2] == projectileMaxTimeout - 8) {
                 player.airlocks[2].openDoor();
             }
             if (projectileTimeout[2] >= projectileMaxTimeout) {
@@ -272,22 +272,25 @@ var projectileMaxTimeout = 60;
         projectiles.forEach(function(p, pIndex) {
             enemies.forEach(function(e, eIndex) {
                 // dumb 2d collision
-                if (!(p.x > e.x + 32 || p.x + 32 < e.x || p.y > e.y + 32 || p.y + 32 < e.y)) {
+                if (!(p.x + 4 > e.x + 32 || p.x + 28 < e.x || p.y + 4 > e.y + 32 || p.y + 28 < e.y)) {
                     killProjectile(pIndex);
                     killEnemy(eIndex);
                 }
             });
             
             bullets.forEach(function(b, bIndex) {
-                if (!(p.x > b.x + 32 || p.x + 32 < b.x || p.y > b.y + 32 || p.y + 32 < b.y)) {
-                    killProjectile(pIndex);
+                if (!(p.x + 4 > b.x + 6 || p.x + 28 < b.x || p.y + 4 > b.y + 6 || p.y + 28 < b.y)) {
+                    p.bulletHits --;
+                    if (p.bulletHits <= 0) {
+                        killProjectile(pIndex);
+                    }
                     killBullet(bIndex);
                 }
             });
         });
         
         bullets.forEach(function(b, bIndex) {
-            if (!(b.x > player.x + 32 || b.x + 5 < player.x || b.y > player.y + 32 || b.y + 5 < player.y)) {
+            if (!(b.x > player.x + 26 || b.x + 6 < player.x+6 || b.y > player.y + 58 || b.y + 6 < player.y+6)) {
                 killBullet(bIndex);
             }
         });
@@ -343,6 +346,10 @@ var projectileMaxTimeout = 60;
         context.fillText(projectiles.length, 10, 100);
         context.fillText(stars.length, 10, 120);
         context.fillText(bullets.length, 10, 140);
+        
+        context.fillText(player.airlocks[0].curFrame + ", " + player.airlocks[0].open, 10, 180);
+        context.fillText(player.airlocks[1].curFrame + ", " + player.airlocks[1].open, 10, 200);
+        context.fillText(player.airlocks[2].curFrame + ", " + player.airlocks[2].open, 10, 220);
         
         
         numRenders++;

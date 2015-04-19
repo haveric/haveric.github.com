@@ -13,10 +13,12 @@ Airlock.prototype.getNextProjectile = function() {
     var projectile;
     var chance = Math.random() * 100;
     
-    if (chance < 33) {
+    if (chance < 25) {
         projectile = new Needles(this.x+3, this.y+6);
-    } else if (chance < 66) {
+    } else if (chance < 50) {
         projectile = new Fridge(this.x+3, this.y+6);
+    } else if (chance < 75) {
+        projectile = new Crate(this.x+3, this.y+6);
     } else {
         projectile = new Turret(this.x+3, this.y+6);
     }

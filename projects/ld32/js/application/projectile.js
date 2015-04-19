@@ -9,6 +9,7 @@ var Projectile = function(x, y) {
     this.rotationSpeed = (Math.random() * 3) + .2;
     this.rotationDirection = Math.floor((Math.random() * 2) + 1);
     this.name = "";
+    this.bulletHits = 1;
 }
 
 Projectile.prototype.setRandomDirection = function() {
@@ -89,6 +90,7 @@ var Fridge = function(x, y) {
     Projectile.call(this, x, y);
     this.name = "Fridge";
     this.sprite = "fridgeItem";
+    this.bulletHits = 5;
 }
 
 Fridge.prototype = new Projectile();
@@ -103,6 +105,15 @@ var Turret = function(x, y) {
 
 Turret.prototype = new Projectile();
 Turret.prototype.constructor = Turret;
+
+var Crate = function(x, y) {
+    Projectile.call(this, x, y);
+    this.name = "Crate";
+    this.sprite = "crateItem";
+}
+
+Crate.prototype = new Projectile();
+Crate.prototype.constructor = Crate;
 
 function killProjectile(index) {
     if (index >= 0 && index < projectiles.length) {
