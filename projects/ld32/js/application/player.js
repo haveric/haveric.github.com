@@ -36,7 +36,7 @@ Player.prototype.moveUp = function() {
     }
 }
 Player.prototype.moveDown = function() {
-    if (this.y < CANVAS_HEIGHT - 32) {
+    if (this.y < CANVAS_HEIGHT - 64) {
         if (this.yVelocity < 0) {
             this.yVelocity = 0;
         }
