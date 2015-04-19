@@ -114,6 +114,7 @@ var Crate = function(x, y) {
     this.name = "Crate";
     this.sprite = "crateItem";
     this.id = 3;
+    this.bulletHits = 3;
 }
 
 Crate.prototype = new Projectile();
