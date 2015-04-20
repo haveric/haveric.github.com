@@ -235,9 +235,9 @@ a.back {
 #itemFridges,
 #itemConsoles {
     float: left;
-    font-size: 20px;
+    font-size: 11px;
     margin-right: 5px;
-    padding-top: 5px;
+    padding-top: 9px;
 }
 
 .bottomRight {
