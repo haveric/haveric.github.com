@@ -5,6 +5,7 @@ var Explosion = function(x, y, enemyId) {
     this.frameMod = 10;
     this.enemyId = enemyId;
     this.killedEnemy = false;
+    soundManager.play('enemyExplode');
 }
 
 Explosion.prototype.update = function(index) {

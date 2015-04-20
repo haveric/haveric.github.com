@@ -61,4 +61,8 @@ var Sound = function (name, src, vol) {
 
 var soundManager = new SoundManager();
 
-soundManager.add('blip', 'assets/placeholderBlip.wav');
+soundManager.add('shipExplode', 'assets/shipExplode.wav');
+soundManager.add('enemyShoot', 'assets/enemyShoot.wav');
+soundManager.add('enemyExplode', 'assets/enemyExplode.wav');
+soundManager.add('buttonClick', 'assets/buttonClick.wav');
+soundManager.add('shipHit', 'assets/shipHit.wav');

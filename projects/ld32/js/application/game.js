@@ -433,6 +433,7 @@ var bulletsKilled = 0;
                 killBullet(bIndex);
                 bulletsKilled ++;
                 updateScore();
+                soundManager.play('shipHit');
             }
         });
         
@@ -537,8 +538,13 @@ var bulletsKilled = 0;
         
         context.fillStyle="#ffffff";
         context.font = '18px "Lucida Console", Monaco, monospace';
-        context.fillText("Score: ", 250, 35);
-        context.fillText(score, 320, 35);
+        context.fillText("Score: ", 260, 35);
+        context.fillText(score, 330, 35);
+        
+        context.fillStyle="#cccc00"
+        var rankMultiplier = playerRank + 1;
+        context.fillText("x" + rankMultiplier, 220, 35);
+        
         if (debug) {
             context.fillStyle="#ffffff";
             context.font = "16px Arial";
@@ -566,6 +572,9 @@ var bulletsKilled = 0;
             numRenders = 0;
             updateScore();
         }
+    }
+    var playClick = function() {
+        soundManager.play('buttonClick');
     }
     
     var showMainMenu = function() {
@@ -618,7 +627,7 @@ var bulletsKilled = 0;
     
     $("#backToMenu").on("click", function() {
         $("#mainMenu .door").addClass("closed");
-        
+        playClick();
         return false;
     });
     
@@ -626,7 +635,7 @@ var bulletsKilled = 0;
         $(".menu:not(#mainMenu)").hide();
         $("#mainMenu .door").removeClass("closed");
         init();
-        
+        playClick();
         return false;
     });
     
@@ -634,7 +643,7 @@ var bulletsKilled = 0;
         $(".menu:not(#scoring)").hide();
         $("#scoring .door").removeClass("closed");
         init();
-        
+        playClick();
         return false;
     });
     
@@ -644,7 +653,7 @@ var bulletsKilled = 0;
         $("#instructions .door").addClass("closed");
         
         $("#mainMenu .door").removeClass("closed");
-        
+        playClick();
         return false;
     });
     
@@ -654,7 +663,7 @@ var bulletsKilled = 0;
         $("#controls .door").addClass("closed");
         
         $("#mainMenu .door").removeClass("closed");
-        
+        playClick();
         return false;
     });
     
@@ -665,13 +674,13 @@ var bulletsKilled = 0;
         $("#about .door").addClass("closed");
         
         $("#mainMenu .door").removeClass("closed");
-        
+        playClick();
         return false;
     });
     
     $(".back").on("click", function() {
         $("#mainMenu .door").addClass("closed");
-        
+        playClick();
         return false;
     });
     

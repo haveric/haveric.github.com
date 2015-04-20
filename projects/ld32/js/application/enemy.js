@@ -41,6 +41,7 @@ Enemy.prototype.shoot = function(playerX, playerY) {
             bullets.push(bullet);
         }
         enemyBulletsFired ++;
+        soundManager.play('enemyShoot');
     }
 }
 

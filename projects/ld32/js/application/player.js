@@ -8,7 +8,7 @@ var Player = function(x, y) {
     this.maxXVelocity = 5;
     this.maxYVelocity = 5;
     
-    this.hp = 1;
+    this.hp = 15;
     this.numAirlocks = 3;
     this.airlocks = [];
     
@@ -118,5 +118,6 @@ Player.prototype.draw = function(context, frame) {
     if (!this.dying && this.hp <= 0) {
         this.dying = true;
         this.curFrame = 0;
+        soundManager.play('shipExplode');
     }
 }
