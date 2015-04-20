@@ -578,6 +578,10 @@ var bulletsKilled = 0;
         $("#scoring").show();
     }
     var showScoreMenu = function() {
+        $("#enemyKilled1").text(enemyTypeKilled[0]);
+        $("#enemyKilled2").text(enemyTypeKilled[1]);
+        $("#enemyKilled3").text(enemyTypeKilled[2]);
+        
         $("#numCrates").text(enemiesKilled[3]);
         $("#numTurrets").text(enemiesKilled[2]);
         $("#numFridges").text(enemiesKilled[1]);

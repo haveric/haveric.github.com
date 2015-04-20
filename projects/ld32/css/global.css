@@ -223,7 +223,9 @@ a.back {
 #instructionsTopRight .ships + .ships {
     padding-top: 10px;
 }
-
+#enemyKilled1,
+#enemyKilled2,
+#enemyKilled3,
 #numCrates,
 #numTurrets,
 #numFridges,
@@ -256,4 +258,8 @@ a.back {
     font-size: 18px;
     margin: 0;
     text-transform: uppercase;
+}
+
+.contentbreak {
+    clear: both;
 }

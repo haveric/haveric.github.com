@@ -8,7 +8,7 @@ var Player = function(x, y) {
     this.maxXVelocity = 5;
     this.maxYVelocity = 5;
     
-    this.hp = 15;
+    this.hp = 1;
     this.numAirlocks = 3;
     this.airlocks = [];
     
