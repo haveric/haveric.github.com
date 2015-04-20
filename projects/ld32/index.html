@@ -9,14 +9,40 @@
         
         <div id="scoring" class="menu">
             <div class="leftDoor blue door">
-                <h1 class="title">Scoring</h1>
+                <h1 class="title">End Results!</h1>
                 <div class="leftContents">
+                    <h2>Enemies Killed by</h2>
+                    <img src="img/crate.png"/>
+                    <span id="numCrates"></span>
+                    <img src="img/turret.png"/>
+                    <span id="numTurrets"></span>
+                    <img src="img/fridge.png"/>
+                    <span id="numFridges"></span>
+                    <img src="img/console.png"/>
+                    <span id="numConsoles"></span>
+                    <p>Ships killed by running into them: <span id="numShipsHit"></span></p>
+                    <p>Total ships killed: <span id="numTotalKilled"></span></p>
+                    <h2>Items Launched</h2>
+                    <img src="img/crate.png"/>
+                    <span id="itemCrates"></span>
+                    <img src="img/turret.png"/>
+                    <span id="itemTurrets"></span>
+                    <img src="img/fridge.png"/>
+                    <span id="itemFridges"></span>
+                    <img src="img/console.png"/>
+                    <span id="itemConsoles"></span>
+                    <p>Total Items: <span id="numTotalItems"></span></p>
+                    <p>Difficulty Reached: <span id="difficultyReached"></span></p>
                 </div>
             </div>
             <div class="rightDoor blue door">
                 <div class="mainLinks">
                     <a href="#" id="playAgain">Play Again</a>
                     <a href="#" id="backToMenu">Back to Menu</a>
+                </div>
+                <div class="bottomRight">
+                    <p class="score"><strong>Score: </strong><span id="score"></span></p>
+                    <p class="bestScore"><strong>Best Score: </strong><span id="bestScore"></span></p>
                 </div>
             </div>
         </div>

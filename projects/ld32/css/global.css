@@ -223,3 +223,37 @@ a.back {
 #instructionsTopRight .ships + .ships {
     padding-top: 10px;
 }
+
+#numCrates,
+#numTurrets,
+#numFridges,
+#numConsoles,
+#itemCrates,
+#itemTurrets,
+#itemFridges,
+#itemConsoles {
+    float: left;
+    font-size: 20px;
+    margin-right: 5px;
+    padding-top: 5px;
+}
+
+.bottomRight {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    left: 100px;
+}
+
+.score {
+    font-size: 20px;
+    text-transform: uppercase;
+    margin: 0 0 50px;
+    padding-left: 40px;
+}
+
+.bestScore {
+    font-size: 18px;
+    margin: 0;
+    text-transform: uppercase;
+}

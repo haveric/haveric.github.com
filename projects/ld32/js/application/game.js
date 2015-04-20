@@ -16,6 +16,7 @@ var projectileMaxTimeout = 60;
 var spritesRendered = false;
 var projectilesLaunched = [0,0,0,0,0]
 var enemiesKilled = [0,0,0,0,0,0];
+var enemyTypeKilled = [0,0,0];
 var enemyBulletsFired = 0;
 var maxEnemies = 5;
 var enemiesDifficultyOriginal = 5;
@@ -23,6 +24,9 @@ var enemiesDifficulty = 5;
 var enemiesDifficultyDelta = 1;
 var playerRank = 0;
 var gameOver = false;
+var score = 0;
+var time = 0;
+var bulletsKilled = 0;
 
 (function () {
     var keysDown = [],
@@ -122,6 +126,7 @@ var gameOver = false;
         populateBackground();
         
         gameRunning = true;
+        time = new Date();
         if (!requestId) {
             animLoop();
         }
@@ -141,6 +146,7 @@ var gameOver = false;
         spritesRendered = false;
         projectilesLaunched = [0,0,0,0,0]
         enemiesKilled = [0,0,0,0,0,0];
+        enemyTypeKilled = [0,0,0];
         enemyBulletsFired = 0;
         maxEnemies = 5;
         enemiesDifficultyOriginal = 5;
@@ -148,6 +154,9 @@ var gameOver = false;
         enemiesDifficultyDelta = 1;
         playerRank = 0;
         gameOver = false;
+        score = 0;
+        time = 0;
+        bulletsKilled = 0;
         requestId = null;
     }
     
@@ -303,6 +312,22 @@ var gameOver = false;
         });
     }
     
+    var updateScore = function() {
+        if (!player.dying) {
+            var enemyScore = enemyTypeKilled[0] * 50 + enemyTypeKilled[1] * 100 + enemyTypeKilled[2] * 150;
+            
+            var curTime = new Date();
+            var seconds = Math.floor((curTime.getTime() - time.getTime()) / 1000);
+            
+            var pointsForTime = seconds * 5;
+            
+            var rankMultiplier = playerRank + 1;
+            
+            var bulletsScore = bulletsKilled * 15;
+            score = (enemyScore + pointsForTime + bulletsScore) * rankMultiplier;
+        }
+    }
+    
     var handleMovement = function() {
         stars.forEach(function(star, index) {
             star.move(index);
@@ -371,10 +396,21 @@ var gameOver = false;
                 // dumb 2d collision
                 if (!(p.x + 4 > e.x + 32 || p.x + 28 < e.x || p.y + 4 > e.y + 32 || p.y + 28 < e.y)) {
                     enemiesKilled[p.id] ++;
+                    
+                    if (e instanceof SpiralFireEnemy) {
+                        enemyTypeKilled[2] ++;
+                    } else if (e instanceof RapidFireEnemy) {
+                        enemyTypeKilled[1] ++;
+                    } else {
+                        enemyTypeKilled[0] ++;
+                    }
+                    
                     killProjectile(pIndex);
                     e.dying = true;
                     var explosion = new Explosion(e.x, e.y, e.id);
                     explosions.push(explosion);
+                    
+                    updateScore();
                 }
             });
             
@@ -385,6 +421,8 @@ var gameOver = false;
                         killProjectile(pIndex);
                     }
                     killBullet(bIndex);
+                    bulletsKilled ++;
+                    updateScore();
                 }
             });
         });
@@ -393,6 +431,8 @@ var gameOver = false;
             if (!(b.x > player.x + 26 || b.x + 6 < player.x+6 || b.y > player.y + 58 || b.y + 6 < player.y+6)) {
                 player.hp --;
                 killBullet(bIndex);
+                bulletsKilled ++;
+                updateScore();
             }
         });
         
@@ -400,9 +440,19 @@ var gameOver = false;
             if (!e.dying && !(e.x + 5 > player.x + 26 || e.x + 27 < player.x + 6 || e.y + 5 > player.y + 58 || e.y + 5 < player.y + 6)) {
                 player.hp -= 2;
                 enemiesKilled[5] ++;
+                
+                if (e instanceof SpiralFireEnemy) {
+                    enemyTypeKilled[2] ++;
+                } else if (e instanceof RapidFireEnemy) {
+                    enemyTypeKilled[1] ++;
+                } else {
+                    enemyTypeKilled[0] ++;
+                }
+                
                 e.dying = true;
                 var explosion = new Explosion(e.x, e.y, e.id);
                 explosions.push(explosion);
+                updateScore();
             }
         });
         
@@ -485,6 +535,10 @@ var gameOver = false;
         }
         spriteMapper.getImage(hpSprite).drawImage(context, 10, 10);
         
+        context.fillStyle="#ffffff";
+        context.font = '18px "Lucida Console", Monaco, monospace';
+        context.fillText("Score: ", 250, 35);
+        context.fillText(score, 320, 35);
         if (debug) {
             context.fillStyle="#ffffff";
             context.font = "16px Arial";
@@ -510,6 +564,7 @@ var gameOver = false;
         numRenders++;
         if (numRenders == 60) {
             numRenders = 0;
+            updateScore();
         }
     }
     
@@ -523,6 +578,35 @@ var gameOver = false;
         $("#scoring").show();
     }
     var showScoreMenu = function() {
+        $("#numCrates").text(enemiesKilled[3]);
+        $("#numTurrets").text(enemiesKilled[2]);
+        $("#numFridges").text(enemiesKilled[1]);
+        $("#numConsoles").text(enemiesKilled[4]);
+        $("#numShipsHit").text(enemiesKilled[5]);
+        $("#numTotalKilled").text(enemiesKilled[1] + enemiesKilled[2] + enemiesKilled[3] + enemiesKilled[4] + enemiesKilled[5]);
+        
+        $("#itemCrates").text(projectilesLaunched[3]);
+        $("#itemTurrets").text(projectilesLaunched[2]);
+        $("#itemFridges").text(projectilesLaunched[1]);
+        $("#itemConsoles").text(projectilesLaunched[4]);
+        
+        $("#numTotalItems").text(projectilesLaunched[1] + projectilesLaunched[2] + projectilesLaunched[3] + projectilesLaunched[4]);
+        $("#difficultyReached").text(playerRank);
+        
+        $("#score").text(score);
+        
+        try {
+            var bestScore = localStorage['bestscore'];
+            if (!bestScore || bestScore < score) {
+                localStorage['bestscore'] = score;
+                bestScore = score;
+            }
+            
+            $("#bestScore").text(bestScore);
+        } catch(e) {
+            $("#bestScore").hide();
+        }
+        
         $("#scoring .door").addClass("closed");
         $("#mainMenu .door").removeClass("closed");
         $("#mainMenu").show();
