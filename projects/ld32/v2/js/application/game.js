@@ -476,8 +476,8 @@ var bulletsKilled = 0;
         if (!spritesRendered) {
             prerenderSprites();
         }
-        context.fillStyle="#000000";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
 
         var bigStars = [];
         stars.forEach(function(star) {

@@ -12,6 +12,7 @@ body {
     width: 600px;
     height: 576px;
     z-index:0;
+    background-color: #000;
 }
 
 .menu {
