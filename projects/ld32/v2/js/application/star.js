@@ -1,6 +1,7 @@
+var TWO_PI = Math.PI * 2;
 var Star = function(y) {
     this.x = Math.random() * 800;
-    
+
     // Don't start with big stars 
     if (y) {
         var weighted = Math.random() * 10;
@@ -21,7 +22,7 @@ var Star = function(y) {
             this.radius = (Math.random() * 2) + 1;
         }
     }
-    
+
     if (this.radius < 0.5) {
         this.radius = 0.5;
     }
@@ -39,6 +40,20 @@ var Star = function(y) {
         blue: 255
     }
     this.generateRandomColor(64, 196, 64);
+    this.rgbColor = "rgb(" + this.color.red + "," + this.color.green + "," + this.color.blue + ")";
+    
+    if (this.radius >= 10) {
+        var blendRed = Math.floor((this.color.red + 220) / 2);
+        var blendGreen = Math.floor((this.color.green + 220) / 2);
+        var blendBlue = Math.floor((this.color.blue + 220) / 2);
+        
+        this.blendColor = "rgb(" + blendRed + "," + blendGreen + "," + blendBlue + ")";
+        
+        var gradient = context.createRadialGradient(this.radius*.3, this.radius*.3, this.radius*.2, 0, 0, this.radius);
+        gradient.addColorStop(0, this.blendColor);
+        gradient.addColorStop(1, this.rgbColor);
+        this.fillStyle = gradient;
+    }
 }
 
 Star.prototype.move = function(index) {
@@ -50,23 +65,19 @@ Star.prototype.move = function(index) {
 }
 
 Star.prototype.draw = function(context, frame) {
+    context.beginPath();
+    
     if (this.radius < 10) {
-        context.fillStyle = this.getRGBColor();
+        context.fillStyle = this.rgbColor;
+        context.arc(this.x, this.y, this.radius, 0, TWO_PI);
     } else {
-        var gradient = context.createRadialGradient(this.x - this.radius*.3, this.y - this.radius*.3, this.radius*.2, this.x, this.y, this.radius);
+        context.fillStyle = this.fillStyle;
         
-        var blendRed = Math.floor((this.color.red + 220) / 2);
-        var blendGreen = Math.floor((this.color.green + 220) / 2);
-        var blendBlue = Math.floor((this.color.blue + 220) / 2);
-        
-        var rgbBlend = "rgb(" + blendRed + "," + blendGreen + "," + blendBlue + ")";
-        gradient.addColorStop(0, rgbBlend);
-        gradient.addColorStop(1, this.getRGBColor());
-        context.fillStyle = gradient;
+        context.translate(this.x, this.y);
+        context.arc(0, 0, this.radius, 0, TWO_PI);
+        context.translate(-this.x, -this.y);
     }
     
-    context.beginPath();
-    context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     context.fill();
 }
 
@@ -84,10 +95,6 @@ Star.prototype.generateRandomColor = function(mixR, mixG, mixB) {
         green: green,
         blue: blue
     }
-}
-
-Star.prototype.getRGBColor = function() {
-    return "rgb(" + this.color.red + "," + this.color.green + "," + this.color.blue + ")";
 }
 
 function killStar(index) {

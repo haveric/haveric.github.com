@@ -3,6 +3,7 @@ var CANVAS_WIDTH = 600,
     STEP = 16,
     STORED_TIME;
 
+var context;
 var debug = false;
 var stars = [];
 var projectiles = [];
@@ -33,8 +34,7 @@ var bulletsKilled = 0;
         gameRunning = false,
         keyDownListener,
         keyUpListener,
-        canvas,
-        context;
+        canvas;
     
     var player,
         requestId;
