@@ -1,3 +1,5 @@
+var PI_DIV_180 = Math.PI / 180;
+
 var TextureMapper = function () {
     textures = [];
 }
@@ -58,6 +60,8 @@ var Sprite = function (imageName, textureName, x, y, w, h) {
     this.y = y;
     this.w = w || 32;
     this.h = h || 32;
+    this.w_div_2 = this.w / 2;
+    this.h_div_2 = this.h / 2;
 }
 
 Sprite.prototype.drawImage = function (context, i, j, degrees) {
@@ -66,10 +70,10 @@ Sprite.prototype.drawImage = function (context, i, j, degrees) {
     } else {
         if (degrees != null && degrees > 0) {
             context.save();
-            context.translate(i+this.w/2, j+this.h/2);
-            context.rotate(degrees * Math.PI / 180);
+            context.translate(i+this.w_div_2, j+this.h_div_2);
+            context.rotate(degrees * PI_DIV_180);
         
-            context.drawImage(this.texture, this.x, this.y, this.w, this.h, -this.w/2, -this.h/2, this.w, this.h);
+            context.drawImage(this.texture, this.x, this.y, this.w, this.h, -this.w_div_2, -this.h_div_2, this.w, this.h);
 
             context.restore();
         } else {

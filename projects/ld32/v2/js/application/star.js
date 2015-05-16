@@ -1,4 +1,5 @@
 var TWO_PI = Math.PI * 2;
+
 var Star = function(y) {
     this.x = Math.random() * 800;
 
@@ -54,12 +55,14 @@ var Star = function(y) {
         gradient.addColorStop(1, this.rgbColor);
         this.fillStyle = gradient;
     }
+    
+    this.killY = CANVAS_HEIGHT + 50 + this.radius*2;
 }
 
 Star.prototype.move = function(index) {
     this.y += this.velocity;
     
-    if (this.y >= CANVAS_HEIGHT + 50 + this.radius*2) {
+    if (this.y >= this.killY) {
         killStar(index);
     }
 }
