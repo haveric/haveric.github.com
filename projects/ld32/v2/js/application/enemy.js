@@ -1,7 +1,7 @@
 var globalEnemyId = 0;
 
 var Enemy = function(x, y) {
-    this.x = x;
+    this.x = Math.round(x);
     this.y = y;
     this.velocity = Math.floor((Math.random() * 2) + 1); 
     this.sprite = "enemy";
