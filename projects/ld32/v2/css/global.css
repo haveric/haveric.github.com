@@ -90,6 +90,10 @@ a.back {
     padding: 40px 40px 0px 120px;
 }
 
+.mainLinks a.selected {
+    outline: 2px dashed #555;
+}
+
 .leftDoor,
 .rightDoor {
     -webkit-transition: all 1s ease-in;

@@ -29,6 +29,9 @@ var score = 0;
 var time = 0;
 var bulletsKilled = 0;
 
+var mainMenuButton = 1;
+var scoreMenuButton = 1;
+
 (function () {
     var keysDown = [],
         gameRunning = false,
@@ -578,15 +581,67 @@ var bulletsKilled = 0;
     }
     
     var showMainMenu = function() {
+        $(document).off("keydown");
+        $("#mainMenu .mainLinks a").eq(mainMenuButton - 1).addClass("selected").siblings().removeClass("selected");
         $("#mainMenu").show();
         $("#mainMenu .door").addClass("closed");
         $("#scoring .door").removeClass("closed");
+        
+        $(document).on("keydown.mainMenu", function(e) {
+            if (e.which == '13' || e.which == '65') {
+                $("#mainMenu .mainLinks a").eq(mainMenuButton - 1).click();
+                
+                $(document).off("keydown.mainMenu");
+            }
+            
+            if (e.which == '38') {
+                mainMenuButton --;
+                
+                if (mainMenuButton < 1) {
+                    mainMenuButton = 4;
+                }
+            } else if (e.which == '40') {
+                mainMenuButton ++;
+                
+                if (mainMenuButton > 4) {
+                    mainMenuButton = 1;
+                }
+            }
+            $("#mainMenu .mainLinks a").eq(mainMenuButton - 1).addClass("selected").siblings().removeClass("selected");
+        });
     }
     
     var preShowScoreMenu = function() {
         $("#scoring").show();
     }
     var showScoreMenu = function() {
+        $(document).off("keydown");
+        $("#scoring .mainLinks a").eq(scoreMenuButton - 1).addClass("selected").siblings().removeClass("selected");
+        
+        $(document).on("keydown.scoreMenu", function(e) {
+            if (e.which == '13' || e.which == '65') {
+                $("#scoring .mainLinks a").eq(scoreMenuButton - 1).click();
+                
+                $(document).off("keydown.scoreMenu");
+            }
+            
+            if (e.which == '38') {
+                scoreMenuButton --;
+                
+                if (scoreMenuButton < 1) {
+                    scoreMenuButton = 2;
+                }
+            } else if (e.which == '40') {
+                scoreMenuButton ++;
+                
+                if (scoreMenuButton > 2) {
+                    scoreMenuButton = 1;
+                }
+            }
+            
+            $("#scoring .mainLinks a").eq(scoreMenuButton - 1).addClass("selected").siblings().removeClass("selected");
+        });
+        
         $("#enemyKilled1").text(enemyTypeKilled[0]);
         $("#enemyKilled2").text(enemyTypeKilled[1]);
         $("#enemyKilled3").text(enemyTypeKilled[2]);
@@ -626,12 +681,14 @@ var bulletsKilled = 0;
     }
     
     $("#backToMenu").on("click", function() {
-        $("#mainMenu .door").addClass("closed");
+        showMainMenu();
         playClick();
         return false;
     });
     
     $("#startGame").on("click", function() {
+        $(document).off("keydown");
+        
         $(".menu:not(#mainMenu)").hide();
         $("#mainMenu .door").removeClass("closed");
         init();
@@ -640,6 +697,8 @@ var bulletsKilled = 0;
     });
     
     $("#playAgain").on("click", function() {
+        $(document).off("keydown");
+        
         $(".menu:not(#scoring)").hide();
         $("#scoring .door").removeClass("closed");
         init();
@@ -648,6 +707,16 @@ var bulletsKilled = 0;
     });
     
     $("#instructionsButton").on("click", function() {
+        $(document).off("keydown");
+        
+        $(document).on("keydown.instructionsMenu", function(e) {
+            if (e.which == '13' || e.which == '65') {
+                $("#instructions .mainLinks .back").click();
+                
+                $(document).off("keydown.instructionsMenu");
+            }
+        });
+        
         $(".menu:not(#mainMenu)").hide();
         $("#instructions").show();
         $("#instructions .door").addClass("closed");
@@ -658,6 +727,16 @@ var bulletsKilled = 0;
     });
     
     $("#controlsButton").on("click", function() {
+        $(document).off("keydown");
+        
+        $(document).on("keydown.controlsMenu", function(e) {
+            if (e.which == '13' || e.which == '65') {
+                $("#controls .mainLinks .back").click();
+                
+                $(document).off("keydown.controlsMenu");
+            }
+        });
+        
         $(".menu:not(#mainMenu)").hide();
         $("#controls").show();
         $("#controls .door").addClass("closed");
@@ -668,6 +747,16 @@ var bulletsKilled = 0;
     });
     
     $("#aboutButton").on("click", function() {
+        $(document).off("keydown");
+        
+        $(document).on("keydown.aboutMenu", function(e) {
+            if (e.which == '13' || e.which == '65') {
+                $("#about .mainLinks .back").click();
+                
+                $(document).off("keydown.aboutMenu");
+            }
+        });
+        
         $(".menu:not(#mainMenu)").hide();
         
         $("#about").show();
@@ -679,7 +768,7 @@ var bulletsKilled = 0;
     });
     
     $(".back").on("click", function() {
-        $("#mainMenu .door").addClass("closed");
+        showMainMenu();
         playClick();
         return false;
     });
