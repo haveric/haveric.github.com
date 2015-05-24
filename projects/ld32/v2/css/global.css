@@ -1,10 +1,11 @@
 body {
-    width: 600px;
-    margin: 0 auto;
+    margin: 0;
     position: relative;
 }
 
 #gameWrapper {
+    width: 600px;
+    margin: 0 auto;
     position: relative;
 }
 
@@ -22,6 +23,7 @@ body {
     top: 0;
     overflow: hidden;
     pointer-events: none;
+    transform-origin: 0 0;
 }
 
 .menu a {

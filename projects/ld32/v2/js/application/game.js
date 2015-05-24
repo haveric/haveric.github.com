@@ -1,5 +1,5 @@
 var CANVAS_WIDTH = 600,
-    CANVAS_HEIGHT = 600,
+    CANVAS_HEIGHT = 576,
     STEP = 16,
     STORED_TIME;
 
@@ -772,6 +772,37 @@ var scoreMenuButton = 1;
         playClick();
         return false;
     });
+    
+    var updateGameSize = function() {
+        var ratio = CANVAS_HEIGHT / CANVAS_WIDTH;
+        
+        var height = window.innerHeight;
+        var width = window.innerWidth;
+        
+        var $gameCanvas = $("#gameCanvas");
+        var newWidth = 0;
+        var newHeight = 0;
+        if (height > width) {
+            newWidth = width;
+            newHeight = width * ratio;
+        } else {
+            newWidth = 1 / ratio * height;
+            newHeight = height;
+        }
+        $gameCanvas.width(newWidth).height(newHeight);
+        $("#gameWrapper").width(newWidth);
+        var scale = newWidth / CANVAS_WIDTH + .001;
+        console.log("New: " + newWidth + ", " + newHeight + ", " + scale);
+        $(".menu").css("transform", "scale(" + scale + ")");
+    }
+    
+    $(window).on("resize", function() {
+        updateGameSize();
+    });
+    
+    
+    
+    updateGameSize();
     
     showMainMenu();
 }());
