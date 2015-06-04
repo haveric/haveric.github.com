@@ -7,7 +7,87 @@
     <body>
         <div id="gameWrapper">
             <canvas id="gameCanvas"></canvas>
-            
+
+            <div id="leaderboard" class="menu">
+                <h1>New High Score!</h1>
+                <h2>Score</h2>
+                <div class="name">
+                    <span class="letter active">A</span>
+                    <span class="letter">A</span>
+                    <span class="letter">A</span>
+                </div>
+                <div class="keyinput qwerty" style="display: none;">
+                    <div class="row">
+                        <span class="key">Q</span>
+                        <span class="key">W</span>
+                        <span class="key">E</span>
+                        <span class="key">R</span>
+                        <span class="key">T</span>
+                        <span class="key">Y</span>
+                        <span class="key">U</span>
+                        <span class="key">I</span>
+                        <span class="key">O</span>
+                        <span class="key">P</span>
+                    </div>
+                    <div class="row">
+                        <span class="key active">A</span>
+                        <span class="key">S</span>
+                        <span class="key">D</span>
+                        <span class="key">F</span>
+                        <span class="key">G</span>
+                        <span class="key">H</span>
+                        <span class="key">J</span>
+                        <span class="key">K</span>
+                        <span class="key">L</span>
+                    </div>
+                    <div class="row">
+                        <span class="key">Z</span>
+                        <span class="key">X</span>
+                        <span class="key">C</span>
+                        <span class="key">V</span>
+                        <span class="key">B</span>
+                        <span class="key">N</span>
+                        <span class="key">M</span>
+                    </div>
+                </div>
+                <div class="keyinput abc">
+                    <div class="row">
+                        <span class="key active">A</span>
+                        <span class="key">B</span>
+                        <span class="key">C</span>
+                        <span class="key">D</span>
+                        <span class="key">E</span>
+                        <span class="key">F</span>
+                        <span class="key">G</span>
+                        <span class="key">H</span>
+                        <span class="key">I</span>
+                        <span class="key">J</span>
+                    </div>
+                    <div class="row">
+                        <span class="key">K</span>
+                        <span class="key">L</span>
+                        <span class="key">M</span>
+                        <span class="key">N</span>
+                        <span class="key">O</span>
+                        <span class="key">P</span>
+                        <span class="key">Q</span>
+                        <span class="key">R</span>
+                        <span class="key">S</span>
+                        <span class="key">T</span>
+                    </div>
+                    <div class="row">
+                        <span class="key">U</span>
+                        <span class="key">V</span>
+                        <span class="key">W</span>
+                        <span class="key">X</span>
+                        <span class="key">Y</span>
+                        <span class="key">Z</span>
+                        <span class="key wide delete">DEL</span>
+                        <span class="key wide finish">Finish</span>
+                    </div>
+                </div>
+            </div>
+
             <div id="scoring" class="menu">
                 <div class="leftDoor blue door">
                     <h1 class="title">End Results!</h1>
@@ -22,7 +102,7 @@
                         <div class="contentbreak">
                             <p>Total enemies killed: <span id="numTotalKilled"></span></p>
                         </div>
-                        
+
                         <h2>Enemies Killed by</h2>
                         <img src="img/crate.png"/>
                         <span id="numCrates"></span>
@@ -35,7 +115,7 @@
                         <div class="contentbreak">
                             <p>Ships killed by running into them: <span id="numShipsHit"></span></p>
                         </div>
-                        
+
                         <h2>Items Launched</h2>
                         <img src="img/crate.png"/>
                         <span id="itemCrates"></span>
@@ -67,9 +147,9 @@
                     <h1 class="title">About</h1>
                     <div class="leftContents">
                         <p>This game was created by Ryan Breuer for Ludum Dare 32.</p>
-                        
+
                         <p>The theme of Ludum Dare 32 was 'An Unconventional Weapon'. I chose to use the situation where your normal weapons are malfunctioning so you decide to start pitching things out the back of your spaceship in an attempt to stop the enemies.</p>
-                        
+
                         <p>Thanks for playing!</p>
                     </div>
                 </div>
@@ -154,13 +234,13 @@
                 </div>
             </div>
         </div>
-        
-        
-        
-        
-        
+
+
+
+
+
         <script src="js/vendor/jquery-1.10.2.min.js" type="text/javascript"></script>
-        
+
         <script src="js/application/audio.js" type='text/javascript'></script>
         <script src="js/application/sprites.js" type='text/javascript'></script>
         <script src="js/application/tile.js" type='text/javascript'></script>
@@ -172,7 +252,7 @@
         <script src="js/application/star.js" type='text/javascript'></script>
         <script src="js/application/player.js" type='text/javascript'></script>
         <script src="js/application/game.js" type='text/javascript'></script>
-        
+
         <script src="js/application/ga.js" type='text/javascript'></script>
     </body>
 </html>
