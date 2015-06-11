@@ -30,7 +30,7 @@ body {
     background-color: #000;
 }
 
-.menu {
+#menu-wrap {
     width: 600px;
     height: 576px;
     position: absolute;
