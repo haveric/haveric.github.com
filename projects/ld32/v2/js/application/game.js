@@ -32,6 +32,7 @@ var bulletsKilled = 0;
 var mainMenuButton = 1;
 var scoreMenuButton = 1;
 var settings = new Settings();
+var leaderboard = new Leaderboard();
 
 (function () {
     var keysDown = [],
