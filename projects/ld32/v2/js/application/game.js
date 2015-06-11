@@ -31,6 +31,7 @@ var bulletsKilled = 0;
 
 var mainMenuButton = 1;
 var scoreMenuButton = 1;
+var settings = new Settings();
 
 (function () {
     var keysDown = [],
@@ -192,7 +193,7 @@ var scoreMenuButton = 1;
     }
 
     var populateBackground = function() {
-        var i = 400;
+        var i = settings.numStars;
         while (i > 0) {
             var y = Math.random() * CANVAS_HEIGHT;
             var star = new Star(y);
@@ -774,26 +775,34 @@ var scoreMenuButton = 1;
     });
 
     var updateGameSize = function() {
-        var ratio = CANVAS_HEIGHT / CANVAS_WIDTH;
+        if (settings.scale == "fill" || settings.scale == "95%") {
+            var ratio = CANVAS_HEIGHT / CANVAS_WIDTH;
 
-        var height = window.innerHeight;
-        var width = window.innerWidth;
+            var height = window.innerHeight;
+            var width = window.innerWidth;
 
-        var $gameCanvas = $("#gameCanvas");
-        var newWidth = 0;
-        var newHeight = 0;
-        if (height > width) {
-            newWidth = width;
-            newHeight = width * ratio;
-        } else {
-            newWidth = 1 / ratio * height;
-            newHeight = height;
+            var $gameCanvas = $("#gameCanvas");
+            var newWidth = 0;
+            var newHeight = 0;
+            if (height > width) {
+                if (settings.scale == "95%") {
+                    width = .95 * width;
+                }
+                newWidth = width;
+                newHeight = width * ratio;
+            } else {
+                if (settings.scale == "95%") {
+                    height = .95 * height;
+                }
+                newWidth = 1 / ratio * height;
+                newHeight = height;
+            }
+            $gameCanvas.width(newWidth).height(newHeight);
+            $("#gameWrapper").width(newWidth);
+            var scale = newWidth / CANVAS_WIDTH + .001;
+
+            $("#menu-wrap").css("transform", "scale(" + scale + ")");
         }
-        $gameCanvas.width(newWidth).height(newHeight);
-        $("#gameWrapper").width(newWidth);
-        var scale = newWidth / CANVAS_WIDTH + .001;
-        console.log("New: " + newWidth + ", " + newHeight + ", " + scale);
-        $("#menu-wrap").css("transform", "scale(" + scale + ")");
     }
 
     $(window).on("resize", function() {
