@@ -608,6 +608,34 @@ var settings = new Settings();
                     mainMenuButton = 1;
                 }
             }
+
+            if (e.which == '79') {
+                if (settings.scale == "none") {
+                    settings.setScale("95%");
+                } else if (settings.scale == "95%") {
+                    settings.setScale("fill");
+                } else if (settings.scale == "fill") {
+                    settings.setScale("none");
+                }
+                console.log("Scale: " + settings.scale);
+
+                updateGameSize();
+            } else if (e.which == '80') {
+                if (settings.numStars == 0) {
+                    settings.setNumStars(100);
+                } else if (settings.numStars == 100) {
+                    settings.setNumStars(200);
+                } else if (settings.numStars == 200) {
+                    settings.setNumStars(400);
+                } else if (settings.numStars == 400) {
+                    settings.setNumStars(800);
+                } else if (settings.numStars == 800) {
+                    settings.setNumStars(0);
+                }
+
+                console.log("Num Stars: " + settings.numStars);
+            }
+
             $("#mainMenu .mainLinks a").eq(mainMenuButton - 1).addClass("selected").siblings().removeClass("selected");
         });
     }
@@ -775,13 +803,18 @@ var settings = new Settings();
     });
 
     var updateGameSize = function() {
-        if (settings.scale == "fill" || settings.scale == "95%") {
+        var $gameCanvas = $("#gameCanvas");
+
+        if (settings.scale == "none") {
+            $gameCanvas.width(CANVAS_WIDTH).height(CANVAS_HEIGHT);
+            $("#gameWrapper").width(CANVAS_WIDTH);
+            $("#menu-wrap").css("transform", "scale(" + 1 + ")");
+        } else if (settings.scale == "fill" || settings.scale == "95%") {
             var ratio = CANVAS_HEIGHT / CANVAS_WIDTH;
 
             var height = window.innerHeight;
             var width = window.innerWidth;
 
-            var $gameCanvas = $("#gameCanvas");
             var newWidth = 0;
             var newHeight = 0;
             if (height > width) {
