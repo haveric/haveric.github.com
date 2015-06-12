@@ -1,5 +1,5 @@
 var Leaderboard = function() {
-    this.scores = [{
+    this.scores = [
         {
             name: "AAA",
             score: 100000
@@ -40,7 +40,7 @@ var Leaderboard = function() {
             name: "AAA",
             score: 10000
         }
-    }];
+    ];
 
     this.loadOrStore();
 }
@@ -52,7 +52,7 @@ Leaderboard.prototype.loadOrStore = function() {
         } else {
             localStorage['scores'] = JSON.stringify(this.scores);
         }
-    catch (e) { }
+    } catch (e) { }
 }
 
 Leaderboard.prototype.store = function() {
