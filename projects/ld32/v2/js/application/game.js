@@ -708,6 +708,41 @@ var leaderboard = new Leaderboard();
         $("#scoring .door").addClass("closed");
         $("#mainMenu .door").removeClass("closed");
         $("#mainMenu").show();
+
+        if (Leaderboard.isHighScore(score)) {
+            $("#leaderboard-highscore").text(score);
+            $("#leaderboard").show();
+
+            $(document).on("keydown.leaderboard", function(e) {
+                if (e.which == '13' || e.which == '65') {
+                    //$("#scoring .mainLinks a").eq(scoreMenuButton - 1).click();
+
+                    //$(document).off("keydown.scoreMenu");
+                }
+
+                if (e.which == '37') {
+
+                } else if (e.which == '39') {
+
+                } else if (e.which == '38') {
+                    /*
+                    scoreMenuButton --;
+
+                    if (scoreMenuButton < 1) {
+                        scoreMenuButton = 2;
+                    }
+                    */
+                } else if (e.which == '40') {
+                    /*
+                    scoreMenuButton ++;
+
+                    if (scoreMenuButton > 2) {
+                        scoreMenuButton = 1;
+                    }
+                    */
+                }
+            });
+        }
     }
 
     $("#backToMenu").on("click", function() {
