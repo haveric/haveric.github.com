@@ -38,7 +38,7 @@ var Leaderboard = function() {
         },
         {
             name: "AAA",
-            score: 10000
+            score: 0
         }
     ];
 
@@ -73,12 +73,12 @@ Leaderboard.prototype.isHighScore = function(newScore) {
     return highScore;
 }
 
-Leaderboard.prototype.addScore = function(name, score) {
+Leaderboard.prototype.addScore = function(name, newScore) {
     for (var i = 0; i < this.scores.length; i++) {
         var score = this.scores[i].score;
 
         if (newScore > score) {
-            this.scores.splice(i, 0, {"name": name, "score": score});
+            this.scores.splice(i, 0, {"name": name, "score": newScore});
             this.scores.pop();
             this.store();
 

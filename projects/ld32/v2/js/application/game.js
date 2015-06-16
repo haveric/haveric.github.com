@@ -33,6 +33,9 @@ var mainMenuButton = 1;
 var scoreMenuButton = 1;
 var settings = new Settings();
 var leaderboard = new Leaderboard();
+var leaderboardX = 1;
+var leaderboardY = 1;
+var leaderboardLetter = 1;
 
 (function () {
     var keysDown = [],
@@ -588,6 +591,7 @@ var leaderboard = new Leaderboard();
         $("#mainMenu").show();
         $("#mainMenu .door").addClass("closed");
         $("#scoring .door").removeClass("closed");
+        $("#leaderboard").hide();
 
         $(document).on("keydown.mainMenu", function(e) {
             if (e.which == '13' || e.which == '65') {
@@ -644,10 +648,8 @@ var leaderboard = new Leaderboard();
     var preShowScoreMenu = function() {
         $("#scoring").show();
     }
-    var showScoreMenu = function() {
-        $(document).off("keydown");
-        $("#scoring .mainLinks a").eq(scoreMenuButton - 1).addClass("selected").siblings().removeClass("selected");
 
+    var initScoreKeyInput = function() {
         $(document).on("keydown.scoreMenu", function(e) {
             if (e.which == '13' || e.which == '65') {
                 $("#scoring .mainLinks a").eq(scoreMenuButton - 1).click();
@@ -671,6 +673,13 @@ var leaderboard = new Leaderboard();
 
             $("#scoring .mainLinks a").eq(scoreMenuButton - 1).addClass("selected").siblings().removeClass("selected");
         });
+    }
+
+    var showScoreMenu = function() {
+        $(document).off("keydown");
+        $("#scoring .mainLinks a").eq(scoreMenuButton - 1).addClass("selected").siblings().removeClass("selected");
+
+        initScoreKeyInput();
 
         $("#enemyKilled1").text(enemyTypeKilled[0]);
         $("#enemyKilled2").text(enemyTypeKilled[1]);
@@ -709,38 +718,121 @@ var leaderboard = new Leaderboard();
         $("#mainMenu .door").removeClass("closed");
         $("#mainMenu").show();
 
-        if (Leaderboard.isHighScore(score)) {
+        if (leaderboard.isHighScore(score)) {
+            leaderboardX = 1;
+            leaderboardY = 1;
+            leaderboardLetter = 1;
             $("#leaderboard-highscore").text(score);
             $("#leaderboard").show();
 
+            $(document).off("keydown.scoreMenu");
             $(document).on("keydown.leaderboard", function(e) {
-                if (e.which == '13' || e.which == '65') {
-                    //$("#scoring .mainLinks a").eq(scoreMenuButton - 1).click();
+                var $keyinput = $("#leaderboard").find(".keyinput.active");
+                var $name = $("#leaderboard").find(".name");
 
-                    //$(document).off("keydown.scoreMenu");
+                if (e.which == '13' || e.which == '65') {
+                    var $key = $keyinput.find(".key.active");
+                    var text = $key.text();
+
+                    if (text == "DEL") {
+                        if (leaderboardLetter > 1) {
+                            leaderboardLetter--;
+                        }
+
+                        var $letter = $name.find(".letter:nth-child(" + leaderboardLetter + ")");
+
+                        $letter.addClass("active").siblings().removeClass("active");
+                    } else if (text == "Finish") {
+                        var scoreName = "";
+                        $name.find(".letter").each(function() {
+                            scoreName += $(this).text();
+                        });
+
+                        leaderboard.addScore(scoreName, score);
+                        initScoreKeyInput();
+                        $("#leaderboard").hide();
+                    } else {
+                        var $beforeLetter = $name.find(".letter:nth-child(" + leaderboardLetter + ")");
+
+                        $beforeLetter.text(text);
+                        if (leaderboardLetter < 3) {
+                            leaderboardLetter++;
+                        }
+
+                        var $afterLetter = $name.find(".letter:nth-child(" + leaderboardLetter + ")");
+
+                        $afterLetter.addClass("active").siblings().removeClass("active");
+                    }
                 }
 
                 if (e.which == '37') {
+                    leaderboardX--;
 
+                    if (leaderboardX < 1) {
+                        leaderboardX = 10;
+                    }
+
+                    if (leaderboardY == 3) {
+                        if (leaderboardX == 10) {
+                            leaderboardX = 8;
+                        }
+                    }
                 } else if (e.which == '39') {
+                    leaderboardX++;
 
+                    if (leaderboardY == 3) {
+                        if (leaderboardX > 8) {
+                            leaderboardX = 1;
+                        }
+                    } else if (leaderboardX > 10) {
+                        leaderboardX = 1;
+                    }
                 } else if (e.which == '38') {
-                    /*
-                    scoreMenuButton --;
+                    var fromBottom = (leaderboardY == 3);
+                    leaderboardY--;
 
-                    if (scoreMenuButton < 1) {
-                        scoreMenuButton = 2;
+                    if (leaderboardY < 1) {
+                        leaderboardY = 3;
                     }
-                    */
+
+                    if (leaderboardY == 3) {
+                        if (leaderboardX == 8) {
+                            leaderboardX = 7;
+                        } else if (leaderboardX > 8) {
+                            leaderboardX = 8;
+                        }
+                    } else if (fromBottom) {
+                        if (leaderboardX == 8) {
+                            leaderboardX = 9;
+                        }
+                    }
                 } else if (e.which == '40') {
-                    /*
-                    scoreMenuButton ++;
+                    var fromBottom = (leaderboardY == 3);
+                    leaderboardY++;
 
-                    if (scoreMenuButton > 2) {
-                        scoreMenuButton = 1;
+                    if (leaderboardY > 3) {
+                        leaderboardY = 1;
                     }
-                    */
+
+                    if (leaderboardY == 3) {
+                        if (leaderboardX == 8) {
+                            leaderboardX = 7;
+                        } else if (leaderboardX > 8) {
+                            leaderboardX = 8;
+                        }
+                    } else if (fromBottom) {
+                        if (leaderboardX == 8) {
+                            leaderboardX = 9;
+                        }
+                    }
                 }
+
+                $keyinput.find(".key.active").removeClass("active");
+
+                var $row = $keyinput.find(".row:nth-child(" + leaderboardY + ")");
+                var $key = $row.find(".key:nth-child(" + leaderboardX + ")");
+
+                $key.addClass("active");
             });
         }
     }
