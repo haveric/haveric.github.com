@@ -715,7 +715,8 @@ var leaderboardLetter = 1;
         }
 
         $("#scoring .door, #scoring .door2").addClass("closed");
-        $("#mainMenu .door, #mainMenu .door2").removeClass("closed");
+        $("#mainMenu .door").removeClass("closed");
+        $("#mainMenu .door2").addClass("closed");
         $("#mainMenu").show();
 
         if (leaderboard.isHighScore(score)) {
