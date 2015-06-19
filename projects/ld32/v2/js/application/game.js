@@ -723,6 +723,9 @@ var leaderboardLetter = 1;
             leaderboardY = 1;
             leaderboardLetter = 1;
             $("#leaderboard-highscore").text(score);
+            $("#leaderboard .name .letter:first-child").addClass("active").siblings(".letter").removeClass("active");
+            $("#leaderboard .keyinput .key.active").removeClass("active");
+            $("#leaderboard .keyinput .row:first-child .key:first-child").addClass("active");
             $("#leaderboard").show();
 
             $(document).off("keydown.scoreMenu");
@@ -754,6 +757,7 @@ var leaderboardLetter = 1;
 
                         $(document).on("keydown.highscore", function(e) {
                             $("#highScore").hide();
+                            initScoreKeyInput();
                         });
 
                         populateHighScores();
