@@ -1,5 +1,5 @@
 var CANVAS_WIDTH = 600,
-    CANVAS_HEIGHT = 576,
+    CANVAS_HEIGHT = 960,
     STEP = 16,
     STORED_TIME;
 
@@ -589,7 +589,7 @@ var leaderboardLetter = 1;
         $(document).off("keydown");
         $("#mainMenu .mainLinks a").eq(mainMenuButton - 1).addClass("selected").siblings().removeClass("selected");
         $("#mainMenu").show();
-        $("#mainMenu .door").addClass("closed");
+        $("#mainMenu .door, #mainMenu .door2").addClass("closed");
         $("#scoring .door").removeClass("closed");
         $("#leaderboard").hide();
 
@@ -714,8 +714,8 @@ var leaderboardLetter = 1;
             $("#bestScore").hide();
         }
 
-        $("#scoring .door").addClass("closed");
-        $("#mainMenu .door").removeClass("closed");
+        $("#scoring .door, #scoring .door2").addClass("closed");
+        $("#mainMenu .door, #mainMenu .door2").removeClass("closed");
         $("#mainMenu").show();
 
         if (leaderboard.isHighScore(score)) {
@@ -847,7 +847,7 @@ var leaderboardLetter = 1;
         $(document).off("keydown");
 
         $(".menu:not(#mainMenu)").hide();
-        $("#mainMenu .door").removeClass("closed");
+        $("#mainMenu .door, #mainMenu .door2").removeClass("closed");
         init();
         playClick();
         return false;
