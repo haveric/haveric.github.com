@@ -1,5 +1,5 @@
 var CANVAS_WIDTH = 600,
-    CANVAS_HEIGHT = 576,
+    CANVAS_HEIGHT = 960,
     STEP = 16,
     STORED_TIME;
 
@@ -589,7 +589,7 @@ var leaderboardLetter = 1;
         $(document).off("keydown");
         $("#mainMenu .mainLinks a").eq(mainMenuButton - 1).addClass("selected").siblings().removeClass("selected");
         $("#mainMenu").show();
-        $("#mainMenu .door").addClass("closed");
+        $("#mainMenu .door, #mainMenu .door2").addClass("closed");
         $("#scoring .door").removeClass("closed");
         $("#leaderboard").hide();
 
@@ -604,12 +604,12 @@ var leaderboardLetter = 1;
                 mainMenuButton --;
 
                 if (mainMenuButton < 1) {
-                    mainMenuButton = 4;
+                    mainMenuButton = 5;
                 }
             } else if (e.which == '40') {
                 mainMenuButton ++;
 
-                if (mainMenuButton > 4) {
+                if (mainMenuButton > 5) {
                     mainMenuButton = 1;
                 }
             }
@@ -714,8 +714,8 @@ var leaderboardLetter = 1;
             $("#bestScore").hide();
         }
 
-        $("#scoring .door").addClass("closed");
-        $("#mainMenu .door").removeClass("closed");
+        $("#scoring .door, #scoring .door2").addClass("closed");
+        $("#mainMenu .door, #mainMenu .door2").removeClass("closed");
         $("#mainMenu").show();
 
         if (leaderboard.isHighScore(score)) {
@@ -751,6 +751,13 @@ var leaderboardLetter = 1;
                         leaderboard.addScore(scoreName, score);
                         initScoreKeyInput();
                         $("#leaderboard").hide();
+        
+                        $(document).on("keydown.highscore", function(e) {
+                            $("#highScore").hide();
+                        });
+                        
+                        populateHighScores();
+                        $("#highScore").show();
                     } else {
                         var $beforeLetter = $name.find(".letter:nth-child(" + leaderboardLetter + ")");
 
@@ -838,8 +845,10 @@ var leaderboardLetter = 1;
     }
 
     $("#backToMenu").on("click", function() {
-        showMainMenu();
-        playClick();
+        if (! $("#highScore").is(":visible")) {
+            showMainMenu();
+            playClick();
+        }
         return false;
     });
 
@@ -847,19 +856,22 @@ var leaderboardLetter = 1;
         $(document).off("keydown");
 
         $(".menu:not(#mainMenu)").hide();
-        $("#mainMenu .door").removeClass("closed");
+        $("#mainMenu .door, #mainMenu .door2").removeClass("closed");
         init();
         playClick();
         return false;
     });
 
     $("#playAgain").on("click", function() {
-        $(document).off("keydown");
-
-        $(".menu:not(#scoring)").hide();
-        $("#scoring .door").removeClass("closed");
-        init();
-        playClick();
+        if (! $("#highScore").is(":visible")) {
+            $(document).off("keydown");
+    
+            $(".menu:not(#scoring)").hide();
+            $("#scoring .door, #scoring .door2").removeClass("closed");
+            init();
+            playClick();
+        }
+        
         return false;
     });
 
@@ -923,12 +935,40 @@ var leaderboardLetter = 1;
         playClick();
         return false;
     });
+    
+    $("#highscoreButton").on("click", function() {
+        $(document).off("keydown");
+        
+        $(document).on("keydown.highscore", function(e) {
+            $("#highScore").hide();
+            showMainMenu();
+        });
+        
+        populateHighScores();
+        $("#highScore").show();
+    });
 
     $(".back").on("click", function() {
         showMainMenu();
         playClick();
         return false;
     });
+    
+    var populateHighScores = function() {
+        $("#highScore-scores").html("");
+        
+        var html = "";
+        
+        for (var i = 0; i < leaderboard.scores.length; i++) {
+            var entry = leaderboard.scores[i];
+            var name = entry.name;
+            var score = entry.score;
+            
+            html += "<p class='name'>" + name + " <span class='score'>" + score + "</span></p>";
+        }
+        
+        $("#highScore-scores").html(html);
+    }
 
     var updateGameSize = function() {
         var $gameCanvas = $("#gameCanvas");

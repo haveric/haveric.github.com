@@ -41,7 +41,7 @@ var Leaderboard = function() {
             score: 0
         }
     ];
-
+    
     this.loadOrStore();
 }
 

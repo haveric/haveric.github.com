@@ -26,14 +26,14 @@ body {
 
 #gameCanvas {
     width: 600px;
-    height: 576px;
+    height: 960px;
     z-index:0;
     background-color: #000;
 }
 
 #menu-wrap {
     width: 600px;
-    height: 576px;
+    height: 960px;
     position: absolute;
     top: 0;
     overflow: hidden;
@@ -109,11 +109,32 @@ a.back {
 }
 
 .mainLinks {
-    padding: 40px 40px 0px 120px;
+    padding: 20px 10px 0px 160px;
 }
 
 .mainLinks a.selected {
     outline: 2px dashed #555;
+}
+
+.topDoor,
+.botDoor {
+    -webkit-transition: all 1s ease-in;
+    -moz-transition: all 1s ease-in;
+    -ms-transition: all 1s ease-in;
+    -o-transition: all 1s ease-in;
+    transition: all 1s ease-in;
+    -webkit-transition-delay: .3s;
+    transition-delay: .3s;
+}
+
+.topDoor.closed,
+.botDoor.closed {
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -ms-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+
 }
 
 .leftDoor,
@@ -134,10 +155,60 @@ a.back {
     transition: all 1s ease-out;
 }
 
+.topDoor {
+    background: url('../img/door-top.png');
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 192px;
+    
+    -moz-transform: translateY(-192px);
+    -webkit-transform: translateY(-192px);
+    -o-transform: translateY(-192px);
+    -ms-transform: translateY(-192px);
+    transform: translateY(-192px);
+    pointer-events: none;
+}
+
+.topDoor.closed {
+    -moz-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    pointer-events: none;
+}
+
+.botDoor {
+    background: url('../img/door-bot.png');
+    position: absolute;
+    top: 768px;
+    left: 0;
+    width: 600px;
+    height: 192px;
+    
+    -moz-transform: translateY(192px);
+    -webkit-transform: translateY(192px);
+    -o-transform: translateY(192px);
+    -ms-transform: translateY(192px);
+    transform: translateY(192px);
+    pointer-events: none;
+}
+
+.botDoor.closed {
+    -moz-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    pointer-events: none;
+}
+
 .leftDoor {
     background: url('../img/door-left.png');
     position: absolute;
-    top: 0;
+    top: 192px;
     left: 0;
     width: 339px;
     height: 576px;
@@ -149,6 +220,8 @@ a.back {
     transform: translateX(-339px);
     pointer-events: none;
 }
+
+
 
 .leftDoor.blue {
     background: url('../img/door-left-blue.png');
@@ -178,7 +251,7 @@ a.back {
 .rightDoor {
     background: url('../img/door-right.png');
     position: absolute;
-    top: 0;
+    top: 192px;
     right: 0;
     width: 336px;
     height: 576px;
@@ -291,7 +364,23 @@ a.back {
     clear: both;
 }
 
+#highScore-scores {
+    color: #fff;
+}
 
+#highScore-scores .name {
+    padding-left: 120px;
+}
+
+#highScore-scores .score {
+    padding-left: 60px;
+}
+
+#highScore-scores p {
+    margin: 7px 0;
+}
+
+#highScore,
 #leaderboard {
     width: 400px;
     height: 400px;
@@ -307,6 +396,7 @@ a.back {
     z-index: 100;
 }
 
+#highScore h1,
 #leaderboard h1 {
     color: #fff;
     text-align: center;

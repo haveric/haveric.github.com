@@ -10,6 +10,13 @@
         <div id="gameWrapper">
             <canvas id="gameCanvas"></canvas>
             <div id="menu-wrap">
+                <div id="highScore" class="menu" style="display: none;">
+                    <h1>High Scores</h1>
+                    
+                    <div id="highScore-scores">
+                    
+                    </div>
+                </div>
                 <div id="leaderboard" class="menu">
                     <h1>New High Score!</h1>
                     <h2>Score: <span id="leaderboard-highscore"></span></h2>
@@ -57,6 +64,8 @@
                 </div>
 
                 <div id="scoring" class="menu">
+                    <div class="topDoor door2"></div>
+                    <div class="botDoor door2"></div>
                     <div class="leftDoor blue door">
                         <h1 class="title">End Results!</h1>
                         <div class="leftContents">
@@ -111,6 +120,8 @@
                     </div>
                 </div>
                 <div id="about" class="menu">
+                    <div class="topDoor door2 closed"></div>
+                    <div class="botDoor door2 closed"></div>
                     <div class="leftDoor door lightblue closed">
                         <h1 class="title">About</h1>
                         <div class="leftContents">
@@ -128,6 +139,8 @@
                     </div>
                 </div>
                 <div id="controls" class="menu">
+                    <div class="topDoor door2 closed"></div>
+                    <div class="botDoor door2 closed"></div>
                     <div class="leftDoor door pink closed">
                         <h1 class="title">Controls</h1>
                         <div class="leftContents">
@@ -153,6 +166,8 @@
                     </div>
                 </div>
                 <div id="instructions" class="menu">
+                    <div class="topDoor door2 closed"></div>
+                    <div class="botDoor door2 closed"></div>
                     <div class="leftDoor door orange closed">
                         <h1 class="title">Instructions</h1>
                         <div class="leftContents">
@@ -189,6 +204,8 @@
                     </div>
                 </div>
                 <div id="mainMenu" class="menu">
+                    <div class="topDoor door2 closed"></div>
+                    <div class="botDoor door2 closed"></div>
                     <div class="leftDoor door closed">
                         <h1 class="title">Out of Bullets</h1>
                     </div>
@@ -198,6 +215,7 @@
                             <a href="#" id="instructionsButton">Instructions</a>
                             <a href="#" id="controlsButton">Controls</a>
                             <a href="#" id="aboutButton">About</a>
+                            <a href="#" id="highscoreButton">Leaderboard</a>
                         </div>
                     </div>
                 </div>
