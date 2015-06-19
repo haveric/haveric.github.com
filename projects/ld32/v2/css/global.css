@@ -108,7 +108,7 @@ a.back {
 }
 
 .mainLinks {
-    padding: 40px 40px 0px 120px;
+    padding: 20px 10px 0px 160px;
 }
 
 .mainLinks a.selected {
@@ -363,7 +363,23 @@ a.back {
     clear: both;
 }
 
+#highScore-scores {
+    color: #fff;
+}
 
+#highScore-scores .name {
+    padding-left: 120px;
+}
+
+#highScore-scores .score {
+    padding-left: 60px;
+}
+
+#highScore-scores p {
+    margin: 7px 0;
+}
+
+#highScore,
 #leaderboard {
     width: 400px;
     height: 400px;
@@ -379,6 +395,7 @@ a.back {
     z-index: 100;
 }
 
+#highScore h1,
 #leaderboard h1 {
     color: #fff;
     text-align: center;
