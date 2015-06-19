@@ -109,7 +109,7 @@ var leaderboardLetter = 1;
 
 
     var init = function() {
-        $("#scoring .door").removeClass("closed");
+        $("#scoring .door, #scoring .door2").removeClass("closed");
         keyDownListener = addEventListener("keydown", function (e) {
             if (debug) {
                 console.log("Keycode: " + e.keyCode);
@@ -590,7 +590,7 @@ var leaderboardLetter = 1;
         $("#mainMenu .mainLinks a").eq(mainMenuButton - 1).addClass("selected").siblings().removeClass("selected");
         $("#mainMenu").show();
         $("#mainMenu .door, #mainMenu .door2").addClass("closed");
-        $("#scoring .door").removeClass("closed");
+        $("#scoring .door, #scoring .door2").removeClass("closed");
         $("#leaderboard").hide();
 
         $(document).on("keydown.mainMenu", function(e) {
@@ -751,11 +751,11 @@ var leaderboardLetter = 1;
                         leaderboard.addScore(scoreName, score);
                         initScoreKeyInput();
                         $("#leaderboard").hide();
-        
+
                         $(document).on("keydown.highscore", function(e) {
                             $("#highScore").hide();
                         });
-                        
+
                         populateHighScores();
                         $("#highScore").show();
                     } else {
@@ -865,13 +865,13 @@ var leaderboardLetter = 1;
     $("#playAgain").on("click", function() {
         if (! $("#highScore").is(":visible")) {
             $(document).off("keydown");
-    
+
             $(".menu:not(#scoring)").hide();
             $("#scoring .door, #scoring .door2").removeClass("closed");
             init();
             playClick();
         }
-        
+
         return false;
     });
 
@@ -935,15 +935,15 @@ var leaderboardLetter = 1;
         playClick();
         return false;
     });
-    
+
     $("#highscoreButton").on("click", function() {
         $(document).off("keydown");
-        
+
         $(document).on("keydown.highscore", function(e) {
             $("#highScore").hide();
             showMainMenu();
         });
-        
+
         populateHighScores();
         $("#highScore").show();
     });
@@ -953,20 +953,20 @@ var leaderboardLetter = 1;
         playClick();
         return false;
     });
-    
+
     var populateHighScores = function() {
         $("#highScore-scores").html("");
-        
+
         var html = "";
-        
+
         for (var i = 0; i < leaderboard.scores.length; i++) {
             var entry = leaderboard.scores[i];
             var name = entry.name;
             var score = entry.score;
-            
+
             html += "<p class='name'>" + name + " <span class='score'>" + score + "</span></p>";
         }
-        
+
         $("#highScore-scores").html(html);
     }
 
