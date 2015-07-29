@@ -12,6 +12,18 @@
     100% {border-color: rgba(0,0,0,0);}
 }
 
+@-webkit-keyframes menuship {
+    0% {opacity: 1;}
+    50% {opacity: .5;}
+    100% {opacity: 1}
+}
+
+@keyframes menuship {
+    0% {opacity: 1;}
+    50% {opacity: .5;}
+    100% {opacity: 1}
+}
+
 body {
     margin: 0;
     position: relative;
@@ -113,9 +125,27 @@ a.back {
 }
 
 .mainLinks a.selected {
-    outline: 2px dashed #555;
+    position: relative;
 }
 
+.mainLinks a.selected:before {
+    content: " ";
+    position: absolute;
+    left: -37px;
+    top: 7px;
+    background: url('../img/enemy1.png');
+    width: 29px;
+    height: 25px;
+
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+
+    -webkit-animation: menuship 3s infinite;
+    animation: menuship 3s infinite;
+}
 .topDoor,
 .botDoor {
     -webkit-transition: all 1s ease-in;
