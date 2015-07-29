@@ -162,7 +162,7 @@ a.back {
     left: 0;
     width: 600px;
     height: 192px;
-    
+
     -moz-transform: translateY(-192px);
     -webkit-transform: translateY(-192px);
     -o-transform: translateY(-192px);
@@ -187,7 +187,7 @@ a.back {
     left: 0;
     width: 600px;
     height: 192px;
-    
+
     -moz-transform: translateY(192px);
     -webkit-transform: translateY(192px);
     -o-transform: translateY(192px);
@@ -369,11 +369,15 @@ a.back {
 }
 
 #highScore-scores .name {
-    padding-left: 120px;
+    padding-left: 105px;
 }
 
 #highScore-scores .score {
-    padding-left: 60px;
+    display: inline-block;
+    float: right;
+    margin: 0 100px 0 0;
+    padding: 0;
+    text-align: right;
 }
 
 #highScore-scores p {
