@@ -756,6 +756,7 @@ var leaderboardLetter = 1;
                         initScoreKeyInput();
                         $("#leaderboard").hide();
 
+                        $(document).off("keydown.leaderboard");
                         $(document).on("keydown.highscore", function(e) {
                             $("#highScore").hide();
                             initScoreKeyInput();
