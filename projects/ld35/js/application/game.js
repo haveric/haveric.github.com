@@ -37,6 +37,8 @@ var CANVAS_WIDTH = 800,
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, maxGear);
         enemies = new Enemies(15, maxGear);
 
+        soundManager.play("bg",0.5, true);
+
         MainLoop.setUpdate(handleInput).setDraw(render).start();
     }
     var reset = function() {

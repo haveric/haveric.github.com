@@ -8,7 +8,7 @@ SoundManager.prototype.add = function(name, src, vol) {
     this.sounds.push(sound);
 }
 
-SoundManager.prototype.play = function(audioName, playVolume) {
+SoundManager.prototype.play = function(audioName, playVolume, repeat) {
     var self = this;
     
     if (!playVolume || playVolume == null) {
@@ -20,6 +20,13 @@ SoundManager.prototype.play = function(audioName, playVolume) {
         var sound = self.sounds[i];
         if (sound.name === audioName) {
             var audio = new Audio(sound.src);
+
+            if (repeat) {
+                audio.addEventListener("ended", function() {
+                    this.currentTime = 0;
+                    this.play();
+                }, false);
+            }
             var actualVolume = self.volume * sound.vol * playVolume;
             if (actualVolume > 1) {
                 actualVolume = 1;
@@ -61,4 +68,4 @@ var Sound = function (name, src, vol) {
 
 var soundManager = new SoundManager();
 
-soundManager.add('blip', 'assets/placeholderBlip.wav');
+soundManager.add('bg', 'assets/backgroundMusic.wav');
