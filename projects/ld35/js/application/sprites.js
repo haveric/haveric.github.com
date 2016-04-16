@@ -77,8 +77,13 @@ Sprite.prototype.drawImage = function (context, i, j, degrees) {
 
 var textureMapper = new TextureMapper();
 textureMapper.addTexture('sprites', 'img/placeholder.gif');
-textureMapper.addTexture('player', 'img/player.gif');
+textureMapper.addTexture('player', 'img/player.png');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('path', 'sprites', 0, 0);
-spriteMapper.addImage('player', 'player', 0, 0);
+spriteMapper.addImage('player-gear3', 'player', 0, 0, 48, 48);
+spriteMapper.addImage('player-gear4', 'player', 48, 0, 48, 48);
+spriteMapper.addImage('player-gear5', 'player', 96, 0, 48, 48);
+spriteMapper.addImage('player-gear6', 'player', 144, 0, 48, 48);
+spriteMapper.addImage('player-gear7', 'player', 192, 0, 48, 48);
+spriteMapper.addImage('player-gear8', 'player', 240, 0, 48, 48);

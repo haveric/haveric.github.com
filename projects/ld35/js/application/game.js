@@ -9,6 +9,9 @@ var CANVAS_WIDTH = 800,
         context;
 
     var player,
+        track,
+        enemies,
+        maxGear = 5;
         numRenders = 0,
         keyDownListener,
         keyUpListener;
@@ -28,8 +31,9 @@ var CANVAS_WIDTH = 800,
         canvas.setAttribute("height", CANVAS_HEIGHT);
 
         context = canvas.getContext('2d');
-
-        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100);
+        track = new Track(150,0);
+        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, maxGear);
+        enemies = new Enemies(15, maxGear);
 
         MainLoop.setUpdate(handleInput).setDraw(render).start();
     }
@@ -45,12 +49,12 @@ var CANVAS_WIDTH = 800,
     }
 
     var handleInput = function() {
-        if (65 in keysDown) {
+        if (65 in keysDown) { //A
             player.shiftUp();
-            delete keysDown["65"]; //A
-        } else if (90 in keysDown) {
+            delete keysDown["65"];
+        } else if (90 in keysDown) { //Z
             player.shiftDown();
-            delete keysDown["90"]; //Z
+            delete keysDown["90"];
         }
 
         if (38 in keysDown) { // Player holding up
@@ -74,8 +78,10 @@ var CANVAS_WIDTH = 800,
 
         if (37 in keysDown) { // Player holding left
             player.moveLeft();
+            delete keysDown["37"];
         } else if (39 in keysDown) { // Player holding right
             player.moveRight();
+            delete keysDown["39"];
         }
 
         if (81 in keysDown) { // q
@@ -86,7 +92,24 @@ var CANVAS_WIDTH = 800,
     var render = function(){
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var spawnsPerSecond = 4;
+        if (numRenders % (60 / spawnsPerSecond) == 0) {
+            enemies.spawn();
+        }
+
+        enemies.move();
         player.move();
+
+        var death = enemies.checkForCollision(player);
+        console.log("Death: " + death);
+        if (death) {
+            stop();
+        }
+
+
+        track.draw(context, numRenders);
+        enemies.draw(context, numRenders);
         player.draw(context, numRenders);
 
         context.fillStyle="#ffffff";
