@@ -56,11 +56,21 @@ var Sprite = function (imageName, textureName, x, y, w, h) {
     this.h = h || 32;
 }
 
-Sprite.prototype.drawImage = function (context, i, j) {
+Sprite.prototype.drawImage = function (context, i, j, degrees) {
     if (this.texture == null) {
         this.texture = textureMapper.getTexture(this.textureName);
     } else {
-        context.drawImage(this.texture, this.x, this.y, this.w, this.h, i, j, this.w, this.h);
+        if (degrees != null && degrees > 0) {
+            context.save();
+            context.translate(i+this.w/2, j+this.h/2);
+            context.rotate(degrees * Math.PI / 180);
+
+            context.drawImage(this.texture, this.x, this.y, this.w, this.h, -this.w/2, -this.h/2, this.w, this.h);
+
+            context.restore();
+        } else {
+            context.drawImage(this.texture, this.x, this.y, this.w, this.h, i, j, this.w, this.h);
+        }
     }
 }
 
@@ -71,7 +81,4 @@ textureMapper.addTexture('player', 'img/player.gif');
 
 var spriteMapper = new SpriteMapper();
 spriteMapper.addImage('path', 'sprites', 0, 0);
-spriteMapper.addImage('player-up', 'player', 0, 0);
-spriteMapper.addImage('player-down', 'player', 0, 0);
-spriteMapper.addImage('player-left', 'player', 0, 0);
-spriteMapper.addImage('player-right', 'player', 0, 0);
+spriteMapper.addImage('player', 'player', 0, 0);

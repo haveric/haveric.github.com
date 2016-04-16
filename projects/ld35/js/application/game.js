@@ -8,14 +8,14 @@ var CANVAS_WIDTH = 800,
         canvas,
         context;
 
-    var map,
-        player,
+    var player,
         numRenders = 0,
         keyDownListener,
         keyUpListener;
 
     var init = function() {
         keyDownListener = addEventListener("keydown", function (e) {
+            //console.log("Keycode: " + e.keyCode);
             keysDown[e.keyCode] = true;
         }, false);
 
@@ -29,18 +29,11 @@ var CANVAS_WIDTH = 800,
 
         context = canvas.getContext('2d');
 
-        var mapSize = 20;
-
-        map = new Map(mapSize, mapSize);
-        map.generate();
-        var midPoint = Math.floor(mapSize/2);
-
-        player = new Player(midPoint,midPoint);
+        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100);
 
         MainLoop.setUpdate(handleInput).setDraw(render).start();
     }
     var reset = function() {
-        map = null;
         player = null;
     }
     var stop = function(type) {
@@ -52,34 +45,54 @@ var CANVAS_WIDTH = 800,
     }
 
     var handleInput = function() {
+        if (65 in keysDown) {
+            player.shiftUp();
+            delete keysDown["65"]; //A
+        } else if (90 in keysDown) {
+            player.shiftDown();
+            delete keysDown["90"]; //Z
+        }
+
         if (38 in keysDown) { // Player holding up
-            player.moveUp(map);
+            player.moveUp();
+        } else if (40 in keysDown) { // Player holding down
+            player.moveDown();
+        } else {
+            if (player.velocity != 0) {
+                if (Math.abs(player.velocity) - .5 > 0) {
+                    player.velocity *= .95;
+                } else {
+                    player.velocity *= .75;
+                }
+
+
+                if (player.velocity <= .01 && player.velocity >= -.01) {
+                    player.velocity = 0;
+                }
+            }
         }
-        if (40 in keysDown) { // Player holding down
-            player.moveDown(map);
-        }
+
         if (37 in keysDown) { // Player holding left
-            player.moveLeft(map);
+            player.moveLeft();
+        } else if (39 in keysDown) { // Player holding right
+            player.moveRight();
         }
-        if (39 in keysDown) { // Player holding right
-            player.moveRight(map);
-        }
+
         if (81 in keysDown) { // q
             stop("menu");
         }
-
-        keysDown = [];
     }
 
     var render = function(){
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
-
-        map.draw(context, numRenders, player.getX(), player.getY());
-
+        player.move();
         player.draw(context, numRenders);
 
-
+        context.fillStyle="#ffffff";
+        context.font = '18px "Lucida Console", Monaco, monospace';
+        context.fillText("Gear: " + player.gear, 20, CANVAS_HEIGHT - 50);
+        context.fillText("Speed: " + Math.abs(Math.round(player.velocity * 12)), 20, CANVAS_HEIGHT - 25);
 
         numRenders++;
         if (numRenders == 60) {
