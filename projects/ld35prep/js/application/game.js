@@ -3,7 +3,6 @@ var CANVAS_WIDTH = 800,
 
 (function () {
     var keysDown = [],
-        gameRunning = false,
         keyDownListener,
         keyUpListener,
         canvas,
@@ -11,48 +10,9 @@ var CANVAS_WIDTH = 800,
 
     var map,
         player,
-        requestId;
         numRenders = 0,
         keyDownListener,
         keyUpListener;
-
-    // shim layer with setTimeout fallback
-    window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       ||
-              window.webkitRequestAnimationFrame ||
-              window.mozRequestAnimationFrame    ||
-              window.msRequestAnimationFrame     ||
-              window.oRequestAnimationFrame      ||
-              function( callback ){
-                window.setTimeout(callback, 1000 / 60);
-              };
-    })();
-
-    // TODO: Remove unnecessary calls here
-    window.cancelAnimFrame = (function(){
-      return  window.cancelAnimationFrame       ||
-              window.webkitCancelAnimationFrame ||
-              window.mozCancelAnimationFrame    ||
-              window.msCancelAnimationFrame     ||
-              window.oCancelAnimationFrame ||
-              window.cancelRequestAnimationFrame       ||
-              window.webkitCancelRequestAnimationFrame ||
-              window.mozCancelRequestAnimationFrame    ||
-              window.msCancelRequestAnimationFrame     ||
-              window.oCancelRequestAnimationFrame;
-    })();
-
-
-    var animLoop = function(){
-        if (gameRunning) {
-            requestId = requestAnimFrame(animLoop);
-
-            handleInput();
-
-            render();
-        }
-    }
-
 
     var init = function() {
         keyDownListener = addEventListener("keydown", function (e) {
@@ -77,17 +37,14 @@ var CANVAS_WIDTH = 800,
 
         player = new Player(midPoint,midPoint);
 
-        gameRunning = true;
-        if (!requestId) {
-            animLoop();
-        }
+        MainLoop.setUpdate(handleInput).setDraw(render).start();
     }
     var reset = function() {
         map = null;
         player = null;
     }
     var stop = function(type) {
-        gameRunning = false;
+        MainLoop.stop();
         removeEventListener("keydown", keyDownListener, false);
         removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
