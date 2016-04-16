@@ -15,8 +15,7 @@ var CANVAS_WIDTH = 800,
         maxGear = 5,
         numRenders = 0,
         keyDownListener,
-        keyUpListener,
-        gamepadListener;
+        keyUpListener;
 
     var init = function() {
         keyDownListener = addEventListener("keydown", function (e) {
@@ -49,7 +48,6 @@ var CANVAS_WIDTH = 800,
         removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
         keyUpListener = undefined;
-        window.clearInterval(gamepadListener);
     }
 
     var hasControllerSupport = function() {
@@ -57,31 +55,36 @@ var CANVAS_WIDTH = 800,
     }
 
     var checkForGamepads = function() {
-        navigator.getGamepads().forEach(function(gamepad, index) {
-            gamepad.axes.forEach(function(axis, axisIndex) {
+        if (hasControllerSupport()) {
+            var numGamepads = navigator.getGamepads().length;
+            for (var i = 0; i < numGamepads; i++) {
+                var gamepad = navigator.getGamepads()[i];
+                if (gamepad) {
+                    gamepad.axes.forEach(function(axis, axisIndex) {
 
-                if (axis <= -0.5) {
-                    keysDown["axis" + axisIndex + "-left"] = true;
-                } else if (axis >= 0.5) {
-                    keysDown["axis" + axisIndex + "-right"] = true;
-                } else {
-                    delete keysDown["axis" + axisIndex + "-left"];
-                    delete keysDown["axis" + axisIndex + "-right"];
-                    delete keysDelayed["axis" + axisIndex + "-left"];
-                    delete keysDelayed["axis" + axisIndex + "-right"];
-                }
-            });
+                        if (axis <= -0.5) {
+                            keysDown["axis" + axisIndex + "-left"] = true;
+                        } else if (axis >= 0.5) {
+                            keysDown["axis" + axisIndex + "-right"] = true;
+                        } else {
+                            delete keysDown["axis" + axisIndex + "-left"];
+                            delete keysDown["axis" + axisIndex + "-right"];
+                            delete keysDelayed["axis" + axisIndex + "-left"];
+                            delete keysDelayed["axis" + axisIndex + "-right"];
+                        }
+                    });
 
-            gamepad.buttons.forEach(function(button, buttonIndex) {
-                if (button.pressed) {
-                    console.log("button: " + "gamepad"+ buttonIndex);
-                    keysDown["gamepad"+ buttonIndex] = true;
-                } else {
-                    delete keysDown["gamepad" + buttonIndex];
-                    delete keysDelayed["gamepad" + buttonIndex];
+                    gamepad.buttons.forEach(function(button, buttonIndex) {
+                        if (button.pressed) {
+                            keysDown["gamepad"+ buttonIndex] = true;
+                        } else {
+                            delete keysDown["gamepad" + buttonIndex];
+                            delete keysDelayed["gamepad" + buttonIndex];
+                        }
+                    });
                 }
-            });
-        });
+            }
+        }
     }
 
     var handleInput = function() {
@@ -197,6 +200,12 @@ var CANVAS_WIDTH = 800,
         context.font = '18px "Lucida Console", Monaco, monospace';
         context.fillText("Gear: " + player.gear, 20, CANVAS_HEIGHT - 50);
         context.fillText("Speed: " + Math.abs(Math.round(player.velocity * 12)), 20, CANVAS_HEIGHT - 25);
+        context.fillText(player.collected.get(3), 20, 40);
+        context.fillText(player.collected.get(4), 20, 60);
+        context.fillText(player.collected.get(5), 20, 80);
+        context.fillText(player.collected.get(6), 20, 100);
+        context.fillText(player.collected.get(7), 20, 120);
+        context.fillText(player.collected.get(8), 20, 140);
 
         numRenders++;
         if (numRenders == 60) {

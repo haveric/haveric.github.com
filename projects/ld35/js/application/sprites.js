@@ -76,7 +76,6 @@ Sprite.prototype.drawImage = function (context, i, j, degrees) {
 
 
 var textureMapper = new TextureMapper();
-textureMapper.addTexture('sprites', 'img/placeholder.gif');
 textureMapper.addTexture('player', 'img/player.png');
 
 var spriteMapper = new SpriteMapper();

@@ -83,6 +83,8 @@ Enemies.prototype.checkForCollision = function(player) {
                 if (enemy.gear == player.gear) {
                     self.enemies.splice(realIndex, 1);
                     realIndex --;
+                    var numCollected = player.collected.get(enemy.gear) || 0;
+                    player.collected.set(enemy.gear, numCollected + 1);
                 } else {
                     isDead = true;
                 }

@@ -8,6 +8,10 @@ var Player = function(x, y, maxGear) {
     this.maxGear = maxGear;
     this.setGear(3);
     this.setLane(3);
+    this.collected = new Map();
+    for (var i = 3; i <= 8; i++) {
+        this.collected.set(i, 0);
+    }
 }
 
 Player.prototype.moveUp = function() {
