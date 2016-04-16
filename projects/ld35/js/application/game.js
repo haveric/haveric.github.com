@@ -3,6 +3,7 @@ var CANVAS_WIDTH = 800,
 
 (function () {
     var keysDown = [],
+        keysDelayed = [],
         keyDownListener,
         keyUpListener,
         canvas,
@@ -11,10 +12,11 @@ var CANVAS_WIDTH = 800,
     var player,
         track,
         enemies,
-        maxGear = 5;
+        maxGear = 5,
         numRenders = 0,
         keyDownListener,
-        keyUpListener;
+        keyUpListener,
+        gamepadListener;
 
     var init = function() {
         keyDownListener = addEventListener("keydown", function (e) {
@@ -24,6 +26,7 @@ var CANVAS_WIDTH = 800,
 
         keyUpListener = addEventListener("keyup", function (e) {
             delete keysDown[e.keyCode];
+            delete keysDelayed[e.keyCode];
         }, false);
 
         canvas = document.getElementById("gameCanvas");
@@ -46,20 +49,73 @@ var CANVAS_WIDTH = 800,
         removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
         keyUpListener = undefined;
+        window.clearInterval(gamepadListener);
+    }
+
+    var hasControllerSupport = function() {
+        return "getGamepads" in navigator;
+    }
+
+    var checkForGamepads = function() {
+        navigator.getGamepads().forEach(function(gamepad, index) {
+            gamepad.axes.forEach(function(axis, axisIndex) {
+
+                if (axis <= -0.5) {
+                    keysDown["axis" + axisIndex + "-left"] = true;
+                } else if (axis >= 0.5) {
+                    keysDown["axis" + axisIndex + "-right"] = true;
+                } else {
+                    delete keysDown["axis" + axisIndex + "-left"];
+                    delete keysDown["axis" + axisIndex + "-right"];
+                    delete keysDelayed["axis" + axisIndex + "-left"];
+                    delete keysDelayed["axis" + axisIndex + "-right"];
+                }
+            });
+
+            gamepad.buttons.forEach(function(button, buttonIndex) {
+                if (button.pressed) {
+                    console.log("button: " + "gamepad"+ buttonIndex);
+                    keysDown["gamepad"+ buttonIndex] = true;
+                } else {
+                    delete keysDown["gamepad" + buttonIndex];
+                    delete keysDelayed["gamepad" + buttonIndex];
+                }
+            });
+        });
     }
 
     var handleInput = function() {
-        if (65 in keysDown) { //A
-            player.shiftUp();
-            delete keysDown["65"];
-        } else if (90 in keysDown) { //Z
-            player.shiftDown();
-            delete keysDown["90"];
+        checkForGamepads();
+
+        if (65 in keysDown || "gamepad1" in keysDown) { //A
+            if (!("65" in keysDelayed) && !("gamepad1" in keysDelayed)) {
+                player.shiftUp();
+                delete keysDown["65"];
+                delete keysDown["gamepad1"];
+                keysDelayed["65"] = true;
+                keysDelayed["gamepad1"] = true;
+                setTimeout(function() {
+                    delete keysDelayed["65"];
+                    delete keysDelayed["gamepad1"];
+                },100);
+            }
+        } else if (90 in keysDown || "gamepad0" in keysDown) { //Z
+            if (!("90" in keysDelayed) && !("gamepad0" in keysDelayed)) {
+                player.shiftDown();
+                delete keysDown["90"];
+                delete keysDown["gamepad0"];
+                keysDelayed["90"] = true;
+                keysDelayed["gamepad0"] = true;
+                setTimeout(function() {
+                    delete keysDelayed["90"];
+                    delete keysDelayed["gamepad0"];
+                },100);
+            }
         }
 
-        if (38 in keysDown) { // Player holding up
+        if (38 in keysDown || "axis1-left" in keysDown) { // Player holding up
             player.moveUp();
-        } else if (40 in keysDown) { // Player holding down
+        } else if (40 in keysDown || "axis1-right" in keysDown) { // Player holding down
             player.moveDown();
         } else {
             if (player.velocity != 0) {
@@ -76,12 +132,37 @@ var CANVAS_WIDTH = 800,
             }
         }
 
-        if (37 in keysDown) { // Player holding left
-            player.moveLeft();
-            delete keysDown["37"];
-        } else if (39 in keysDown) { // Player holding right
-            player.moveRight();
-            delete keysDown["39"];
+        if (37 in keysDown || "gamepad14" in keysDown || "axis0-left" in keysDown) { // Player holding left
+            if (!("37" in keysDelayed) && !("gamepad14" in keysDelayed) && !("axis0-left" in keysDelayed)) {
+                player.moveLeft();
+
+                delete keysDown["37"];
+                delete keysDown["gamepad14"];
+                delete keysDown["axis0-left"];
+                keysDelayed["37"] = true;
+                keysDelayed["gamepad14"] = true;
+                keysDelayed["axis0-left"] = true;
+                setTimeout(function() {
+                    delete keysDelayed["37"];
+                    delete keysDelayed["gamepad14"];
+                    delete keysDelayed["axis0-left"];
+                },100);
+            }
+        } else if (39 in keysDown || "gamepad15" in keysDown || "axis0-right" in keysDown) { // Player holding right
+            if (!("39" in keysDelayed) && !("gamepad15" in keysDelayed) && !("axis0-right" in keysDelayed)) {
+                player.moveRight();
+                delete keysDown["39"];
+                delete keysDown["gamepad15"];
+                delete keysDown["axis0-right"];
+                keysDelayed["39"] = true;
+                keysDelayed["gamepad15"] = true;
+                keysDelayed["axis0-right"] = true;
+                setTimeout(function() {
+                    delete keysDelayed["39"];
+                    delete keysDelayed["gamepad15"];
+                    delete keysDelayed["axis0-right"];
+                },100);
+            }
         }
 
         if (81 in keysDown) { // q
@@ -102,7 +183,7 @@ var CANVAS_WIDTH = 800,
         player.move();
 
         var death = enemies.checkForCollision(player);
-        console.log("Death: " + death);
+        //console.log("Death: " + death);
         if (death) {
             stop();
         }
