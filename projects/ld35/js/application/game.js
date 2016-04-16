@@ -17,6 +17,8 @@ var CANVAS_WIDTH = 800,
         keyDownListener,
         keyUpListener;
 
+    //var audioBG;
+
     var init = function() {
         keyDownListener = addEventListener("keydown", function (e) {
             //console.log("Keycode: " + e.keyCode);
@@ -37,7 +39,7 @@ var CANVAS_WIDTH = 800,
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, maxGear);
         enemies = new Enemies(15, maxGear);
 
-        soundManager.play("bg",0.5, true);
+        //audioBG = soundManager.play("bg",0.5, true);
 
         MainLoop.setUpdate(handleInput).setDraw(render).start();
     }
@@ -50,6 +52,7 @@ var CANVAS_WIDTH = 800,
         removeEventListener("keyup", keyUpListener, false);
         keyDownListener = undefined;
         keyUpListener = undefined;
+        //audioBG.pause();
     }
 
     var hasControllerSupport = function() {
