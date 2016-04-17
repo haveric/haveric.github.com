@@ -32,6 +32,10 @@ var SpriteMapper = function () {
     sprites = [];
 }
 
+SpriteMapper.prototype.getSprites = function() {
+    return sprites;
+}
+
 SpriteMapper.prototype.addImage = function (imageName, textureName, x, y, w, h) {
     sprites.push(new Sprite(imageName, textureName, x, y, w, h));
 }

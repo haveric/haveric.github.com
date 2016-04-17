@@ -12,7 +12,8 @@ var CANVAS_WIDTH = 800,
         enemies,
         minGear = 3,
         maxGear = 5,
-        numRenders = 0;
+        numRenders = 0,
+        spritesRendered = false;
 
     //var audioBG;
 
@@ -105,7 +106,29 @@ var CANVAS_WIDTH = 800,
         }
     }
 
+    var prerenderSprites = function() {
+        var numSprites = spriteMapper.getSprites().length;
+        var numLoaded = 0;
+
+        spriteMapper.getSprites().forEach(function(sprite) {
+            if (sprite.texture != null) {
+                numLoaded ++;
+            } else {
+                sprite.drawImage(context, 0, 0);
+            }
+        });
+
+        if (numLoaded == numSprites) {
+            spritesRendered = true;
+        }
+    }
+
+
     var render = function(){
+        if (!spritesRendered) {
+            prerenderSprites();
+
+        }
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
 
