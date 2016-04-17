@@ -68,6 +68,5 @@ var Sound = function (name, src, vol) {
 
 var soundManager = new SoundManager();
 
-soundManager.add('bg', 'assets/backgroundMusic.wav');
 soundManager.add('explosion', 'assets/explosion.wav');
 soundManager.add('collect', 'assets/collect.wav');

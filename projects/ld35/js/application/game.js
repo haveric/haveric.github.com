@@ -15,12 +15,24 @@ var CANVAS_WIDTH = 800,
         maxGear = 3,
         enemyMaxGear = 4;
         numRenders = 0,
+        enemySpawns = 4;
         spritesRendered = false,
-        debug = true;
+        currentGameType = "none",
+        gameHasEnded = false;
 
-    //var audioBG;
+    var init = function(type) {
+        currentGameType = type;
+        gameHasEnded = false;
+        var enemySpeed = 6;
+        var maxEnemies = 15;
+        if (currentGameType != "demo") {
+            maxGear = parseInt($("#startGear").val());
+            enemyMaxGear = parseInt($("#enemyStartMaxGear").val());
+            enemySpeed = parseInt($("#enemySpeed").val());
+            maxEnemies = parseInt($("#numEnemies").val());
+            enemySpawns = parseInt($("#enemySpawns").val());
+        }
 
-    var init = function() {
         canvas = document.getElementById("gameCanvas");
         canvas.setAttribute("width", CANVAS_WIDTH);
         canvas.setAttribute("height", CANVAS_HEIGHT);
@@ -29,33 +41,21 @@ var CANVAS_WIDTH = 800,
         messager = new Messager();
         points = new Points();
         track = new Track(5);
-        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, minGear, maxGear, track.numLanes);
-
-        // Test data
-        if (debug) {
-            player.setNeededToShift(3, 1);
-            player.setNeededToShift(4, 1);
-            player.setNeededToShift(5, 1);
-            player.setNeededToShift(6, 1);
-            player.setNeededToShift(7, 1);
-        } else {
-            player.setNeededToShift(3, 10);
-            player.setNeededToShift(4, 15);
-            player.setNeededToShift(5, 20);
-            player.setNeededToShift(6, 25);
-            player.setNeededToShift(7, 30);
+        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100, minGear, maxGear, track.numLanes);
+        if (currentGameType != "demo") {
+            player.setNeededToShift(3, parseInt($("#shift4").val()));
+            player.setNeededToShift(4, parseInt($("#shift5").val()));
+            player.setNeededToShift(5, parseInt($("#shift6").val()));
+            player.setNeededToShift(6, parseInt($("#shift7").val()));
+            player.setNeededToShift(7, parseInt($("#shift8").val()));
         }
-
-        enemies = new Enemies(15, enemyMaxGear);
-
-        //audioBG = soundManager.play("bg",0.5, true);
+        enemies = new Enemies(maxEnemies, enemyMaxGear, enemySpeed);
 
         MainLoop.setUpdate(handleUpdate).setDraw(render).setEnd().start();
     }
 
     var stop = function(type) {
         MainLoop.stop();
-        //audioBG.pause();
     }
 
     var handleUpdate = function(delta) {
@@ -80,7 +80,7 @@ var CANVAS_WIDTH = 800,
             }
         }
 
-        if (!player.isDying) {
+        if (!player.isDying && currentGameType != "demo") {
             if (controls.isPressed("shiftUp")) { //A
                 if (!controls.isDelayed("shiftUp")) {
                     player.shiftUp();
@@ -146,8 +146,7 @@ var CANVAS_WIDTH = 800,
     }
 
     var handleMovement = function(delta) {
-        var spawnsPerSecond = 4;
-        if (numRenders % (60 / spawnsPerSecond) == 0) {
+        if (numRenders % Math.floor(60 / enemySpawns) == 0) {
             enemies.spawn(track.numLanes);
         }
 
@@ -156,20 +155,23 @@ var CANVAS_WIDTH = 800,
         player.move(delta);
         messager.watch(delta);
 
-        if (player.isDying) {
-            if (player.gear < 8 && player.frame == 6 && points.getTotal() == 0) {
-                //stop();
-            } else if (player.gear == 8 && player.frame > 6 && !player.hasBlackHoleStarted) {
-                player.hasBlackHoleStarted = true;
-                player.velocity = 0;
-            }
-        } else if (!player.isDying) {
-            var death = enemies.checkForCollision(player, points, messager);
-            if (death) {
-                player.x -= 8;
-                player.y -= 8;
-                player.frame = 0;
-                player.isDying = true;
+        if (currentGameType != "demo") {
+            if (player.isDying) {
+                if (player.gear < 8 && player.frame == 6 && points.getTotal() == 0) {
+                    endGame("lose");
+                } else if (player.gear == 8 && player.frame > 6 && !player.hasBlackHoleStarted) {
+                    player.hasBlackHoleStarted = true;
+                    player.velocity = 0;
+                    endGame("win?");
+                }
+            } else if (!player.isDying) {
+                var death = enemies.checkForCollision(player, points, messager);
+                if (death) {
+                    player.x -= 8;
+                    player.y -= 8;
+                    player.frame = 0;
+                    player.isDying = true;
+                }
             }
         }
     }
@@ -179,7 +181,7 @@ var CANVAS_WIDTH = 800,
             prerenderSprites();
         }
 
-        if (numRenders == 0 && !player.isDying) {
+        if (numRenders == 0 && !player.isDying && currentGameType != "demo") {
             player.score += 1;
         }
 
@@ -188,14 +190,26 @@ var CANVAS_WIDTH = 800,
         context.textAlign="left";
         track.draw(context, numRenders);
         enemies.draw(context, numRenders);
-        player.draw(context, numRenders);
 
+        if (currentGameType != "demo") {
+            player.draw(context, numRenders);
+        }
+
+        var bestScore = localStorage['bestscore'];
         context.fillStyle="#ffffff";
         context.font = '18px "Lucida Console", Monaco, monospace';
         context.fillText("Score", 50, CANVAS_HEIGHT - 50);
+        if (bestScore) {
+            context.fillText("Best Score", CANVAS_WIDTH - 125, CANVAS_HEIGHT - 50);
+        }
         context.textAlign="center";
         context.fillText(player.score, 80, CANVAS_HEIGHT - 25);
+        if (bestScore) {
+            context.fillText(bestScore, CANVAS_WIDTH - 75, CANVAS_HEIGHT - 25);
+        }
         context.textAlign="left";
+
+
 
 
         var gearsX = 15;
@@ -237,9 +251,10 @@ var CANVAS_WIDTH = 800,
         if (player.neededToShift.get(6) <= 0 && player.neededToShift.get(7) > 0) {
             context.fillText(player.neededToShift.get(7), textX, textY - space * 4);
         }
-
-        points.draw(context, numRenders);
-        messager.draw(context, numRenders);
+        if (currentGameType != "demo") {
+            points.draw(context, numRenders);
+            messager.draw(context, numRenders);
+        }
 
         numRenders++;
         if (numRenders == 60) {
@@ -247,5 +262,180 @@ var CANVAS_WIDTH = 800,
         }
     }
 
-    init();
+    var endGame = function(type) {
+        if (!gameHasEnded) {
+            if (type == "lose") {
+                $("#end").addClass("active");
+            } else if (type == "win?") {
+                $("#endTwo").addClass("active");
+            }
+            gameHasEnded = true;
+
+            var bestScore = localStorage['bestscore'];
+            if (!bestScore || bestScore < player.score) {
+                localStorage['bestscore'] = player.score;
+            }
+        }
+    }
+
+    var updateDifficultyLabels = function() {
+        $("#startGear + .value").text($("#startGear").val());
+        $("#enemyStartMaxGear + .value").text($("#enemyStartMaxGear").val());
+        $("#enemySpeed + .value").text($("#enemySpeed").val());
+        $("#numEnemies + .value").text($("#numEnemies").val());
+        $("#enemySpawns + .value").text($("#enemySpawns").val());
+
+        $("#shift4 + .value").text($("#shift4").val());
+        $("#shift5 + .value").text($("#shift5").val());
+        $("#shift6 + .value").text($("#shift6").val());
+        $("#shift7 + .value").text($("#shift7").val());
+        $("#shift8 + .value").text($("#shift8").val());
+    }
+
+    updateDifficultyLabels();
+    init("demo");
+
+
+
+    $("input[type=range]").on("input change", function() {
+        $(this).siblings(".value").text($(this).val());
+        $("#customLink").addClass("active").siblings(".difficulty").removeClass("active");
+    });
+
+    $("#startGear").on("input change", function() {
+        var val = $(this).val();
+
+        if (val > 3) {
+            $("#shift4").val(0);
+            $("#shift4 + .value").text(0);
+            $("#shift4").prop('disabled', true);
+            $("#shift4").parents(".rangeChoice").slideUp();
+        } else {
+            $("#shift4").prop('disabled', false);
+            $("#shift4").parents(".rangeChoice").slideDown();
+        }
+
+        if (val > 4) {
+            $("#shift5").val(0);
+            $("#shift5 + .value").text(0);
+            $("#shift5").prop('disabled', true);
+            $("#shift5").parents(".rangeChoice").slideUp();
+        } else {
+            $("#shift5").prop('disabled', false);
+            $("#shift5").parents(".rangeChoice").slideDown();
+        }
+    });
+
+    $(".difficulty").on("click", function() {
+        $(this).addClass("active").siblings().removeClass("active");
+
+        return false;
+    });
+
+    $("#easyLink").on("click", function() {
+        $("#startGear").val(5);
+        $("#enemyStartMaxGear").val(4);
+        $("#enemySpeed").val(4);
+        $("enemySpawns").val(4);
+        $("#numEnemies").val(10);
+
+        $("#shift4").val(0);
+        $("#shift5").val(0);
+        $("#shift6").val(10);
+        $("#shift7").val(20);
+        $("#shift8").val(30);
+        updateDifficultyLabels();
+
+        return false;
+    });
+
+    $("#normalLink").on("click", function() {
+        $("#startGear").val(3);
+        $("#enemyStartMaxGear").val(4);
+        $("#enemySpeed").val(6);
+        $("enemySpawns").val(4);
+        $("#numEnemies").val(15);
+
+        $("#shift4").val(0);
+        $("#shift5").val(10);
+        $("#shift6").val(20);
+        $("#shift7").val(25);
+        $("#shift8").val(30);
+        updateDifficultyLabels();
+
+        return false;
+    });
+
+    $("#hardLink").on("click", function() {
+        $("#startGear").val(3);
+        $("#enemyStartMaxGear").val(5);
+        $("#enemySpeed").val(8);
+        $("enemySpawns").val(6);
+        $("#numEnemies").val(20);
+
+        $("#shift4").val(10);
+        $("#shift5").val(20);
+        $("#shift6").val(25);
+        $("#shift7").val(30);
+        $("#shift8").val(35);
+
+        updateDifficultyLabels();
+
+        return false;
+    });
+
+    $("#extremeLink").on("click", function() {
+        $("#startGear").val(3);
+        $("#enemyStartMaxGear").val(6);
+        $("#enemySpeed").val(15);
+        $("enemySpawns").val(15);
+        $("#numEnemies").val(30);
+
+        $("#shift4").val(15);
+        $("#shift5").val(25);
+        $("#shift6").val(30);
+        $("#shift7").val(35);
+        $("#shift8").val(40);
+        updateDifficultyLabels();
+
+        return false;
+    });
+
+    $("#customLink").on("click", function() {
+        $("#difficulty").addClass("active");
+        return false;
+    });
+
+    $("#playLink").on("click", function() {
+        $(".menu").removeClass("active");
+        init("play");
+
+        return false;
+    });
+
+    $(".tryagain").on("click", function() {
+        $(".menu").removeClass("active");
+        init("play");
+
+        return false;
+    });
+
+    $(".backtomenu").on("click", function() {
+        $(".menu").removeClass("active");
+        $("#startMenu").addClass("active");
+
+        return false;
+    });
+
+    $("#settingsLink").on("click", function() {
+        $("#settings").addClass("active").siblings(".menu").removeClass("active");
+
+        return false;
+    });
+
+    $("#aboutLink").on("click", function() {
+        $("#about").addClass("active").siblings(".menu").removeClass("active");
+
+        return false;
+    });
 }());

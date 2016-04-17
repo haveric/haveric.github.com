@@ -13,3 +13,124 @@ body {
     height: 640px;
     z-index:0;
 }
+
+.clearfix {
+    overflow: auto;
+}
+
+hr {
+    margin: 0 15px;
+}
+
+a {
+    font-size: 24px;
+    display: block;
+    text-align: center;
+    padding: 15px;
+
+    margin: 20px 0;
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    -ms-transition: all .4s ease;
+    -o-transition: all .4s ease;
+    transition: all .4s ease;
+}
+
+a:hover,
+a.active {
+    color: #ccc;
+    background: #333;
+}
+
+h1 {
+    font-size: 30px;
+    text-align: center;
+    color: #06f;
+}
+
+h2 {
+    font-size: 22px;
+    text-align: center;
+    color: #06f;
+}
+
+p {
+    padding: 0 15px;
+    color: #ccc;
+    font-size: 16px;
+    position: relative;
+}
+
+.menu {
+    visibility: hidden;
+    position: absolute;
+    background: rgba(0,0,0,.85);
+    border-radius: 15px;
+    z-index: 50;
+
+    top: 45px;
+    left: 170px;
+    width: 440px;
+    height: 500px;
+    opacity: 0;
+
+    -webkit-transition: all .6s ease;
+    -moz-transition: all .6s ease;
+    -ms-transition: all .6s ease;
+    -o-transition: all .6s ease;
+    transition: all .6s ease;
+
+    border: 1px solid rgba(100, 100, 100, 0.3);
+}
+
+#difficulty {
+    left: 620px;
+    width: 165px;
+}
+
+#difficulty h2 {
+    font-size: 18px;
+}
+
+.difficulty {
+    width: 20%;
+    float: left;
+    box-sizing:border-box;
+    padding: 15px 5px;
+    font-size: 20px;
+}
+
+.menu.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.rangeChoice {
+    display: inline-block;
+    margin: 1px;
+    position: relative;
+    width: 100%;
+}
+
+.rangeChoice label {
+    font-size: 14px;
+    color: #fff;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.rangeChoice input {
+    width: 75%;
+    margin: 0 10px;
+}
+
+.rangeChoice .value {
+    color: #fff;
+    font-size: 16px;
+    position: absolute;
+    right: 5px;
+    bottom: 1px;
+}

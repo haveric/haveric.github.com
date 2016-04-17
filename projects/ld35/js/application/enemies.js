@@ -1,26 +1,26 @@
-var Enemies = function(max, maxGear) {
+var Enemies = function(max, maxGear, speed) {
     this.maxGear = maxGear || 8;
     this.maxEnemies = max;
 
     this.enemies = [];
+    this.speed = speed;
 }
 
 Enemies.prototype.spawn = function(numLanes) {
     if (this.getNumEnemies() < this.maxEnemies) {
         var lane = getRandomInt(1, numLanes);
         var gear = getRandomInt(3, this.maxGear);
-        var speed = 6;
 
-        var enemy = this.addEnemy(numLanes, lane, gear, speed, -100);
+        var enemy = this.addEnemy(numLanes, lane, gear, this.speed, -500);
 
         var rand = getRandomInt(1, 100);
 
         if (rand > 35) {
-            this.addEnemy(numLanes, lane, gear, speed, enemy.y - 60);
+            this.addEnemy(numLanes, lane, gear, this.speed, enemy.y - 60);
         }
 
         if (rand > 65) {
-            this.addEnemy(numLanes, lane, gear, speed, enemy.y - 120);
+            this.addEnemy(numLanes, lane, gear, this.speed, enemy.y - 120);
         }
     }
 }
@@ -106,6 +106,7 @@ Enemies.prototype.checkForCollision = function(player, points, messager) {
                     }
 
                     if (numNeededToShift == 0) {
+                        messager.spawn(230, 35, "NEW SHIFT AVAILABLE!", 60);
                         if (self.maxGear < 8) {
                             self.maxGear ++;
                         }
@@ -131,7 +132,7 @@ Enemies.prototype.checkForCollision = function(player, points, messager) {
                     }
 
                     points.spawn(player.x, player.y, enemyPoints);
-                    messager.spawn(230, 35, "NEW SHIFT AVAILABLE!", 60);
+
                     soundManager.play("collect");
                 } else {
                     soundManager.play("explosion");
