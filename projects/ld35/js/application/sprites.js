@@ -86,36 +86,30 @@ spriteMapper.addImage('player-gear3-3', 'player', 144, 0, 48, 48);
 spriteMapper.addImage('player-gear3-4', 'player', 0, 48, 48, 48);
 
 spriteMapper.addImage('player-gear4-0', 'player', 0, 48, 48, 48);
-spriteMapper.addImage('player-gear4-1', 'player', 0, 48, 48, 48);
-spriteMapper.addImage('player-gear4-2', 'player', 0, 48, 48, 48);
-spriteMapper.addImage('player-gear4-3', 'player', 0, 48, 48, 48);
+spriteMapper.addImage('player-gear4-1', 'player', 48, 48, 48, 48);
+spriteMapper.addImage('player-gear4-2', 'player', 96, 48, 48, 48);
+spriteMapper.addImage('player-gear4-3', 'player', 144, 48, 48, 48);
 spriteMapper.addImage('player-gear4-4', 'player', 0, 96, 48, 48);
 
 spriteMapper.addImage('player-gear5-0', 'player', 0, 96, 48, 48);
-spriteMapper.addImage('player-gear5-1', 'player', 0, 96, 48, 48);
-spriteMapper.addImage('player-gear5-2', 'player', 0, 96, 48, 48);
-spriteMapper.addImage('player-gear5-3', 'player', 0, 96, 48, 48);
+spriteMapper.addImage('player-gear5-1', 'player', 48, 96, 48, 48);
+spriteMapper.addImage('player-gear5-2', 'player', 96, 96, 48, 48);
+spriteMapper.addImage('player-gear5-3', 'player', 144, 96, 48, 48);
 spriteMapper.addImage('player-gear5-4', 'player', 0, 144, 48, 48);
 
 spriteMapper.addImage('player-gear6-0', 'player', 0, 144, 48, 48);
-spriteMapper.addImage('player-gear6-1', 'player', 0, 144, 48, 48);
-spriteMapper.addImage('player-gear6-2', 'player', 0, 144, 48, 48);
-spriteMapper.addImage('player-gear6-3', 'player', 0, 144, 48, 48);
+spriteMapper.addImage('player-gear6-1', 'player', 48, 144, 48, 48);
+spriteMapper.addImage('player-gear6-2', 'player', 96, 144, 48, 48);
+spriteMapper.addImage('player-gear6-3', 'player', 144, 144, 48, 48);
 spriteMapper.addImage('player-gear6-4', 'player', 0, 192, 48, 48);
 
 spriteMapper.addImage('player-gear7-0', 'player', 0, 192, 48, 48);
-spriteMapper.addImage('player-gear7-1', 'player', 0, 192, 48, 48);
-spriteMapper.addImage('player-gear7-2', 'player', 0, 192, 48, 48);
-spriteMapper.addImage('player-gear7-3', 'player', 0, 192, 48, 48);
+spriteMapper.addImage('player-gear7-1', 'player', 48, 192, 48, 48);
+spriteMapper.addImage('player-gear7-2', 'player', 96, 192, 48, 48);
+spriteMapper.addImage('player-gear7-3', 'player', 144, 192, 48, 48);
 spriteMapper.addImage('player-gear7-4', 'player', 0, 240, 48, 48);
 
 spriteMapper.addImage('player-gear8-0', 'player', 0, 240, 48, 48);
 spriteMapper.addImage('player-gear8-1', 'player', 0, 240, 48, 48);
 spriteMapper.addImage('player-gear8-2', 'player', 0, 240, 48, 48);
 spriteMapper.addImage('player-gear8-3', 'player', 0, 240, 48, 48);
-spriteMapper.addImage('player-gear8-4', 'player', 0, 288, 48, 48);
-
-spriteMapper.addImage('player-gear9-0', 'player', 0, 288, 48, 48);
-spriteMapper.addImage('player-gear9-1', 'player', 0, 288, 48, 48);
-spriteMapper.addImage('player-gear9-2', 'player', 0, 288, 48, 48);
-spriteMapper.addImage('player-gear9-3', 'player', 0, 288, 48, 48);

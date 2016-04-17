@@ -7,7 +7,7 @@ var Player = function(x, y, minGear, maxGear) {
     this.maxVelocity = 5;
     this.frame = 0;
     this.minGear = minGear;
-    this.maxGear = maxGear;
+    this.maxGear = 8;//maxGear;
     this.setGear(this.minGear);
     this.setLane(3);
     this.collected = new Map();
