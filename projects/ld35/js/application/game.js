@@ -54,24 +54,12 @@ var CANVAS_WIDTH = 800,
         MainLoop.setUpdate(handleUpdate).setDraw(render).setEnd().start();
     }
 
-    var stop = function(type) {
-        MainLoop.stop();
-    }
-
     var handleUpdate = function(delta) {
         handleInput();
         handleMovement(delta);
     }
     var handleInput = function() {
         controls.checkForGamepads();
-
-        if (controls.isPressed("stop")) { // p
-            if (!controls.isDelayed("stop")) {
-                controls.deleteKey("stop", 250);
-
-                stop("menu");
-            }
-        }
 
         if (controls.isPressed("reset")) { // r
             if (!controls.isDelayed("reset")) {
