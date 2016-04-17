@@ -12,7 +12,7 @@ Enemy.prototype.move = function() {
 }
 
 Enemy.prototype.draw = function(context, frame) {
-    var sprite = "player" + "-gear" + this.gear;
+    var sprite = "player" + "-gear" + this.gear + "-0";
 
     spriteMapper.getImage(sprite).drawImage(context, this.x, this.y);
 }

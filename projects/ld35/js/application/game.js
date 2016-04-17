@@ -10,6 +10,7 @@ var CANVAS_WIDTH = 800,
         controls = new Controls(),
         track,
         enemies,
+        minGear = 3,
         maxGear = 5,
         numRenders = 0;
 
@@ -22,7 +23,7 @@ var CANVAS_WIDTH = 800,
 
         context = canvas.getContext('2d');
         track = new Track(150,0);
-        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, maxGear);
+        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, minGear, maxGear);
         enemies = new Enemies(15, maxGear);
 
         //audioBG = soundManager.play("bg",0.5, true);
