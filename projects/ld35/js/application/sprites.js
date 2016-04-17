@@ -177,3 +177,4 @@ spriteMapper.addImage('enemy-gear6-0', 'player', 0, 384, 48, 48);
 spriteMapper.addImage('enemy-gear5-0', 'player', 0, 432, 48, 48);
 spriteMapper.addImage('enemy-gear4-0', 'player', 0, 480, 48, 48);
 spriteMapper.addImage('enemy-gear3-0', 'player', 0, 528, 48, 48);
+spriteMapper.addImage('ui-select', 'player', 0, 576, 50, 50);

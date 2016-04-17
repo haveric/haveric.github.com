@@ -13,9 +13,9 @@ var Enemy = function(numLanes, lane, gear, velocity, y) {
 
 Enemy.prototype.move = function(timeDelta, player) {
     if (player.hasBlackHoleStarted) {
-        var diffX = this.x - player.x;
-        var diffY = this.y - player.y;
-        var percentX = Math.abs(diffX) / Math.abs(diffX + diffY);
+        var diffX = Math.abs(this.x - player.x);
+        var diffY = Math.abs(this.y - player.y);
+        var percentX = diffX / (diffX + diffY);
         var percentY = 1 - percentX;
 
         if (this.x > player.x) {

@@ -9,6 +9,7 @@ var CANVAS_WIDTH = 800,
         controls = new Controls(),
         track,
         enemies,
+        points,
         minGear = 3,
         maxGear = 3,
         enemyMaxGear = 4;
@@ -24,6 +25,7 @@ var CANVAS_WIDTH = 800,
         canvas.setAttribute("height", CANVAS_HEIGHT);
 
         context = canvas.getContext('2d');
+        points = new Points();
         track = new Track(5);
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, minGear, maxGear, track.numLanes);
 
@@ -147,18 +149,19 @@ var CANVAS_WIDTH = 800,
             enemies.spawn(track.numLanes);
         }
 
+        points.move(delta, player);
         enemies.move(delta, player);
         player.move(delta);
 
         if (player.isDying) {
-            if (player.gear < 8 && player.frame == 6) {
-                stop();
+            if (player.gear < 8 && player.frame == 6 && points.getTotal() == 0) {
+                //stop();
             } else if (player.gear == 8 && player.frame > 6 && !player.hasBlackHoleStarted) {
                 player.hasBlackHoleStarted = true;
                 player.velocity = 0;
             }
         } else if (!player.isDying) {
-            var death = enemies.checkForCollision(player);
+            var death = enemies.checkForCollision(player, points);
             if (death) {
                 player.x -= 8;
                 player.y -= 8;
@@ -173,7 +176,7 @@ var CANVAS_WIDTH = 800,
             prerenderSprites();
         }
 
-        if (numRenders == 0) {
+        if (numRenders == 0 && !player.isDying) {
             player.score += 1;
         }
 
@@ -189,6 +192,8 @@ var CANVAS_WIDTH = 800,
         context.fillText("Score", 50, CANVAS_HEIGHT - 50);
         context.textAlign="center";
         context.fillText(player.score, 80, CANVAS_HEIGHT - 25);
+        context.textAlign="left";
+
 
         var gearsX = 15;
         var gearsY = 380;
@@ -210,8 +215,10 @@ var CANVAS_WIDTH = 800,
             spriteMapper.getImage("player-gear8-0").drawImage(context, gearsX, gearsY - space * 5);
         }
 
-        var textX = gearsX + 55;
-        var textY = gearsY + 30;
+        spriteMapper.getImage("ui-select").drawImage(context, gearsX-1, gearsY - space * (player.gear - 3));
+
+        var textX = gearsX + 65;
+        var textY = gearsY + 32;
         if (player.neededToShift.get(3) > 0) {
             context.fillText(player.neededToShift.get(3), textX, textY);
         }
@@ -228,7 +235,7 @@ var CANVAS_WIDTH = 800,
             context.fillText(player.neededToShift.get(7), textX, textY - space * 4);
         }
 
-
+        points.draw(context, numRenders);
 
         numRenders++;
         if (numRenders == 60) {
