@@ -11,8 +11,27 @@ var Enemy = function(numLanes, lane, gear, velocity, y) {
     this.gear = gear;
 }
 
-Enemy.prototype.move = function(timeDelta) {
-    this.y += timeDelta * this.velocity;
+Enemy.prototype.move = function(timeDelta, player) {
+    if (player.hasBlackHoleStarted) {
+        var diffX = this.x - player.x;
+        var diffY = this.y - player.y;
+        var percentX = Math.abs(diffX) / Math.abs(diffX + diffY);
+        var percentY = 1 - percentX;
+
+        if (this.x > player.x) {
+            this.x -= percentX * this.velocity;
+        } else {
+            this.x += percentX * this.velocity;
+        }
+
+        if (this.y < player.y) {
+            this.y += percentY * this.velocity;
+        } else {
+            this.y -= percentY * this.velocity;
+        }
+    } else {
+        this.y += timeDelta * this.velocity;
+    }
 }
 
 Enemy.prototype.draw = function(context, frame) {

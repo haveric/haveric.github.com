@@ -55,7 +55,7 @@ Enemies.prototype.getNumEnemies = function() {
     return this.enemies.length;
 }
 
-Enemies.prototype.move = function(delta) {
+Enemies.prototype.move = function(delta, player) {
     var self = this;
 
     var normalDelta = 1000 / 60;
@@ -63,11 +63,21 @@ Enemies.prototype.move = function(delta) {
 
     var realIndex = 0;
     self.enemies.forEach(function(enemy, index) {
-        enemy.move(timeDelta);
+        enemy.move(timeDelta, player);
 
-        if (enemy.y > CANVAS_HEIGHT + 100) {
-            self.enemies.splice(realIndex, 1);
-            realIndex --;
+        if (player.hasBlackHoleStarted) {
+            var offset = 20;
+            if (enemy.y+48-offset > player.y && player.y + 48-offset > enemy.y) {
+                if (enemy.x+48-offset > player.x && player.x + 48-offset > enemy.x) {
+                    self.enemies.splice(realIndex, 1);
+                    realIndex --;
+                }
+            }
+        } else {
+            if (enemy.y > CANVAS_HEIGHT + 100) {
+                self.enemies.splice(realIndex, 1);
+                realIndex --;
+            }
         }
 
         realIndex ++;

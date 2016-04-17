@@ -10,6 +10,7 @@ var Player = function(x, y, minGear, maxGear, numLanes) {
     this.maxGear = 8;//maxGear;
     this.setGear(this.minGear);
     this.numLanes = numLanes;
+    this.angle = 0;
     if (numLanes == 3) {
         this.setLane(2);
     } else {
@@ -24,6 +25,7 @@ var Player = function(x, y, minGear, maxGear, numLanes) {
     this.shiftingUp = false;
     this.shiftingDown = false;
     this.isDying = false;
+    this.hasBlackHoleStarted = false;
 }
 
 Player.prototype.moveUp = function() {
@@ -91,9 +93,22 @@ Player.prototype.draw = function(context, frame) {
     var displayGear = this.gear;
     var sprite;
     if (this.isDying) {
+        if (this.gear == 8) {
+            this.angle += 2;
+
+            if (this.angle > 360) {
+                this.angle -= 360;
+            }
+        }
         if (frame % 5 == 0) {
-            if (this.frame < 6) {
+            if (this.gear < 8 && this.frame < 6) {
                 this.frame ++;
+            } else if (this.gear == 8) {
+                if (this.frame < 11) {
+                    this.frame ++;
+                } else {
+                    this.frame = 6;
+                }
             }
         }
         sprite = "player" + "-gear" + displayGear + "-death" + this.frame;
@@ -122,7 +137,7 @@ Player.prototype.draw = function(context, frame) {
         sprite = "player" + "-gear" + displayGear + "-" + this.frame;
     }
 
-    spriteMapper.getImage(sprite).drawImage(context, this.x, this.y);
+    spriteMapper.getImage(sprite).drawImage(context, this.x, this.y, this.angle);
 }
 
 Player.prototype.setSpeeds = function(speed, minVelocity, maxVelocity) {

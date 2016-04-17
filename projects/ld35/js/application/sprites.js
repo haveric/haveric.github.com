@@ -164,7 +164,12 @@ spriteMapper.addImage('player-gear8-death2', 'player', 368, 320, 64, 64);
 spriteMapper.addImage('player-gear8-death3', 'player', 432, 320, 64, 64);
 spriteMapper.addImage('player-gear8-death4', 'player', 496, 320, 64, 64);
 spriteMapper.addImage('player-gear8-death5', 'player', 560, 320, 64, 64);
-spriteMapper.addImage('player-gear8-death6', 'player', 560, 560, 64, 64);
+spriteMapper.addImage('player-gear8-death6', 'player', 240, 384, 64, 64);
+spriteMapper.addImage('player-gear8-death7', 'player', 304, 384, 64, 64);
+spriteMapper.addImage('player-gear8-death8', 'player', 368, 384, 64, 64);
+spriteMapper.addImage('player-gear8-death9', 'player', 432, 384, 64, 64);
+spriteMapper.addImage('player-gear8-death10', 'player', 496, 384, 64, 64);
+spriteMapper.addImage('player-gear8-death11', 'player', 560, 384, 64, 64);
 
 spriteMapper.addImage('enemy-gear8-0', 'player', 0, 288, 48, 48);
 spriteMapper.addImage('enemy-gear7-0', 'player', 0, 336, 48, 48);

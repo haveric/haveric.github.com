@@ -130,11 +130,16 @@ var CANVAS_WIDTH = 800,
             enemies.spawn(track.numLanes);
         }
 
-        enemies.move(delta);
+        enemies.move(delta, player);
         player.move(delta);
 
-        if (player.isDying && player.frame == 6) {
-            stop();
+        if (player.isDying) {
+            if (player.gear < 8 && player.frame == 6) {
+                stop();
+            } else if (player.gear == 8 && player.frame > 6 && !player.hasBlackHoleStarted) {
+                player.hasBlackHoleStarted = true;
+                player.velocity = 0;
+            }
         } else if (!player.isDying) {
             var death = enemies.checkForCollision(player);
             if (death) {
