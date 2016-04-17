@@ -11,7 +11,8 @@ var CANVAS_WIDTH = 800,
         track,
         enemies,
         minGear = 3,
-        maxGear = 5,
+        maxGear = 3,
+        enemyMaxGear = 4;
         numRenders = 0,
         spritesRendered = false;
 
@@ -25,7 +26,22 @@ var CANVAS_WIDTH = 800,
         context = canvas.getContext('2d');
         track = new Track(5);
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, minGear, maxGear, track.numLanes);
-        enemies = new Enemies(15, maxGear);
+        /*
+        // Test data
+        player.setNeededToShift(3, 1);
+        player.setNeededToShift(4, 1);
+        player.setNeededToShift(5, 1);
+        player.setNeededToShift(6, 1);
+        player.setNeededToShift(7, 1);
+        */
+
+        player.setNeededToShift(3, 10);
+        player.setNeededToShift(4, 15);
+        player.setNeededToShift(5, 20);
+        player.setNeededToShift(6, 25);
+        player.setNeededToShift(7, 30);
+        
+        enemies = new Enemies(15, enemyMaxGear);
 
         //audioBG = soundManager.play("bg",0.5, true);
 
@@ -167,12 +183,44 @@ var CANVAS_WIDTH = 800,
         context.font = '18px "Lucida Console", Monaco, monospace';
         context.fillText("Gear: " + player.gear, 20, CANVAS_HEIGHT - 50);
         context.fillText("Speed: " + Math.abs(Math.round(player.velocity * 12)), 20, CANVAS_HEIGHT - 25);
-        context.fillText(player.collected.get(3), 20, 40);
-        context.fillText(player.collected.get(4), 20, 60);
-        context.fillText(player.collected.get(5), 20, 80);
-        context.fillText(player.collected.get(6), 20, 100);
-        context.fillText(player.collected.get(7), 20, 120);
-        context.fillText(player.collected.get(8), 20, 140);
+
+        var gearsX = 5;
+        var gearsY = 40;
+        var space = 60;
+        spriteMapper.getImage("player-gear3-0").drawImage(context, gearsX, gearsY);
+        if (player.neededToShift.get(3) <= 0) {
+            spriteMapper.getImage("player-gear4-0").drawImage(context, gearsX, gearsY + space);
+        }
+        if (player.neededToShift.get(4) <= 0) {
+            spriteMapper.getImage("player-gear5-0").drawImage(context, gearsX, gearsY + space * 2);
+        }
+        if (player.neededToShift.get(5) <= 0) {
+            spriteMapper.getImage("player-gear6-0").drawImage(context, gearsX, gearsY + space * 3);
+        }
+        if (player.neededToShift.get(6) <= 0) {
+            spriteMapper.getImage("player-gear7-0").drawImage(context, gearsX, gearsY + space * 4);
+        }
+        if (player.neededToShift.get(7) <= 0) {
+            spriteMapper.getImage("player-gear8-0").drawImage(context, gearsX, gearsY + space * 5);
+        }
+
+        var textX = gearsX + 55;
+        var textY = gearsY + 30;
+        if (player.neededToShift.get(3) > 0) {
+            context.fillText(player.neededToShift.get(3), textX, textY);
+        }
+        if (player.neededToShift.get(3) <= 0 && player.neededToShift.get(4) > 0) {
+            context.fillText(player.neededToShift.get(4), textX, textY + space);
+        }
+        if (player.neededToShift.get(4) <= 0 && player.neededToShift.get(5) > 0) {
+            context.fillText(player.neededToShift.get(5), textX, textY + space * 2);
+        }
+        if (player.neededToShift.get(5) <= 0 && player.neededToShift.get(6) > 0) {
+            context.fillText(player.neededToShift.get(6), textX, textY + space * 3);
+        }
+        if (player.neededToShift.get(6) <= 0 && player.neededToShift.get(7) > 0) {
+            context.fillText(player.neededToShift.get(7), textX, textY + space * 4);
+        }
 
         numRenders++;
         if (numRenders == 60) {

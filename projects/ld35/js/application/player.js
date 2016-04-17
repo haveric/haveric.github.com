@@ -7,7 +7,7 @@ var Player = function(x, y, minGear, maxGear, numLanes) {
     this.maxVelocity = 5;
     this.frame = 0;
     this.minGear = minGear;
-    this.maxGear = 8;//maxGear;
+    this.maxGear = maxGear;
     this.setGear(this.minGear);
     this.numLanes = numLanes;
     this.angle = 0;
@@ -22,10 +22,19 @@ var Player = function(x, y, minGear, maxGear, numLanes) {
         this.collected.set(i, 0);
     }
 
+    this.neededToShift = new Map();
+    for (var i = 3; i <= 7; i++) {
+        this.neededToShift.set(i, 0);
+    }
+
     this.shiftingUp = false;
     this.shiftingDown = false;
     this.isDying = false;
     this.hasBlackHoleStarted = false;
+}
+
+Player.prototype.setNeededToShift = function(gear, value) {
+    this.neededToShift.set(gear, value);
 }
 
 Player.prototype.moveUp = function() {

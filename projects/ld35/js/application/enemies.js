@@ -14,6 +14,7 @@ Enemies.prototype.spawn = function(numLanes) {
         var enemy = this.addEnemy(numLanes, lane, gear, speed, -100);
 
         var rand = getRandomInt(1, 100);
+
         if (rand > 35) {
             this.addEnemy(numLanes, lane, gear, speed, enemy.y - 60);
         }
@@ -96,8 +97,24 @@ Enemies.prototype.checkForCollision = function(player) {
                 if (enemy.gear == player.gear) {
                     self.enemies.splice(realIndex, 1);
                     realIndex --;
-                    var numCollected = player.collected.get(enemy.gear) || 0;
+                    var numCollected = player.collected.get(enemy.gear);
                     player.collected.set(enemy.gear, numCollected + 1);
+
+                    var numNeededToShift = player.neededToShift.get(enemy.gear);
+                    if (numNeededToShift > 0) {
+                        numNeededToShift --;
+                        player.neededToShift.set(enemy.gear, numNeededToShift);
+                    }
+
+                    if (numNeededToShift == 0) {
+                        if (self.maxGear < 8) {
+                            self.maxGear ++;
+                        }
+                        if (player.maxGear < 8) {
+                            player.maxGear ++;
+                        }
+                        player.neededToShift.set(enemy.gear, numNeededToShift - 1);
+                    }
                     soundManager.play("collect");
                 } else {
                     soundManager.play("explosion");
