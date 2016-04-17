@@ -90,7 +90,6 @@ Enemies.prototype.checkForCollision = function(player) {
                     player.collected.set(enemy.gear, numCollected + 1);
                     soundManager.play("collect");
                 } else {
-
                     soundManager.play("explosion");
                     isDead = true;
                 }

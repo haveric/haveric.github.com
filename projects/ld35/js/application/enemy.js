@@ -16,7 +16,7 @@ Enemy.prototype.move = function(timeDelta) {
 }
 
 Enemy.prototype.draw = function(context, frame) {
-    var sprite = "player" + "-gear" + this.gear + "-0";
+    var sprite = "enemy" + "-gear" + this.gear + "-0";
 
     spriteMapper.getImage(sprite).drawImage(context, this.x, this.y);
 }

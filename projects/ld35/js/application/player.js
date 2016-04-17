@@ -23,6 +23,7 @@ var Player = function(x, y, minGear, maxGear, numLanes) {
 
     this.shiftingUp = false;
     this.shiftingDown = false;
+    this.isDying = false;
 }
 
 Player.prototype.moveUp = function() {
@@ -56,10 +57,14 @@ Player.prototype.moveRight = function() {
 }
 
 Player.prototype.move = function(delta) {
+    var mod = 0;
+    if (this.isDying) {
+        mod = -8;
+    }
     if (this.numLanes == 3) {
-        this.x = 175 + this.lane * 100;
+        this.x = 175 + this.lane * 100 + mod;
     } else {
-        this.x = 75 + this.lane * 100;
+        this.x = 75 + this.lane * 100 + mod;
     }
 
     if (this.velocity < -this.maxVelocity) {
@@ -84,32 +89,38 @@ Player.prototype.getY = function() {
 
 Player.prototype.draw = function(context, frame) {
     var displayGear = this.gear;
-
-    if (frame % 3 == 0) {
-        if (this.shiftingUp) {
-            if (this.frame < 3) {
+    var sprite;
+    if (this.isDying) {
+        if (frame % 5 == 0) {
+            if (this.frame < 6) {
                 this.frame ++;
-            } else {
-                this.frame = 0;
-                this.shiftingUp = false;
-            }
-        } else if (this.shiftingDown) {
-            if (this.frame > 0) {
-                this.frame --;
-            } else {
-                this.frame = 0;
-                this.shiftingDown = false;
             }
         }
-    }
+        sprite = "player" + "-gear" + displayGear + "-death" + this.frame;
+    } else {
+        if (frame % 3 == 0) {
+            if (this.shiftingUp) {
+                if (this.frame < 3) {
+                    this.frame ++;
+                } else {
+                    this.frame = 0;
+                    this.shiftingUp = false;
+                }
+            } else if (this.shiftingDown) {
+                if (this.frame > 0) {
+                    this.frame --;
+                } else {
+                    this.frame = 0;
+                    this.shiftingDown = false;
+                }
+            }
+        }
 
-    if (this.shiftingUp) {
-        displayGear -= 1;
-    } else if (this.shiftingDown) {
-        //displayGear += 1;
+        if (this.shiftingUp) {
+            displayGear -= 1;
+        }
+        sprite = "player" + "-gear" + displayGear + "-" + this.frame;
     }
-
-    var sprite = "player" + "-gear" + displayGear + "-" + this.frame;
 
     spriteMapper.getImage(sprite).drawImage(context, this.x, this.y);
 }

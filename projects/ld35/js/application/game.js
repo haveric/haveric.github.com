@@ -59,48 +59,50 @@ var CANVAS_WIDTH = 800,
             }
         }
 
-        if (controls.isPressed("shiftUp")) { //A
-            if (!controls.isDelayed("shiftUp")) {
-                player.shiftUp();
-                controls.deleteKey("shiftUp", 100);
-            }
-        } else if (controls.isPressed("shiftDown")) { //Z
-            if (!controls.isDelayed("shiftDown")) {
-                player.shiftDown();
-                controls.deleteKey("shiftDown", 100);
-            }
-        }
-
-        if (controls.isPressed("up")) { // Player holding up
-            player.moveUp();
-        } else if (controls.isPressed("down")) { // Player holding down
-            player.moveDown();
-        } else {
-            if (player.velocity != 0) {
-                if (Math.abs(player.velocity) - .5 > 0) {
-                    player.velocity *= .95;
-                } else {
-                    player.velocity *= .75;
+        if (!player.isDying) {
+            if (controls.isPressed("shiftUp")) { //A
+                if (!controls.isDelayed("shiftUp")) {
+                    player.shiftUp();
+                    controls.deleteKey("shiftUp", 100);
                 }
-
-
-                if (player.velocity <= .01 && player.velocity >= -.01) {
-                    player.velocity = 0;
+            } else if (controls.isPressed("shiftDown")) { //Z
+                if (!controls.isDelayed("shiftDown")) {
+                    player.shiftDown();
+                    controls.deleteKey("shiftDown", 100);
                 }
             }
-        }
 
-        if (controls.isPressed("left")) { // Player holding left
-            if (!controls.isDelayed("left")) {
-                player.moveLeft();
+            if (controls.isPressed("up")) { // Player holding up
+                player.moveUp();
+            } else if (controls.isPressed("down")) { // Player holding down
+                player.moveDown();
+            } else {
+                if (player.velocity != 0) {
+                    if (Math.abs(player.velocity) - .5 > 0) {
+                        player.velocity *= .95;
+                    } else {
+                        player.velocity *= .75;
+                    }
 
-                controls.deleteKey("left", 100);
+
+                    if (player.velocity <= .01 && player.velocity >= -.01) {
+                        player.velocity = 0;
+                    }
+                }
             }
-        } else if (controls.isPressed("right")) { // Player holding right
-            if (!controls.isDelayed("right")) {
-                player.moveRight();
 
-                controls.deleteKey("right", 100);
+            if (controls.isPressed("left")) { // Player holding left
+                if (!controls.isDelayed("left")) {
+                    player.moveLeft();
+
+                    controls.deleteKey("left", 100);
+                }
+            } else if (controls.isPressed("right")) { // Player holding right
+                if (!controls.isDelayed("right")) {
+                    player.moveRight();
+
+                    controls.deleteKey("right", 100);
+                }
             }
         }
     }
@@ -131,9 +133,16 @@ var CANVAS_WIDTH = 800,
         enemies.move(delta);
         player.move(delta);
 
-        var death = enemies.checkForCollision(player);
-        if (death) {
+        if (player.isDying && player.frame == 6) {
             stop();
+        } else if (!player.isDying) {
+            var death = enemies.checkForCollision(player);
+            if (death) {
+                player.x -= 8;
+                player.y -= 8;
+                player.frame = 0;
+                player.isDying = true;
+            }
         }
     }
 
