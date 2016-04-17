@@ -1,5 +1,9 @@
-var Enemy = function(lane, gear, velocity, y) {
-    this.x = 75 + lane * 100;
+var Enemy = function(numLanes, lane, gear, velocity, y) {
+    if (numLanes == 3) {
+        this.x = 175 + lane * 100;
+    } else {
+        this.x = 75 + lane * 100;
+    }
     this.y = y || -100;
     this.velocity = velocity;
 

@@ -1,4 +1,4 @@
-var Player = function(x, y, minGear, maxGear) {
+var Player = function(x, y, minGear, maxGear, numLanes) {
     this.x = x;
     this.y = y;
     this.velocity = 0;
@@ -9,7 +9,13 @@ var Player = function(x, y, minGear, maxGear) {
     this.minGear = minGear;
     this.maxGear = 8;//maxGear;
     this.setGear(this.minGear);
-    this.setLane(3);
+    this.numLanes = numLanes;
+    if (numLanes == 3) {
+        this.setLane(2);
+    } else {
+        this.setLane(3);
+    }
+
     this.collected = new Map();
     for (var i = 3; i <= 8; i++) {
         this.collected.set(i, 0);
@@ -50,7 +56,11 @@ Player.prototype.moveRight = function() {
 }
 
 Player.prototype.move = function(delta) {
-    this.x = 75 + this.lane * 100;
+    if (this.numLanes == 3) {
+        this.x = 175 + this.lane * 100;
+    } else {
+        this.x = 75 + this.lane * 100;
+    }
 
     if (this.velocity < -this.maxVelocity) {
         this.velocity = -this.maxVelocity;
@@ -132,7 +142,7 @@ Player.prototype.shiftDown = function() {
 }
 
 Player.prototype.setLane = function(lane) {
-    if (lane >= 1 && lane <= 5) {
+    if (lane >= 1 && lane <= this.numLanes) {
         this.lane = lane;
     }
 }

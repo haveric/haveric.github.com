@@ -23,8 +23,8 @@ var CANVAS_WIDTH = 800,
         canvas.setAttribute("height", CANVAS_HEIGHT);
 
         context = canvas.getContext('2d');
-        track = new Track(150,0);
-        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, minGear, maxGear);
+        track = new Track(5);
+        player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, minGear, maxGear, track.numLanes);
         enemies = new Enemies(15, maxGear);
 
         //audioBG = soundManager.play("bg",0.5, true);
@@ -125,7 +125,7 @@ var CANVAS_WIDTH = 800,
     var handleMovement = function(delta) {
         var spawnsPerSecond = 4;
         if (numRenders % (60 / spawnsPerSecond) == 0) {
-            enemies.spawn();
+            enemies.spawn(track.numLanes);
         }
 
         enemies.move(delta);

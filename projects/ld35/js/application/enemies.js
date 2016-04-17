@@ -5,33 +5,33 @@ var Enemies = function(max, maxGear) {
     this.enemies = [];
 }
 
-Enemies.prototype.spawn = function() {
+Enemies.prototype.spawn = function(numLanes) {
     if (this.getNumEnemies() < this.maxEnemies) {
-        var lane = getRandomInt(1, 5);
+        var lane = getRandomInt(1, numLanes);
         var gear = getRandomInt(3, this.maxGear);
         var speed = 6;
 
-        var enemy = this.addEnemy(lane, gear, speed, -100);
+        var enemy = this.addEnemy(numLanes, lane, gear, speed, -100);
 
         var rand = getRandomInt(1, 100);
         if (rand > 35) {
-            this.addEnemy(lane, gear, speed, enemy.y - 60);
+            this.addEnemy(numLanes, lane, gear, speed, enemy.y - 60);
         }
 
         if (rand > 65) {
-            this.addEnemy(lane, gear, speed, enemy.y - 120);
+            this.addEnemy(numLanes, lane, gear, speed, enemy.y - 120);
         }
     }
 }
 
-Enemies.prototype.addEnemy = function(lane, gear, speed, y) {
+Enemies.prototype.addEnemy = function(numLanes, lane, gear, speed, y) {
     var lastYForLane = this.getLastYForLane(lane);
 
     if (y > lastYForLane - 60) {
         y = lastYForLane + y;
     }
 
-    var enemy = new Enemy(lane, gear, speed, y);
+    var enemy = new Enemy(numLanes, lane, gear, speed, y);
     this.enemies[this.enemies.length] = enemy;
 
     return enemy;
