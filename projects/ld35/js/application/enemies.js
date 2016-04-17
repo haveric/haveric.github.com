@@ -55,12 +55,15 @@ Enemies.prototype.getNumEnemies = function() {
     return this.enemies.length;
 }
 
-Enemies.prototype.move = function() {
+Enemies.prototype.move = function(delta) {
     var self = this;
+
+    var normalDelta = 1000 / 60;
+    var timeDelta = delta / normalDelta;
 
     var realIndex = 0;
     self.enemies.forEach(function(enemy, index) {
-        enemy.move();
+        enemy.move(timeDelta);
 
         if (enemy.y > CANVAS_HEIGHT + 100) {
             self.enemies.splice(realIndex, 1);

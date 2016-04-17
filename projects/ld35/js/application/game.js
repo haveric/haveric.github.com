@@ -29,10 +29,7 @@ var CANVAS_WIDTH = 800,
 
         //audioBG = soundManager.play("bg",0.5, true);
 
-        MainLoop.setUpdate(function() {
-            handleMenuInput();
-            handleInput();
-        }).setDraw(render).setEnd(handleMenuInput()).start();
+        MainLoop.setUpdate(handleUpdate).setDraw(render).setEnd().start();
     }
 
     var stop = function(type) {
@@ -40,7 +37,11 @@ var CANVAS_WIDTH = 800,
         //audioBG.pause();
     }
 
-    var handleMenuInput = function() {
+    var handleUpdate = function(delta) {
+        handleInput();
+        handleMovement(delta);
+    }
+    var handleInput = function() {
         controls.checkForGamepads();
 
         if (controls.isPressed("stop")) { // p
@@ -57,9 +58,7 @@ var CANVAS_WIDTH = 800,
                 init();
             }
         }
-    }
 
-    var handleInput = function() {
         if (controls.isPressed("shiftUp")) { //A
             if (!controls.isDelayed("shiftUp")) {
                 player.shiftUp();
@@ -123,6 +122,20 @@ var CANVAS_WIDTH = 800,
         }
     }
 
+    var handleMovement = function(delta) {
+        var spawnsPerSecond = 4;
+        if (numRenders % (60 / spawnsPerSecond) == 0) {
+            enemies.spawn();
+        }
+
+        enemies.move(delta);
+        player.move(delta);
+
+        var death = enemies.checkForCollision(player);
+        if (death) {
+            stop();
+        }
+    }
 
     var render = function(){
         if (!spritesRendered) {
@@ -131,20 +144,6 @@ var CANVAS_WIDTH = 800,
         }
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
-
-        var spawnsPerSecond = 4;
-        if (numRenders % (60 / spawnsPerSecond) == 0) {
-            enemies.spawn();
-        }
-
-        enemies.move();
-        player.move();
-
-        var death = enemies.checkForCollision(player);
-        if (death) {
-            stop();
-        }
-
 
         track.draw(context, numRenders);
         enemies.draw(context, numRenders);

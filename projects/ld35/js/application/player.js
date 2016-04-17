@@ -49,7 +49,7 @@ Player.prototype.moveRight = function() {
     this.setLane(this.lane + 1);
 }
 
-Player.prototype.move = function() {
+Player.prototype.move = function(delta) {
     this.x = 75 + this.lane * 100;
 
     if (this.velocity < -this.maxVelocity) {
@@ -57,7 +57,11 @@ Player.prototype.move = function() {
     } else if (this.velocity > this.maxVelocity) {
         this.velocity = this.maxVelocity;
     }
-    this.y += this.velocity;
+
+    var normalDelta = 1000 / 60;
+    var timeDelta = delta / normalDelta;
+
+    this.y += timeDelta * this.velocity;
 }
 
 Player.prototype.getX = function() {

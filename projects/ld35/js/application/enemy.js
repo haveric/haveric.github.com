@@ -7,8 +7,8 @@ var Enemy = function(lane, gear, velocity, y) {
     this.gear = gear;
 }
 
-Enemy.prototype.move = function() {
-    this.y += this.velocity;
+Enemy.prototype.move = function(timeDelta) {
+    this.y += timeDelta * this.velocity;
 }
 
 Enemy.prototype.draw = function(context, frame) {
