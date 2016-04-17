@@ -87,7 +87,6 @@ Enemies.prototype.move = function(delta, player) {
 
 Enemies.prototype.checkForCollision = function(player) {
     var self = this;
-
     var realIndex = 0;
     var isDead = false;
     self.enemies.forEach(function(enemy, index) {
@@ -115,6 +114,22 @@ Enemies.prototype.checkForCollision = function(player) {
                         }
                         player.neededToShift.set(enemy.gear, numNeededToShift - 1);
                     }
+
+                    if (enemy.gear == 3) {
+                        player.score += 5;
+                    } else if (enemy.gear == 4) {
+                        player.score += 20;
+                    } else if (enemy.gear == 5) {
+                        player.score += 50;
+                    } else if (enemy.gear == 6) {
+                        player.score += 100;
+                    } else if (enemy.gear == 7) {
+                        player.score += 250;
+                    } else if (enemy.gear == 8) {
+                        player.score += 750;
+                    }
+
+
                     soundManager.play("collect");
                 } else {
                     soundManager.play("explosion");

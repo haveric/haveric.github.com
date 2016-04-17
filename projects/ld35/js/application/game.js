@@ -1,7 +1,6 @@
 var CANVAS_WIDTH = 800,
     CANVAS_HEIGHT = 640;
 
-
 (function () {
     var canvas,
         context;
@@ -14,7 +13,8 @@ var CANVAS_WIDTH = 800,
         maxGear = 3,
         enemyMaxGear = 4;
         numRenders = 0,
-        spritesRendered = false;
+        spritesRendered = false,
+        debug = true;
 
     //var audioBG;
 
@@ -26,21 +26,22 @@ var CANVAS_WIDTH = 800,
         context = canvas.getContext('2d');
         track = new Track(5);
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, minGear, maxGear, track.numLanes);
-        /*
-        // Test data
-        player.setNeededToShift(3, 1);
-        player.setNeededToShift(4, 1);
-        player.setNeededToShift(5, 1);
-        player.setNeededToShift(6, 1);
-        player.setNeededToShift(7, 1);
-        */
 
-        player.setNeededToShift(3, 10);
-        player.setNeededToShift(4, 15);
-        player.setNeededToShift(5, 20);
-        player.setNeededToShift(6, 25);
-        player.setNeededToShift(7, 30);
-        
+        // Test data
+        if (debug) {
+            player.setNeededToShift(3, 1);
+            player.setNeededToShift(4, 1);
+            player.setNeededToShift(5, 1);
+            player.setNeededToShift(6, 1);
+            player.setNeededToShift(7, 1);
+        } else {
+            player.setNeededToShift(3, 10);
+            player.setNeededToShift(4, 15);
+            player.setNeededToShift(5, 20);
+            player.setNeededToShift(6, 25);
+            player.setNeededToShift(7, 30);
+        }
+
         enemies = new Enemies(15, enemyMaxGear);
 
         //audioBG = soundManager.play("bg",0.5, true);
@@ -170,38 +171,43 @@ var CANVAS_WIDTH = 800,
     var render = function(){
         if (!spritesRendered) {
             prerenderSprites();
-
         }
+
+        if (numRenders == 0) {
+            player.score += 1;
+        }
+
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
-
+        context.textAlign="left";
         track.draw(context, numRenders);
         enemies.draw(context, numRenders);
         player.draw(context, numRenders);
 
         context.fillStyle="#ffffff";
         context.font = '18px "Lucida Console", Monaco, monospace';
-        context.fillText("Gear: " + player.gear, 20, CANVAS_HEIGHT - 50);
-        context.fillText("Speed: " + Math.abs(Math.round(player.velocity * 12)), 20, CANVAS_HEIGHT - 25);
+        context.fillText("Score", 50, CANVAS_HEIGHT - 50);
+        context.textAlign="center";
+        context.fillText(player.score, 80, CANVAS_HEIGHT - 25);
 
-        var gearsX = 5;
-        var gearsY = 40;
+        var gearsX = 15;
+        var gearsY = 380;
         var space = 60;
         spriteMapper.getImage("player-gear3-0").drawImage(context, gearsX, gearsY);
         if (player.neededToShift.get(3) <= 0) {
-            spriteMapper.getImage("player-gear4-0").drawImage(context, gearsX, gearsY + space);
+            spriteMapper.getImage("player-gear4-0").drawImage(context, gearsX, gearsY - space);
         }
         if (player.neededToShift.get(4) <= 0) {
-            spriteMapper.getImage("player-gear5-0").drawImage(context, gearsX, gearsY + space * 2);
+            spriteMapper.getImage("player-gear5-0").drawImage(context, gearsX, gearsY - space * 2);
         }
         if (player.neededToShift.get(5) <= 0) {
-            spriteMapper.getImage("player-gear6-0").drawImage(context, gearsX, gearsY + space * 3);
+            spriteMapper.getImage("player-gear6-0").drawImage(context, gearsX, gearsY - space * 3);
         }
         if (player.neededToShift.get(6) <= 0) {
-            spriteMapper.getImage("player-gear7-0").drawImage(context, gearsX, gearsY + space * 4);
+            spriteMapper.getImage("player-gear7-0").drawImage(context, gearsX, gearsY - space * 4);
         }
         if (player.neededToShift.get(7) <= 0) {
-            spriteMapper.getImage("player-gear8-0").drawImage(context, gearsX, gearsY + space * 5);
+            spriteMapper.getImage("player-gear8-0").drawImage(context, gearsX, gearsY - space * 5);
         }
 
         var textX = gearsX + 55;
@@ -210,17 +216,19 @@ var CANVAS_WIDTH = 800,
             context.fillText(player.neededToShift.get(3), textX, textY);
         }
         if (player.neededToShift.get(3) <= 0 && player.neededToShift.get(4) > 0) {
-            context.fillText(player.neededToShift.get(4), textX, textY + space);
+            context.fillText(player.neededToShift.get(4), textX, textY - space);
         }
         if (player.neededToShift.get(4) <= 0 && player.neededToShift.get(5) > 0) {
-            context.fillText(player.neededToShift.get(5), textX, textY + space * 2);
+            context.fillText(player.neededToShift.get(5), textX, textY - space * 2);
         }
         if (player.neededToShift.get(5) <= 0 && player.neededToShift.get(6) > 0) {
-            context.fillText(player.neededToShift.get(6), textX, textY + space * 3);
+            context.fillText(player.neededToShift.get(6), textX, textY - space * 3);
         }
         if (player.neededToShift.get(6) <= 0 && player.neededToShift.get(7) > 0) {
-            context.fillText(player.neededToShift.get(7), textX, textY + space * 4);
+            context.fillText(player.neededToShift.get(7), textX, textY - space * 4);
         }
+
+
 
         numRenders++;
         if (numRenders == 60) {

@@ -31,6 +31,7 @@ var Player = function(x, y, minGear, maxGear, numLanes) {
     this.shiftingDown = false;
     this.isDying = false;
     this.hasBlackHoleStarted = false;
+    this.score = 0;
 }
 
 Player.prototype.setNeededToShift = function(gear, value) {
