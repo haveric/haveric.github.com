@@ -85,7 +85,7 @@ Enemies.prototype.move = function(delta, player) {
     });
 }
 
-Enemies.prototype.checkForCollision = function(player, points) {
+Enemies.prototype.checkForCollision = function(player, points, messager) {
     var self = this;
     var realIndex = 0;
     var isDead = false;
@@ -131,7 +131,7 @@ Enemies.prototype.checkForCollision = function(player, points) {
                     }
 
                     points.spawn(player.x, player.y, enemyPoints);
-
+                    messager.spawn(230, 35, "NEW SHIFT AVAILABLE!", 60);
                     soundManager.play("collect");
                 } else {
                     soundManager.play("explosion");

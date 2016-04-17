@@ -10,6 +10,7 @@ var CANVAS_WIDTH = 800,
         track,
         enemies,
         points,
+        messager,
         minGear = 3,
         maxGear = 3,
         enemyMaxGear = 4;
@@ -25,6 +26,7 @@ var CANVAS_WIDTH = 800,
         canvas.setAttribute("height", CANVAS_HEIGHT);
 
         context = canvas.getContext('2d');
+        messager = new Messager();
         points = new Points();
         track = new Track(5);
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, minGear, maxGear, track.numLanes);
@@ -152,6 +154,7 @@ var CANVAS_WIDTH = 800,
         points.move(delta, player);
         enemies.move(delta, player);
         player.move(delta);
+        messager.watch(delta);
 
         if (player.isDying) {
             if (player.gear < 8 && player.frame == 6 && points.getTotal() == 0) {
@@ -161,7 +164,7 @@ var CANVAS_WIDTH = 800,
                 player.velocity = 0;
             }
         } else if (!player.isDying) {
-            var death = enemies.checkForCollision(player, points);
+            var death = enemies.checkForCollision(player, points, messager);
             if (death) {
                 player.x -= 8;
                 player.y -= 8;
@@ -236,6 +239,7 @@ var CANVAS_WIDTH = 800,
         }
 
         points.draw(context, numRenders);
+        messager.draw(context, numRenders);
 
         numRenders++;
         if (numRenders == 60) {
