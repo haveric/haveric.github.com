@@ -355,14 +355,14 @@ var CANVAS_WIDTH = 800,
     });
 
     $("#easyLink").on("click", function() {
-        $("#startGear").val(5);
+        $("#startGear").val(4);
         $("#enemyStartMaxGear").val(4);
         $("#enemySpeed").val(4);
         $("enemySpawns").val(4);
         $("#numEnemies").val(10);
 
         $("#shift4").val(0);
-        $("#shift5").val(0);
+        $("#shift5").val(5);
         $("#shift6").val(10);
         $("#shift7").val(20);
         $("#shift8").val(30);
