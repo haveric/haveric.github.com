@@ -43,11 +43,31 @@ var CANVAS_WIDTH = 800,
         track = new Track(5);
         player = new Player(CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100, minGear, maxGear, track.numLanes);
         if (currentGameType != "demo") {
-            player.setNeededToShift(3, parseInt($("#shift4").val()));
-            player.setNeededToShift(4, parseInt($("#shift5").val()));
-            player.setNeededToShift(5, parseInt($("#shift6").val()));
-            player.setNeededToShift(6, parseInt($("#shift7").val()));
-            player.setNeededToShift(7, parseInt($("#shift8").val()));
+            var shift4 = parseInt($("#shift4").val());
+            if (shift4 == 0) {
+                shift4 = -1;
+            }
+            var shift5 = parseInt($("#shift5").val());
+            if (shift5 == 0) {
+                shift5 = -1;
+            }
+            var shift6 = parseInt($("#shift6").val());
+            if (shift6 == 0) {
+                shift6 = -1;
+            }
+            var shift7 = parseInt($("#shift7").val());
+            if (shift7 == 0) {
+                shift7 = -1;
+            }
+            var shift8 = parseInt($("#shift8").val());
+            if (shift8 == 0) {
+                shift8 = -1;
+            }
+            player.setNeededToShift(3, shift4);
+            player.setNeededToShift(4, shift5);
+            player.setNeededToShift(5, shift6);
+            player.setNeededToShift(6, shift7);
+            player.setNeededToShift(7, shift8);
         }
         enemies = new Enemies(maxEnemies, enemyMaxGear, enemySpeed);
 
