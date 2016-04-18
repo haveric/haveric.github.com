@@ -301,6 +301,19 @@ var CANVAS_WIDTH = 800,
         $("#shift8 + .value").text($("#shift8").val());
     }
 
+    var checkForLocalControls = function() {
+        var localControls = localStorage["controls"];
+        if (localControls) {
+            if (localControls == 1) {
+                controls.resetToDefault();
+                $("#layout1").addClass("active").siblings(".layout").removeClass("active");
+            } else if (localControls == 2) {
+                controls.resetToDefault2();
+                $("#layout2").addClass("active").siblings(".layout").removeClass("active");
+            }
+        }
+    }
+    checkForLocalControls();
     updateDifficultyLabels();
     init("demo");
 
@@ -451,12 +464,14 @@ var CANVAS_WIDTH = 800,
     $("#layout1").on("click", function() {
         $(this).addClass("active").siblings(".layout").removeClass("active");
         controls.resetToDefault();
+        localStorage["controls"] = 1;
         return false;
     });
 
     $("#layout2").on("click", function() {
         $(this).addClass("active").siblings(".layout").removeClass("active");
         controls.resetToDefault2();
+        localStorage["controls"] = 2;
         return false;
     });
 }());
