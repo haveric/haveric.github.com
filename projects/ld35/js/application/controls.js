@@ -4,6 +4,7 @@ var Controls = function() {
     self.keysDown = [];
     self.keysDelayed = [];
     self.defaults = new Map();
+    self.defaults2 = new Map();
     self.controls = new Map();
     self.defaults.set("left", ["37", "gamepad14", "axis0-left"]);
     self.defaults.set("right", ["39", "gamepad15", "axis0-right"]);
@@ -14,7 +15,18 @@ var Controls = function() {
     self.defaults.set("shiftDown", ["90", "gamepad0"]);
 
     self.defaults.set("reset", ["82", "gamepad9"]);
-    self.defaults.set("stop", ["80", "gamepad8"]);
+
+
+    self.defaults2.set("left", ["65", "gamepad14", "axis0-left"]);
+    self.defaults2.set("right", ["68", "gamepad15", "axis0-right"]);
+    self.defaults2.set("up", ["87", "axis1-left"]);
+    self.defaults2.set("down", ["83", "axis1-right"]);
+
+    self.defaults2.set("shiftUp", ["38", "gamepad1"]);
+    self.defaults2.set("shiftDown", ["40", "gamepad0"]);
+
+    self.defaults2.set("reset", ["82", "gamepad9"]);
+
 
     self.resetToDefault();
 
@@ -36,6 +48,15 @@ Controls.prototype.resetToDefault = function() {
         self.controls.set(key, value);
     });
 }
+
+Controls.prototype.resetToDefault2 = function() {
+    var self = this;
+
+    self.defaults2.forEach(function(value, key) {
+        self.controls.set(key, value);
+    });
+}
+
 
 Controls.prototype.setCustomKeys = function(name, keys) {
     this.controls.set(name, keys);

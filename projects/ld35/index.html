@@ -23,7 +23,7 @@
                     <a href="#" id="customLink" class="difficulty">Custom</a>
                 </div>
                 <a href="#" id="playLink">Begin</a>
-                <a href="#" id="settingsLink">Settings</a>
+                <a href="#" id="settingsLink">Controls</a>
                 <a href="#" id="aboutLink">About</a>
             </div>
 
@@ -87,7 +87,36 @@
             </div>
             <div id="settings" class="menu">
                 <div class="header">
-                    <h2>Settings</h2>
+                    <h2>Controls</h2>
+                </div>
+                <div class="clearfix">
+                    <a href="#" id="layout1" class="layout active">
+                        <p>Arrow Layout</p>
+                        <p>
+                            Movement: Arrow Keys<br/>
+                            Shift Up: A<br/>
+                            Shift Down: Z<br/>
+                            Reset: R<br/>
+                        </p>
+                    </a>
+                    <a href="#" id="layout2" class="layout">
+                        <p>WASD Layout</p>
+                        <p>
+                            Movement: WASD<br/>
+                            Shift Up: Up Arrow<br/>
+                            Shift Down: Down Arrow<br/>
+                            Reset: R<br/>
+                        </p>
+                    </a>
+                </div>
+                <div id="xboxlayout">
+                    <p>Alternately, there is limited support for an Xbox 360 controller in either layout.</p>
+                    <p>
+                        Movement: Left Stick<br/>
+                        Shift Up: B
+                        Shift Down: A
+                        Reset: Start
+                    </p>
                 </div>
                 <a href="#" class="backtomenu">Back to Menu</a>
             </div>
@@ -95,12 +124,14 @@
                 <div class="header">
                     <h2>About</h2>
                 </div>
-                <p></p>
+                <p>This game was created by Ryan Breuer for Ludum Dare 35.</p>
+                <p>The theme of Ludum Dare 35 was Shapeshift. I chose to go with literal shapes shifting in order to consume other shapes of a similar type. The alternate death animation was inspired by the error that occurred shortly after Ludum Dare went live.</p>
+                <p>Thanks for playing.</p>
                 <a href="#" class="backtomenu">Back to Menu</a>
             </div>
             <div id="end" class="menu">
                 <div class="header">
-                    <h2>Your score</h2>
+                    <h2>You're dead!</h2>
                 </div>
 
                 <a href="#" class="tryagain">Try Again</a>
@@ -109,7 +140,7 @@
             </div>
             <div id="endTwo" class="menu">
                 <div class="header">
-                    <h2>Error establishing database connection!</h2>
+                    <h2>Everything is dead!</h2>
                 </div>
                 <p>A black hole has appeared and is destroying everything.</p>
                 <a href="#" class="tryagain">Try Again</a>

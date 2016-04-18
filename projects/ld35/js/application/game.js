@@ -64,7 +64,8 @@ var CANVAS_WIDTH = 800,
         if (controls.isPressed("reset")) { // r
             if (!controls.isDelayed("reset")) {
                 controls.deleteKey("reset", 250);
-                init();
+                $(".menu").removeClass("active");
+                init("play");
             }
         }
 
@@ -424,6 +425,18 @@ var CANVAS_WIDTH = 800,
     $("#aboutLink").on("click", function() {
         $("#about").addClass("active").siblings(".menu").removeClass("active");
 
+        return false;
+    });
+
+    $("#layout1").on("click", function() {
+        $(this).addClass("active").siblings(".layout").removeClass("active");
+        controls.resetToDefault();
+        return false;
+    });
+
+    $("#layout2").on("click", function() {
+        $(this).addClass("active").siblings(".layout").removeClass("active");
+        controls.resetToDefault2();
         return false;
     });
 }());
