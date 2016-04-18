@@ -1,5 +1,5 @@
 var CANVAS_WIDTH = 800,
-    CANVAS_HEIGHT = 640;
+    CANVAS_HEIGHT = 600;
 
 (function () {
     var canvas,
@@ -378,7 +378,7 @@ var CANVAS_WIDTH = 800,
         $("enemySpawns").val(4);
         $("#numEnemies").val(15);
 
-        $("#shift4").val(0);
+        $("#shift4").val(5);
         $("#shift5").val(10);
         $("#shift6").val(20);
         $("#shift7").val(25);
