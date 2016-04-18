@@ -455,6 +455,12 @@ var CANVAS_WIDTH = 800,
         return false;
     });
 
+    $("#instructionsLink").on("click", function() {
+        $("#instructions").addClass("active").siblings(".menu").removeClass("active");
+
+        return false;
+    });
+
     $("#aboutLink").on("click", function() {
         $("#about").addClass("active").siblings(".menu").removeClass("active");
 

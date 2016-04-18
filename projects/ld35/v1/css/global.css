@@ -53,9 +53,10 @@ h1 {
 }
 
 h2 {
-    font-size: 22px;
+    font-size: 32px;
     text-align: center;
     color: #06f;
+    margin: 15px 0;
 }
 
 p {
@@ -75,7 +76,7 @@ p {
     top: 45px;
     left: 170px;
     width: 440px;
-    height: 500px;
+    height: 515px;
     opacity: 0;
 
     -webkit-transition: all .6s ease;
