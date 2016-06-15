@@ -1,0 +1,15 @@
+body {
+    width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#gameWrapper {
+    position: relative;
+}
+
+#gameCanvas {
+    width: 800px;
+    height: 600px;
+    z-index:0;
+}
