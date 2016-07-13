@@ -7,3 +7,6 @@ reports
 build.xml
 
 /_site/*
+.idea/
+.jekyll-metadata
+*.iml
