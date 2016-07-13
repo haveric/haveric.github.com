@@ -43,32 +43,16 @@ var CANVAS_WIDTH = 800,
     var handleInput = function() {
         controls.checkForGamepads();
 
-        if (controls.isPressed("up")) { // Player holding up
-            if (!controls.isDelayed("up")) {
-                player.moveUp(map);
-
-                controls.deleteKey("up", 100);
-            }
-        } else if (controls.isPressed("down")) { // Player holding down
-            if (!controls.isDelayed("down")) {
-                player.moveDown(map);
-
-                controls.deleteKey("down", 100);
-            }
+        if (controls.testPressed("up", 100)) {
+            player.moveUp(map);
+        } else if (controls.testPressed("down", 100)) {
+            player.moveDown(map);
         }
 
-        if (controls.isPressed("left")) { // Player holding left
-            if (!controls.isDelayed("left")) {
-                player.moveLeft(map);
-
-                controls.deleteKey("left", 100);
-            }
-        } else if (controls.isPressed("right")) { // Player holding right
-            if (!controls.isDelayed("right")) {
-                player.moveRight(map);
-
-                controls.deleteKey("right", 100);
-            }
+        if (controls.testPressed("left", 100)) {
+            player.moveLeft(map);
+        } else if (controls.testPressed("right", 100)) {
+            player.moveRight(map);
         }
     }
 

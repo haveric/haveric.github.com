@@ -106,6 +106,21 @@ Controls.prototype.deleteKey = function(key, delay) {
     }
 }
 
+/**
+ *  Returns true if press succeeds
+ *          false if press does not succeed
+ */
+Controls.prototype.testPressed = function(key, delay) {
+    var self = this;
+    var succeeded = false;
+
+    if (self.isPressed(key) && !self.isDelayed(key)) {
+        self.deleteKey(key, delay);
+        succeeded = true;
+    }
+
+    return succeeded;
+}
 
 Controls.prototype.hasControllerSupport = function() {
     return "getGamepads" in navigator;
