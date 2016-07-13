@@ -1,27 +1,15 @@
-var CANVAS_WIDTH = 800,
-    CANVAS_HEIGHT = 600;
-
 (function () {
-    var canvas,
-        context;
-
     var player,
         controls = new Controls(),
-        numRenders = 0,
-        currentGameType = "none",
-        gameHasEnded = false;
+        gameState = new GameState(),
+        canvasState = new CanvasState(),
+        numRenders = 0;
 
     var map;
 
     var init = function(type) {
-        currentGameType = type;
-        gameHasEnded = false;
-
-        canvas = document.getElementById("gameCanvas");
-        canvas.setAttribute("width", CANVAS_WIDTH);
-        canvas.setAttribute("height", CANVAS_HEIGHT);
-
-        context = canvas.getContext('2d');
+        canvasState.init();
+        gameState.init(type);
 
         var mapSize = 20;
 
@@ -39,6 +27,7 @@ var CANVAS_WIDTH = 800,
         handleInput();
         handleMovement(delta);
     }
+
     var handleInput = function() {
         controls.checkForGamepads();
 
@@ -64,24 +53,16 @@ var CANVAS_WIDTH = 800,
         if (spriteMapper.preloadSprites()) {
 
             // TODO: Draw Stuff
-            context.fillStyle="#000000";
-            context.fillRect(0, 0, canvas.width, canvas.height);
+            canvasState.clear();
 
-            map.draw(context, numRenders, player.getX(), player.getY());
+            map.draw(canvasState.context, numRenders, player.getX(), player.getY());
 
-            player.draw(context, numRenders);
+            player.draw(canvasState.context, numRenders);
 
             numRenders++;
             if (numRenders == 60) {
                 numRenders = 0;
             }
-        }
-    }
-
-    var endGame = function(type) {
-        if (!gameHasEnded) {
-            // TODO: End game
-            gameHasEnded = true;
         }
     }
 
