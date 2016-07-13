@@ -30,10 +30,7 @@ var Texture = function (name, image) {
 
 var SpriteMapper = function () {
     sprites = [];
-}
-
-SpriteMapper.prototype.getSprites = function() {
-    return sprites;
+    spritesPreloaded = false;
 }
 
 SpriteMapper.prototype.addImage = function (imageName, textureName, x, y, w, h) {
@@ -50,6 +47,25 @@ SpriteMapper.prototype.getImage = function(imgName) {
     return null;
 }
 
+SpriteMapper.prototype.preloadSprites = function() {
+    if (!spritesPreloaded) {
+        var numSprites = sprites.length;
+        var numLoaded = 0;
+
+        sprites.forEach(function(sprite) {
+            if (sprite.loadTexture()) {
+                numLoaded ++;
+            }
+        });
+
+        if (numLoaded == numSprites) {
+            spritesPreloaded = true;
+        }
+    }
+
+    return spritesPreloaded;
+}
+
 var Sprite = function (imageName, textureName, x, y, w, h) {
     this.imageName = imageName;
     this.textureName = textureName;
@@ -60,21 +76,25 @@ var Sprite = function (imageName, textureName, x, y, w, h) {
     this.h = h || 32;
 }
 
-Sprite.prototype.drawImage = function (context, i, j, degrees) {
+Sprite.prototype.loadTexture = function() {
     if (this.texture == null) {
         this.texture = textureMapper.getTexture(this.textureName);
+    }
+
+    return this.texture != null;
+}
+
+Sprite.prototype.drawImage = function (context, i, j, degrees) {
+    if (degrees != null && degrees > 0) {
+        context.save();
+        context.translate(i+this.w/2, j+this.h/2);
+        context.rotate(degrees * Math.PI / 180);
+
+        context.drawImage(this.texture, this.x, this.y, this.w, this.h, -this.w/2, -this.h/2, this.w, this.h);
+
+        context.restore();
     } else {
-        if (degrees != null && degrees > 0) {
-            context.save();
-            context.translate(i+this.w/2, j+this.h/2);
-            context.rotate(degrees * Math.PI / 180);
-
-            context.drawImage(this.texture, this.x, this.y, this.w, this.h, -this.w/2, -this.h/2, this.w, this.h);
-
-            context.restore();
-        } else {
-            context.drawImage(this.texture, this.x, this.y, this.w, this.h, i, j, this.w, this.h);
-        }
+        context.drawImage(this.texture, this.x, this.y, this.w, this.h, i, j, this.w, this.h);
     }
 }
 

@@ -8,7 +8,6 @@ var CANVAS_WIDTH = 800,
     var player,
         controls = new Controls(),
         numRenders = 0,
-        spritesRendered = false,
         currentGameType = "none",
         gameHasEnded = false;
 
@@ -56,44 +55,26 @@ var CANVAS_WIDTH = 800,
         }
     }
 
-    var prerenderSprites = function() {
-        var numSprites = spriteMapper.getSprites().length;
-        var numLoaded = 0;
-
-        spriteMapper.getSprites().forEach(function(sprite) {
-            if (sprite.texture != null) {
-                numLoaded ++;
-            } else {
-                sprite.drawImage(context, 0, 0);
-            }
-        });
-
-        if (numLoaded == numSprites) {
-            spritesRendered = true;
-        }
-    }
-
     var handleMovement = function(delta) {
         // TODO: Move stuff
 
     }
 
-    var render = function(){
-        if (!spritesRendered) {
-            prerenderSprites();
-        }
+    var render = function() {
+        if (spriteMapper.preloadSprites()) {
 
-        // TODO: Draw Stuff
-        context.fillStyle="#000000";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+            // TODO: Draw Stuff
+            context.fillStyle="#000000";
+            context.fillRect(0, 0, canvas.width, canvas.height);
 
-        map.draw(context, numRenders, player.getX(), player.getY());
+            map.draw(context, numRenders, player.getX(), player.getY());
 
-        player.draw(context, numRenders);
+            player.draw(context, numRenders);
 
-        numRenders++;
-        if (numRenders == 60) {
-            numRenders = 0;
+            numRenders++;
+            if (numRenders == 60) {
+                numRenders = 0;
+            }
         }
     }
 
