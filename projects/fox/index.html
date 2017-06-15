@@ -553,11 +553,13 @@ null==d?void 0:d))},attrHooks:{type:{set:function(a,b){if(!o.radioValue&&"radio"
             $(".slide").eq(0).show();
             $("html").on("click", "a", function() {
                 var index = $(this).closest("td").index();
-                var $toShow = $(".slide").eq(index);
-                $toShow.show()
-                $toShow.siblings().hide();
-                
-                return false;
+                if (index > -1) {
+                    var $toShow = $(".slide").eq(index);
+                    $toShow.show()
+                    $toShow.siblings(".slide").hide();
+                    
+                    return false;
+                }
             });
             
             $("#email").validate({
