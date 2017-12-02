@@ -1,6 +1,7 @@
 var Controls = function() {
     var self = this;
 
+    self.defaultDelay = 100;
     self.keysDown = [];
     self.keysDelayed = [];
     self.defaults = new Map();
@@ -111,6 +112,8 @@ Controls.prototype.deleteKey = function(key, delay) {
  *          false if press does not succeed
  */
 Controls.prototype.testPressed = function(key, delay) {
+    delay = delay || this.defaultDelay;
+
     var self = this;
     var succeeded = false;
 

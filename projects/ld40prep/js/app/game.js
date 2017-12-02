@@ -32,15 +32,15 @@
     var handleInput = function() {
         controls.checkForGamepads();
 
-        if (controls.testPressed("up", 100)) {
+        if (controls.testPressed("up")) {
             player.moveUp(map);
-        } else if (controls.testPressed("down", 100)) {
+        } else if (controls.testPressed("down")) {
             player.moveDown(map);
         }
 
-        if (controls.testPressed("left", 100)) {
+        if (controls.testPressed("left")) {
             player.moveLeft(map);
-        } else if (controls.testPressed("right", 100)) {
+        } else if (controls.testPressed("right")) {
             player.moveRight(map);
         }
     }
