@@ -3,7 +3,8 @@
         controls = new Controls(),
         gameState = new GameState(),
         canvasState = new CanvasState(),
-        numRenders = 0;
+        numRenders = 0,
+        FPS = 60;
 
     var map;
 
@@ -60,7 +61,7 @@
             player.draw(canvasState.context, numRenders);
 
             numRenders++;
-            if (numRenders == 60) {
+            if (numRenders == FPS) {
                 numRenders = 0;
             }
         }
