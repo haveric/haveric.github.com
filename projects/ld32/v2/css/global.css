@@ -1,0 +1,265 @@
+body {
+    width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#gameWrapper {
+    position: relative;
+}
+
+#gameCanvas {
+    width: 600px;
+    height: 576px;
+    z-index:0;
+}
+
+.menu {
+    width: 600px;
+    height: 576px;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.menu a {
+    padding: 10px 15px 12px;
+    font-size: 18px;
+    line-height: 18px;
+    background: #7B7D7B;
+    border-left: 1px solid #999;
+    border-top: 1px solid #999;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    box-sizing: border-box;
+    display: block;
+    text-decoration: none;
+    font-family: "Lucida Console", Monaco, monospace;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.key {
+    background: url('../img/key.png') no-repeat;
+    padding: 2px 5px;
+    width: 25px;
+    height: 25px;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.menu a:hover {
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    background: #ccc;
+    color: #000;
+}
+
+a.back {
+    margin-top: 190px;
+}
+.leftContents {
+    padding: 200px 115px 0px 10px;
+}
+
+.leftContents p {
+    margin: 5px 0 8px;
+    font-size: 14px;
+    color: #222;
+}
+
+.leftContents img {
+    float: left;
+    margin-right: 5px;
+}
+
+.leftContents h2 {
+    margin: 0;
+}
+
+.mainLinks {
+    padding: 40px 40px 0px 120px;
+}
+
+.leftDoor,
+.rightDoor {
+    -webkit-transition: all 1s ease-in;
+    -moz-transition: all 1s ease-in;
+    -ms-transition: all 1s ease-in;
+    -o-transition: all 1s ease-in;
+    transition: all 1s ease-in;
+}
+
+.leftDoor.closed,
+.rightDoor.closed {
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -ms-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+}
+
+.leftDoor {
+    background: url('../img/door-left.png');
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 339px;
+    height: 576px;
+    
+    -moz-transform: translateX(-339px);
+    -webkit-transform: translateX(-339px);
+    -o-transform: translateX(-339px);
+    -ms-transform: translateX(-339px);
+    transform: translateX(-339px);
+    pointer-events: none;
+}
+
+.leftDoor.blue {
+    background: url('../img/door-left-blue.png');
+}
+
+.leftDoor.lightblue {
+    background: url('../img/door-left-lightblue.png');
+}
+
+.leftDoor.orange {
+    background: url('../img/door-left-orange.png');
+}
+
+.leftDoor.pink {
+    background: url('../img/door-left-pink.png');
+}
+
+.leftDoor.closed {
+    -moz-transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    -o-transform: translateX(0px);
+    -ms-transform: translateX(0px);
+    transform: translateX(0px);
+    pointer-events: auto;
+}
+
+.rightDoor {
+    background: url('../img/door-right.png');
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 336px;
+    height: 576px;
+    -moz-transform: translateX(336px);
+    -webkit-transform: translateX(336px);
+    -o-transform: translateX(336px);
+    -ms-transform: translateX(336px);
+    transform: translateX(336px);
+    pointer-events: none;
+}
+
+.rightDoor.blue {
+    background: url('../img/door-right-blue.png');
+}
+
+.rightDoor.lightblue {
+    background: url('../img/door-right-lightblue.png');
+}
+
+.rightDoor.orange {
+    background: url('../img/door-right-orange.png');
+}
+
+.rightDoor.pink {
+    background: url('../img/door-right-pink.png');
+}
+
+.rightDoor.closed {
+    -moz-transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    -o-transform: translateX(0px);
+    -ms-transform: translateX(0px);
+    transform: translateX(0px);
+    pointer-events: auto;
+}
+
+.title {
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 28px;
+    margin: 10px 15px;
+    text-transform: uppercase;
+}
+
+#instructions p {
+    font-size: 13px;
+}
+
+.items {
+    margin-right: -30px;
+}
+
+#instructionsTopRight {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    left: 100px;
+}
+
+#instructionsTopRight .ship {
+    float: left;
+    margin-right: 5px;
+}
+
+#instructionsTopRight .ships {
+    display: block;
+    clear: both;
+}
+
+#instructionsTopRight .ships + .ships {
+    padding-top: 10px;
+}
+#enemyKilled1,
+#enemyKilled2,
+#enemyKilled3,
+#numCrates,
+#numTurrets,
+#numFridges,
+#numConsoles,
+#itemCrates,
+#itemTurrets,
+#itemFridges,
+#itemConsoles {
+    float: left;
+    font-size: 11px;
+    margin-right: 5px;
+    padding-top: 9px;
+}
+
+.bottomRight {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    left: 100px;
+}
+
+.score {
+    font-size: 20px;
+    text-transform: uppercase;
+    margin: 0 0 50px;
+    padding-left: 40px;
+}
+
+.bestScore {
+    font-size: 18px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.contentbreak {
+    clear: both;
+}
