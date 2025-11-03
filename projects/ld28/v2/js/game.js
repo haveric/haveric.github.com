@@ -2,6 +2,10 @@ var CANVAS_WIDTH = 800,
     CANVAS_HEIGHT = 640;
 
 (function () {
+    var enemyTimerElapsed = 0,
+        deltaTime = 0,
+        lastTimestamp;
+
     var keysDown = [],
         gameRunning = false,
         keyDownListener,
@@ -12,8 +16,8 @@ var CANVAS_WIDTH = 800,
     var map,
         player,
         requestId;
-    numRenders = 0,
-        difficulty = "demo",
+
+    var difficulty = "demo",
         action1 = "none",
         action2 = "none",
         action3 = "none",
@@ -48,13 +52,21 @@ var CANVAS_WIDTH = 800,
     })();
 
 
-    var animLoop = function(){
+    var animLoop = function(timestamp){
         if (gameRunning) {
-            requestId = requestAnimFrame(animLoop);
+            if (lastTimestamp === undefined) {
+                lastTimestamp = timestamp
+            }
+            deltaTime = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+
             if (difficulty != "demo") {
                 handleInput();
             }
-            render();
+            moveEnemies(deltaTime);
+            render(deltaTime);
+
+            requestId = requestAnimFrame(animLoop);
         }
     }
 
@@ -78,7 +90,7 @@ var CANVAS_WIDTH = 800,
 
         gameRunning = true;
         if (!requestId) {
-            animLoop();
+            requestId = requestAnimFrame(animLoop);
         }
     }
 
@@ -133,7 +145,7 @@ var CANVAS_WIDTH = 800,
 
         gameRunning = true;
         if (!requestId) {
-            animLoop();
+            requestId = requestAnimFrame(animLoop);
         }
     }
     var reset = function() {
@@ -227,7 +239,19 @@ var CANVAS_WIDTH = 800,
         keysDown = [];
     }
 
-    var render = function(){
+    var moveEnemies = function(deltaTime) {
+        var enemyLength = enemies.length;
+        enemyTimerElapsed += deltaTime;
+        if (enemyTimerElapsed > 500) {
+            enemyTimerElapsed -= 500;
+
+            for (var i = 0; i < enemyLength; i++) {
+                enemies[i].moveRandomly(map);
+            }
+        }
+    }
+
+    var render = function(deltaTime){
         context.fillStyle="#000000";
         context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -241,14 +265,6 @@ var CANVAS_WIDTH = 800,
         player.draw(context);
 
         var enemyLength = enemies.length;
-
-        if (numRenders == 30) {
-            numRenders = 0;
-
-            for (var i = 0; i < enemyLength; i++) {
-                enemies[i].moveRandomly(map);
-            }
-        }
         for (var i = 0; i < enemyLength; i++) {
             var enemy = enemies[i];
             enemy.draw(context, player.getX(), player.getY());
@@ -365,8 +381,6 @@ var CANVAS_WIDTH = 800,
             var x = 755+(i-items)*60;
             context.fillText(i, x,570)
         }
-
-        numRenders++;
     }
 
     initDemo();

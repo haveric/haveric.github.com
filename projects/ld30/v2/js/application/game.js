@@ -1,5 +1,7 @@
+var FPS = 60;
 var CANVAS_WIDTH = 800,
-    CANVAS_HEIGHT = 640;
+    CANVAS_HEIGHT = 640,
+    FPS_STEP = 1000 / FPS;
 
 var map;
 var canvas,
@@ -41,9 +43,13 @@ var elapsedTime = 0;
         keyUpListener;
     
     var requestId,
-        numRenders = 0,
         keyDownListener,
         keyUpListener;
+
+    var lastTimestamp,
+        timeElapsed = 0,
+        renderFrame = 0
+        lastRenderFrame = 0;
     
     // shim layer with setTimeout fallback
     window.requestAnimFrame = (function(){
@@ -72,13 +78,28 @@ var elapsedTime = 0;
     })();
         
     
-    var animLoop = function(){
+    var animLoop = function(timestamp){
         if (gameRunning) {
+            if (lastTimestamp === undefined) {
+                lastTimestamp = timestamp;
+
+            }
+            var deltaTime = timestamp - lastTimestamp;
+            // Cap delta time to 1 second
+            if (deltaTime > 1000) {
+                deltaTime = 1000;
+            }
+            timeElapsed += deltaTime;
+
+            while (timeElapsed >= FPS_STEP) {
+                handleInput();
+                timeElapsed -= FPS_STEP;
+                render(); // TODO: Separate movement from rendering
+                renderFrame++;
+            }
+
+            lastTimestamp = timestamp;
             requestId = requestAnimFrame(animLoop);
-            
-            handleInput();
-            
-            render();
         }
     }
     
@@ -190,7 +211,7 @@ var elapsedTime = 0;
         
         gameRunning = true;
         if (!requestId) {
-            animLoop();
+            requestId = requestAnimFrame(animLoop);
         }
     }
     
@@ -323,14 +344,14 @@ var elapsedTime = 0;
     }
     
     var render = function(){
-        sky.draw(numRenders);
+        sky.draw(renderFrame);
         cities.forEach(function(city, index) {
-            city.draw(numRenders);
+            city.draw(renderFrame);
         });
         
         var numFullyDeadCities = 0;
         deadCities.forEach(function(city, index) {
-            city.draw(numRenders);
+            city.draw(renderFrame);
             if (!city.dying) {
                 numFullyDeadCities ++;
             }
@@ -341,22 +362,22 @@ var elapsedTime = 0;
         }
         
         cityLasers.forEach(function(laser, index) {
-            laser.draw(numRenders, index);
+            laser.draw(renderFrame, index);
         });
         
-        map.draw(numRenders, player.getX(), player.getY());
+        map.draw(renderFrame, player.getX(), player.getY());
         
-        phoneBooth.draw(numRenders, player.getX(), player.getY());
+        phoneBooth.draw(renderFrame, player.getX(), player.getY());
         
         enemies.forEach(function(enemy, index) {
-            enemy.draw(numRenders, index, player.getX(), player.getY());
+            enemy.draw(renderFrame, index, player.getX(), player.getY());
         });
         
         bullets.forEach(function(bullet, index) {
-            bullet.draw(numRenders, index, player.getX(), player.getY());
+            bullet.draw(renderFrame, index, player.getX(), player.getY());
         });
         
-        player.draw(numRenders);
+        player.draw(renderFrame);
         
         if (global.isScreenShaking) {
             if (global.screenShakeTimer < 20) {
@@ -376,10 +397,9 @@ var elapsedTime = 0;
         var screenShakeY = 0;
         var screenShakeTimer = 0;
         var isScreenShaking = false;
-        
-        numRenders++;
-        if (numRenders == 60) {
-            numRenders = 0;
+
+        if (renderFrame >= 60) {
+            renderFrame = 0;
             elapsedTime ++;
             
             cityDeathTimer --;

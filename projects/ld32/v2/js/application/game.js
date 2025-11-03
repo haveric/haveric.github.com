@@ -1,7 +1,7 @@
+var FPS = 60;
 var CANVAS_WIDTH = 600,
     CANVAS_HEIGHT = 600,
-    STEP = 16,
-    STORED_TIME;
+    FPS_STEP = 1000 / FPS;
 
 var debug = false;
 var stars = [];
@@ -42,7 +42,8 @@ var bulletsKilled = 0;
         keyDownListener,
         keyUpListener;
 
-    var lastTime = null;
+    var lastTimestamp,
+        timeElapsed = 0;
 
 
     // shim layer with setTimeout fallback
@@ -74,27 +75,27 @@ var bulletsKilled = 0;
 
     var animLoop = function(timestamp){
         if (gameRunning) {
-            if (lastTime == null) {
-                lastTime = timestamp;
+            if (lastTimestamp == null) {
+                lastTimestamp = timestamp;
             }
 
-            var dt = timestamp - lastTime;
+            var deltaTime = timestamp - lastTimestamp;
             // Cap delta time to 1 second
-            if (dt > 1000) {
-                dt = 1000;
+            if (deltaTime > 1000) {
+                deltaTime = 1000;
             }
-            STORED_TIME += dt;
+            timeElapsed += deltaTime;
 
-            if (dt >= STEP) {
+            while (timeElapsed >= FPS_STEP) {
                 handleInput();
                 handleAI();
                 handleMovement();
                 handleCollision();
-                dt -= STEP;
+                timeElapsed -= FPS_STEP;
             }
             render();
 
-            lastTime = timestamp;
+            lastTimestamp = timestamp;
             requestId = requestAnimFrame(animLoop);
         }
     }
@@ -128,7 +129,7 @@ var bulletsKilled = 0;
         gameRunning = true;
         time = new Date();
         if (!requestId) {
-            animLoop();
+            requestId = requestAnimFrame(animLoop);
         }
     }
 
